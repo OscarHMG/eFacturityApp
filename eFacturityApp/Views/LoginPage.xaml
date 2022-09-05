@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F8F8F8"
+    x:Class="eFacturityApp.Views.LoginPage">
+    <ContentPage.Content>
+        <!--<Grid RowDefinitions="*, Auto" VerticalOptions="FillAndExpand" BackgroundColor="White">
+            <StackLayout Grid.Row="0" VerticalOptions="CenterAndExpand" TranslationY="30">
+                <StackLayout >
+                    <Image Source="eFacturityLogo1" 
+                           WidthRequest="150"
+                           HorizontalOptions="Center" />
+                    <Label Text="SloganApp"
+                       Style="{StaticResource RegularLabel}"
+                           HorizontalOptions="Center"
+                           FontSize="{d:OnPlatform Android='24', iOS='26'}" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="{OnIdiom Phone=FillAndExpand, Tablet=Center}"
+                    VerticalOptions="FillAndExpand"
+                    Spacing="10"
+                    Padding="25">
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Email"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <Entry Text="{Binding Email}" x:Name="Username"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout 
+                        EnablePasswordVisibilityToggle="True"
+                        Hint="Contraseña"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <Entry Text="{Binding Password}" x:Name="Password"  IsPassword="True"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <Label Text="¿No tienes cuenta? ¡Regístrate!" Style="{StaticResource RegularLabel}"  HorizontalOptions="End"  Padding="0, 5" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 20,0,0" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RegisterCommand}"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label Text="Olvidé contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 10,0,0" HorizontalOptions="End"  Padding="0, 5" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RecoverAccountCommand}"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    
+                    <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,15,0, 0"  Padding="0,10"/>
+
+
+                </StackLayout>
+
+            </StackLayout>
+            <Grid Grid.Row="1" RowDefinitions="*" VerticalOptions="EndAndExpand" Margin="0">
+                <Grid Grid.Row="0">
+                    <Path Fill="#003593" Stroke="#003594" Data="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"></Path>
+                </Grid>
+
+                <Label Text="{Binding Version}"
+                    Grid.Row="0"
+                    FontSize="{d:OnPlatform Android='20', iOS='22'}"
+                    TextColor="White"
+                    Margin="0, 0, 10, 10"
+                    Style="{StaticResource BoldLabel}"
+                    FontAttributes="Bold"
+                    VerticalOptions="EndAndExpand" 
+                    HorizontalOptions="EndAndExpand"   />
+
+            </Grid>
+
+        </Grid> -->
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="Banner" Aspect="AspectFill" HeightRequest="200"></Image>
+            <BoxView HeightRequest="200" BackgroundColor="#FFFFFF" Opacity="0.3"/>
+
+
+            <Path
+                Grid.Row="1"
+                Fill="#F8F8F8"
+                Stroke="#F8F8F8"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="StartAndExpand"
+                Margin="0, -70, 0 , 0"
+                Aspect="Fill"
+                Data="M-1.41,96.20 C189.90,30.09 359.76,152.45 513.82,50.81 L516.08,154.44 L0.00,150.00 Z"/>
+
+            <Grid Grid.Row="1" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="0, 25, 0 ,0 ">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0">
+                    <Label Text="¡Bienvenido!" FontSize="37" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center"></Label>
+                    <StackLayout HorizontalOptions="{OnIdiom Phone=FillAndExpand, Tablet=Center}"
+                        VerticalOptions="FillAndExpand"
+                        Spacing="10"
+                        Padding="25">
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Email"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" x:Name="Username"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            EnablePasswordVisibilityToggle="True"
+                            Hint="Contraseña"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Password}" x:Name="Password"  IsPassword="True"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <Label Text="¿No tienes cuenta? ¡Regístrate!" Style="{StaticResource RegularLabel}"  HorizontalOptions="End"  Padding="0, 5" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 20,0,0" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RegisterCommand}"></TapGestureRecognizer>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Text="Olvidé contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 10,0,0" HorizontalOptions="End"  Padding="0, 5" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RecoverAccountCommand}"></TapGestureRecognizer>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+
+                        <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,15,0, 0"  Padding="0,10"/>
+
+
+                    </StackLayout>
+                </StackLayout>
+
+
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

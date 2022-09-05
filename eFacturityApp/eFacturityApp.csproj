@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\FontAwesome\fasolid.ttf" />
+    <None Remove="Assets\Fonts\FontAwesome\flaticon.ttf" />
+    <None Remove="Assets\Fonts\Poppins\PoppinsBold.otf" />
+    <None Remove="Assets\Fonts\Poppins\PoppinsItalic.otf" />
+    <None Remove="Assets\Fonts\Poppins\PoppinsRegular.otf" />
+    <None Remove="Assets\Fonts\Poppins\PoppinsThin.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Fonts\FontAwesome\fasolid.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\FontAwesome\flaticon.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Poppins\PoppinsBold.otf" />
+    <EmbeddedResource Include="Assets\Fonts\Poppins\PoppinsItalic.otf" />
+    <EmbeddedResource Include="Assets\Fonts\Poppins\PoppinsRegular.otf" />
+    <EmbeddedResource Include="Assets\Fonts\Poppins\PoppinsThin.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Prism.Plugin.Popups" Version="7.2.0.1046" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.3.1" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.3.0.51" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.3.0.51" />
+    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.3.0.51" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.3.0.51" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.5.3.2" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Images\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Infraestructure\APIModels\" />
+    <Folder Include="Infraestructure\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\BaseNavigationBarPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

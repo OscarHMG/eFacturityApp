@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xaml="http://prismlibrary.com"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False"
+    x:Class="eFacturityApp.Views.BaseNavigationBarPage">
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <Grid Padding="20" RowDefinitions="Auto,*">
+                <StackLayout Orientation="Horizontal" Spacing="20">
+                    <Label
+                        FontFamily="FA"
+                        FontSize="25"
+                        Text="&#xf053;"
+                        TextColor="#696969"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{xaml:GoBack}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        FontSize="20"
+                        Style="{StaticResource RegularLabel}"
+                        Text="{TemplateBinding Title}"
+                        VerticalOptions="Center" />
+                </StackLayout>
+                <ContentPresenter Grid.Row="1" />
+            </Grid>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+</ContentPage>

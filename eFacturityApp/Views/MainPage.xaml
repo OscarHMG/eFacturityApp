@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:MasterDetailPage.ApplyShadow="true"
+    x:Class="eFacturityApp.Views.MainPage">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout Margin="8, 0, 8, 0">
+                <StackLayout Margin="10, 50, 10, 10">
+                    <Image Source="avatar"  HeightRequest="100" />
+                    <Label Margin="0, 10" MaxLines="2" LineBreakMode="TailTruncation">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Hola, " Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}" />
+                                <Span Text="Oscar Moncayo G." Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Inicio" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Nav/BottomNavigationBar?selectedTab=LocationPage"></TapGestureRecognizer>
+
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Cambio de Contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangePasswordCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Contáctanos" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ContactUsCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Preguntas Frecuentes" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PreguntasFrecuentesCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Términos y Condiciones" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding TerminosCondicionesCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Padding="15, 10">
+                    <Label Text="Cerrar Sesión" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CloseSessionCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+
+</MasterDetailPage>

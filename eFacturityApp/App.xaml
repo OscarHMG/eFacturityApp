@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"    
+    x:Class="eFacturityApp.App">
+    <Application.Resources>
+
+        <!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <Color x:Key="SecondaryDark">#425563</Color>
+
+            <Color x:Key="Primary">#3884c6</Color>
+            <Color x:Key="PrimaryDark">#003594</Color>
+            <Color x:Key="Secondary">#a3c900</Color>
+            <Color x:Key="Accent">#4e008d</Color>
+            <Color x:Key="Green">#00B050</Color>
+            <Color x:Key="Gold">#ffd700</Color>
+            <!--<Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryDark}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>-->
+
+            <!-- azul #3884c6-->
+            <!-- morado #4e008d-->
+            <!-- verde #a3c900-->
+            
+            <Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryDark}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            
+
+            
+
+
+            <Style x:Key="RegularLabel" TargetType="Label" ApplyToDerivedTypes="True" >
+                <Setter Property="TextColor" Value="#696969"/>
+                <Setter Property="FontFamily"      Value="PR" />
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='14', iOS='16'}"/>
+            </Style>
+
+            <Style x:Key="BoldLabel"  TargetType="Label" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="#696969"/>
+                <Setter Property="FontFamily"      Value="PB" />
+                <!--<Setter Property="FontSize"        Value="14" />-->
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='14', iOS='16'}"/>
+            </Style>
+
+
+            <Style TargetType="Entry" ApplyToDerivedTypes="true">
+                <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="TextColor" Value="#696969"></Setter>
+            </Style>
+
+            <Style TargetType="combobox:SfComboBox" ApplyToDerivedTypes="true">
+                <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="TextColor" Value="#696969"></Setter>
+            </Style>
+
+            <Style TargetType="Editor" ApplyToDerivedTypes="True">
+                <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="TextColor" Value="#696969"></Setter>
+            </Style>
+
+
+            <Style TargetType="inputLayout:SfTextInputLayout"  ApplyToDerivedTypes="True">
+                <Setter Property="FocusedColor" Value="{StaticResource Accent}"></Setter>
+                <Setter Property="UnfocusedColor" Value="{StaticResource Primary}"></Setter>
+            </Style>
+
+            <Style TargetType="button:SfButton" ApplyToDerivedTypes="true">
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='18', iOS='20'}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Secondary}"/>
+
+                <Setter Property="CornerRadius" Value="32"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="0, 30"/>
+            </Style>
+
+            <Style TargetType="Button" ApplyToDerivedTypes="true">
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='18', iOS='20'}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Accent}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="Padding" Value="0, 10"/>
+            </Style>
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</prism:PrismApplication>

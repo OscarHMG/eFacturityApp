@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    Title="{Binding Title}"
+    Background="White"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False"
+    x:Class="eFacturityApp.Views.HomePage">
+    <ContentPage.Content>
+        <Grid Margin="20" RowDefinitions="Auto,*">
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    Text="&#xf0c9;"
+                    FontFamily="FA"
+                    FontSize="24"
+                    TextColor="Black">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Margin="0,10,0,0">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="24"
+                    Text="Jesus"
+                    TextColor="Black" />
+                <Label
+                    FontSize="24"
+                    Text="Welcome Back!"
+                    TextColor="Black">
+
+                </Label>
+
+                <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,15,0, 0"  Padding="0,10"/>
+            </StackLayout>
+            
+        
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
