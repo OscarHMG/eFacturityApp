@@ -1,7 +1,12 @@
+using eFacturityApp.Infraestructure.Services;
+using eFacturityApp.Popups.ViewModels;
+using eFacturityApp.Popups.Views;
+using eFacturityApp.Services;
 using eFacturityApp.ViewModels;
 using eFacturityApp.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using System.Diagnostics;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
@@ -21,7 +26,7 @@ namespace eFacturityApp
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2Mzk5QDMxMzgyZTMzMmUzMGFwRnBJZkZzNnp1TXBjNzl4OEM2M01SL2tyTlB3WHJQa0dHSXl1R2txaVE9");
 
-            var Result = await NavigationService.NavigateAsync("/MainPage/Nav/HomePage");
+            var Result = await NavigationService.NavigateAsync("/MainPage/Nav/LoginPage");
             if (!Result.Success)
             {
                 Debugger.Break();
@@ -30,7 +35,15 @@ namespace eFacturityApp
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+            containerRegistry.RegisterSingleton<ApiService>();
+            containerRegistry.RegisterSingleton<UserService>();
+            containerRegistry.RegisterSingleton<LoaderService>();
+
+
+            containerRegistry.RegisterForNavigation<LoaderPopupPage, LoaderPopupPageViewModel>("LoaderPopupPage");
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
 
@@ -38,7 +51,8 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>("HomePage");
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage>("ChangePasswordPage");
-            
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>("RegisterPage");
+            containerRegistry.RegisterForNavigation<RecoverAccountPage, RecoveryAccountPageViewModel>("RecoverAccount");
         }
     }
 }

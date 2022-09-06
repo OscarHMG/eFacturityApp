@@ -7,10 +7,12 @@
     Background="White"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Class="eFacturityApp.Views.HomePage">
     <ContentPage.Content>
-        <Grid Margin="20" RowDefinitions="Auto,*">
-            <StackLayout Orientation="Horizontal">
+        <Grid  RowDefinitions="30*, 70*" >
+            <!-- V1 inciio-->
+            <!--<StackLayout Orientation="Horizontal">
                 <Label
                     Text="&#xf0c9;"
                     FontFamily="FA"
@@ -20,24 +22,115 @@
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
                     </Label.GestureRecognizers>
                 </Label>
-            </StackLayout>
-            <StackLayout Grid.Row="1" Margin="0,10,0,0">
+            </StackLayout>-->
+            <!-- V1 fin-->
+            <!-- V2 inciio-->
+            <!--<Grid RowDefinitions="*" ColumnDefinitions="*"  BackgroundColor="Red" HeightRequest="50">
                 <Label
-                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Margin="15, 0, 0, 0"
+                    Grid.Row="0"
+                    Text="&#xf0c9;"
+                    FontFamily="FA"
                     FontSize="24"
-                    Text="Jesus"
-                    TextColor="Black" />
-                <Label
-                    FontSize="24"
-                    Text="Welcome Back!"
                     TextColor="Black">
-
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                    </Label.GestureRecognizers>
                 </Label>
+                <Image HorizontalOptions="Center" Source="eFacturityLogo1" HeightRequest="45"/>
+            </Grid>-->
+            <!-- V2 fin-->
+            <StackLayout Grid.Row="0" VerticalOptions="FillAndExpand">
+                
+                <yummy:PancakeView 
+                    Margin="0, 0" 
+                    CornerRadius="0, 0 , 120, 0" 
+                    VerticalOptions="FillAndExpand"
+                    Padding="10, 20" 
+                    BackgroundGradientStartPoint="0,0"
+                    BackgroundGradientEndPoint="0,1">
+                    <yummy:PancakeView.BackgroundGradientStops>
+                        <yummy:GradientStopCollection>
+                            <yummy:GradientStop Color="#3ba4e2" Offset="0" />
+                            <yummy:GradientStop Color="#9ac123" Offset="1" />
+                        </yummy:GradientStopCollection>
+                    </yummy:PancakeView.BackgroundGradientStops>
 
-                <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,15,0, 0"  Padding="0,10"/>
+                    <StackLayout Orientation="Horizontal" >
+                        <Label
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="15, 0, 0, 0"
+                            Grid.Row="0"
+                            Text="&#xf0c9;"
+                            FontFamily="FA"
+                            FontSize="24"
+                            TextColor="White">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand" Spacing="0"  Margin="0, 25, 15, 0">
+                            <Label Text="Hola," Style="{StaticResource BoldLabel}" FontSize="18" TextColor="White" HorizontalTextAlignment="End"/>
+                            <Label Text="Oscar Moncayo" Style="{StaticResource RegularLabel}" FontSize="22" TextColor="White"/>
+                        </StackLayout>
+                    </StackLayout>
+                    
+                </yummy:PancakeView>
             </StackLayout>
-            
-        
+            <StackLayout Grid.Row="1" Margin="30,0" TranslationY="-95" VerticalOptions="StartAndExpand">
+                <CollectionView ItemsSource="{Binding MenuOptionItems}">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="5" Spacing="0">
+                                <yummy:PancakeView
+                                    HeightRequest="140"
+                                    BackgroundColor="White"
+                                    CornerRadius="12">
+                                    
+                                    <yummy:PancakeView.Shadow>
+                                        <yummy:DropShadow BlurRadius="10" />
+                                    </yummy:PancakeView.Shadow>
+                                    <StackLayout HorizontalOptions="CenterAndExpand"  Padding="0, 20">
+                                        <Image Source="eFacturityLogo1" WidthRequest="100"></Image>
+                                        <Label 
+                                            MaxLines="2"
+                                            LineBreakMode="TailTruncation" 
+                                            Text="{Binding Name}" 
+                                            Style="{StaticResource RegularLabel}" 
+                                            FontSize="17" 
+                                            HorizontalTextAlignment="Center" 
+                                            Margin="8, 0"/>
+                                    </StackLayout>
+                                    <yummy:PancakeView.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=GoToOrderDetailCommand}"
+                                        CommandParameter="{Binding .}">
+
+                                        </TapGestureRecognizer>
+                                    </yummy:PancakeView.GestureRecognizers>
+                                </yummy:PancakeView>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+
+
+                </CollectionView>
+
+                
+            </StackLayout>
+            <StackLayout Grid.Row="1" VerticalOptions="End" Margin="15, 10">
+                <Label Text="Versión 1.0" HorizontalTextAlignment="End" TextColor="#696969" Style="{StaticResource BoldLabel}" FontSize="17"/>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -4,7 +4,16 @@ using System.Text;
 
 namespace eFacturityApp.Infraestructure.ApiModels
 {
-    class APIModels
+    public class APIModels
     {
+
+        public class MenuItemOption
+        {
+            public long Id { get; set; }
+            public string Name { get; set; }
+
+            public string ImageIcon { get; set; }
+
+        }
     }
 }

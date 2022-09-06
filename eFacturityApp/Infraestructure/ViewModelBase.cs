@@ -22,7 +22,7 @@ namespace eFacturityApp.Infraestructure
         protected readonly ApiService _apiService;
 
         protected readonly UserService _userService;
-        protected LoaderService Loader { get; private set; }
+        protected LoaderService _loaderService { get; private set; }
         [Reactive] public string Title { get; set; }
 
         [Reactive] public bool HasInternetConnecion { get; set; }
@@ -60,7 +60,7 @@ namespace eFacturityApp.Infraestructure
                 _apiService = apiService;
                 _userService = userService;
                 loader.setNavigationService(_navigationService);
-                Loader = loader;
+                _loaderService = loader;
 
                 NavigateCommand = new DelegateCommand<string>(Navigate);
             }

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d"
+    xmlns:prism="http://prismlibrary.com"
+    CloseWhenBackgroundIsClicked="False"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="eFacturityApp.Popups.Views.LoaderPopupPage">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="CenterAndExpand">
+        <Frame CornerRadius="8">
+            <StackLayout>
+                <ActivityIndicator IsVisible="True" IsRunning="True" Color="{StaticResource Accent}"/>
+                <Label Text="{Binding Title}" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='17', iOS='19'}" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>
