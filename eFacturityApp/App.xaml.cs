@@ -42,8 +42,10 @@ namespace eFacturityApp
             containerRegistry.RegisterSingleton<UserService>();
             containerRegistry.RegisterSingleton<LoaderService>();
 
-
+            //POPUP PAGES
             containerRegistry.RegisterForNavigation<LoaderPopupPage, LoaderPopupPageViewModel>("LoaderPopupPage");
+            containerRegistry.RegisterForNavigation<AlertDocumentTypePopupPage, AlertDocumentTypePopupPageViewModel>("AlertDocumentTypePopupPage");
+
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
 
@@ -53,6 +55,8 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<ChangePasswordPage>("ChangePasswordPage");
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>("RegisterPage");
             containerRegistry.RegisterForNavigation<RecoverAccountPage, RecoveryAccountPageViewModel>("RecoverAccount");
+            containerRegistry.RegisterForNavigation<FacturaPage, FacturaPageViewModel>("FacturaPage");
+
         }
     }
 }

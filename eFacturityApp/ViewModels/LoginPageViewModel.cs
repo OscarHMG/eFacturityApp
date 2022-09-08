@@ -19,8 +19,8 @@ namespace eFacturityApp.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        [Reactive] public string Email { get; set; }
-        [Reactive] public string Password { get; set; }
+        [Reactive] public string Email { get; set; } = "LMAO";
+        [Reactive] public string Password { get; set; } = "123456";
         [Reactive] public string Version { get; set; }
         public ICommand LoginCommand { get; set; }
 

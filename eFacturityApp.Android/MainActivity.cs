@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace eFacturityApp.Droid
 {
@@ -20,6 +21,9 @@ namespace eFacturityApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
+
+            App.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().
+            UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

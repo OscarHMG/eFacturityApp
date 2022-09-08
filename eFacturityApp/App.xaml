@@ -23,6 +23,7 @@
             <Color x:Key="Accent">#4e008d</Color>
             <Color x:Key="Green">#00B050</Color>
             <Color x:Key="Gold">#ffd700</Color>
+            <Color x:Key="Red">#FF0000</Color>
             <!--<Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />
@@ -65,6 +66,7 @@
             <Style TargetType="combobox:SfComboBox" ApplyToDerivedTypes="true">
                 <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
                 <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="DropDownItemFontFamily" Value="PR"/>
                 <Setter Property="TextColor" Value="#696969"></Setter>
             </Style>
 
@@ -88,6 +90,25 @@
                 <Setter Property="CornerRadius" Value="8"/>
                 <Setter Property="HasShadow" Value="True"/>
                 <Setter Property="Padding" Value="0, 30"/>
+            </Style>
+
+            <Style x:Key="NegativeButton" TargetType="button:SfButton" ApplyToDerivedTypes="true">
+                <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='18', iOS='20'}" />
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="TextColor" Value="{StaticResource Red}"/>
+                <Setter Property="BorderColor" Value="{StaticResource Red}"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="0, 30"/>
+            </Style>
+
+            <Style TargetType="button:SfRadioButton" ApplyToDerivedTypes="true">
+                <Setter Property="FontFamily" Value="PR" />
+                <Setter Property="FontSize" Value="{d:OnPlatform Android='18', iOS='20'}" />
+                <Setter Property="CheckedColor" Value="{StaticResource Accent}"/>
+                <Setter Property="UncheckedColor" Value="{StaticResource Primary}"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
             </Style>
 
             <Style TargetType="Button" ApplyToDerivedTypes="true">

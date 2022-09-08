@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Syncfusion.XForms.Buttons;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace eFacturityApp.Infraestructure.ApiModels
 {
@@ -15,5 +19,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string ImageIcon { get; set; }
 
         }
+
+
+        
     }
 }

@@ -37,18 +37,13 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
                 
-                <StackLayout Padding="15, 10">
-                    <Label Text="Términos y Condiciones" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding TerminosCondicionesCommand}"/>
-                    </StackLayout.GestureRecognizers>
-                </StackLayout>
-                <StackLayout Padding="15, 10">
+                
+                <!--<StackLayout Padding="15, 10">
                     <Label Text="Cerrar Sesión" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CloseSessionCommand}"/>
                     </StackLayout.GestureRecognizers>
-                </StackLayout>
+                </StackLayout> -->
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>

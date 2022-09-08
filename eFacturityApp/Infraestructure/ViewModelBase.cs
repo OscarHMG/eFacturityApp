@@ -32,6 +32,7 @@ namespace eFacturityApp.Infraestructure
         public static bool PopUpIsOpen { get; set; } = false;
 
 
+
         public ViewModelBase(INavigationService navigationService)
         {
             if (Connectivity.NetworkAccess == NetworkAccess.None || Connectivity.NetworkAccess == NetworkAccess.Unknown)

@@ -1,5 +1,6 @@
 ﻿using eFacturityApp.Infraestructure;
 using eFacturityApp.Infraestructure.Services;
+using eFacturityApp.Popups.ViewModels;
 using eFacturityApp.Services;
 using Prism.Navigation;
 using ReactiveUI.Fody.Helpers;
@@ -8,28 +9,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using static eFacturityApp.Infraestructure.ApiModels.APIModels;
-
+using static eFacturityApp.Utils.Utility;
 namespace eFacturityApp.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
         [Reactive] public ObservableCollection<MenuItemOption> MenuOptionItems { get; set; } = new ObservableCollection<MenuItemOption>();
         [Reactive] public ICommand LoadMenuItemsOptionCommad { get; set; }
-        [Reactive] public ICommand LoginCommand { get; set; }
+        [Reactive] public ICommand MenuOptionSelectedCommand { get; set; }
 
         public HomePageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
         {
-            LoginCommand = new Command(async ()=> {
-                var Result = await _navigationService.NavigateAsync("ChangePasswordPage");
-
-                if (!Result.Success)
-                {
-                    Debugger.Break();
-                }
-            });
+            MenuOptionSelectedCommand = new Command<MenuItemOption>(async (OptionSelected)=>  await GoToPageSelectedAsync(OptionSelected));
 
 
             LoadMenuItemsOptionCommad = new Command(() => LoadMenuItems());
@@ -74,6 +69,21 @@ namespace eFacturityApp.ViewModels
             MenuOptionItems.Add(Op5);
 
         }
+
+        private async Task GoToPageSelectedAsync(MenuItemOption Option)
+        {
+            switch (Option.Id)
+            {
+                case 1:
+                    await Navigate(_navigationService, "AlertDocumentTypePopupPage");
+                    break;
+                default:
+                    await ShowAlert("Menú", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                    break;
+            }
+        }
+
 
         public override void Initialize(INavigationParameters parameters)
         {
