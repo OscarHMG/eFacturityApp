@@ -116,6 +116,28 @@ namespace eFacturityApp.Utils
             await navigationService.ClearPopupStackAsync();
         }
 
+
+        public static async Task<bool> ShowYesNoAlert(string Title, string Message, INavigationService navigationService)
+        {
+            var popup = new AlertConfirmationPopupPage(Title, Message, AlertConfirmationPopupPageViewModel.EnumInputType.YesNo);
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(popup);
+            var StringResponse = await popup.PopupClosedTask;
+            bool response = StringResponse.Item1.ToString().ToUpper().Equals("YES") ? true : false;
+            await navigationService.ClearPopupStackAsync();
+            return response;
+        }
+
+        public static async Task<bool> ShowYesNoAlert(string Title, string Message)
+        {
+            var popup = new AlertConfirmationPopupPage(Title, Message, AlertConfirmationPopupPageViewModel.EnumInputType.YesNo);
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(popup);
+            var StringResponse = await popup.PopupClosedTask;
+            bool response = StringResponse.Item1.ToString().ToUpper().Equals("YES") ? true : false;
+            return response;
+        }
+
+
+
         public static async Task Navigate(INavigationService navigationService, string route, INavigationParameters parameters = null)
         {
             var Result = await navigationService.NavigateAsync(route, parameters);

@@ -6,129 +6,56 @@
     xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" 
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters"
     Title="Factura"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    EnableBackButtonOverride="True"
     x:Class="eFacturityApp.Views.FacturaPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+            <x:String x:Key="formatdecimaltwoplaces">{0:0.00}</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout VerticalOptions="FillAndExpand">
-                <syncfusion:SfExpander x:Name="expander" HeaderBackgroundColor="White" IsExpanded="True" DynamicSizeMode="Content">
-                    <syncfusion:SfExpander.Header >
-                        <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
+        <StackLayout Margin="0" Padding="0">
+            <ScrollView Margin="0" VerticalScrollBarVisibility="Never">
+                <StackLayout  VerticalOptions="FillAndExpand">
+                    <syncfusion:SfExpander x:Name="expander" HeaderBackgroundColor="White" IsExpanded="True" DynamicSizeMode="Content">
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
 
-                            <Grid  HorizontalOptions="StartAndExpand">
-                                <Label TextColor="#696969" Text="INFORMACIÓN GENERAL" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="INFORMACIÓN GENERAL" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
 
-                            </Grid>
-                        </yummy:PancakeView>
-                    </syncfusion:SfExpander.Header>
-                    <syncfusion:SfExpander.Content>
-                        <Grid VerticalOptions="StartAndExpand" Padding="0, 15">
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal" >
-
-                                    <inputLayout:SfTextInputLayout 
-                                    Hint="Fecha de Emisión"
-                                    HorizontalOptions="FillAndExpand"
-                                    IsHintAlwaysFloated="false" 
-                                    ContainerType="Outlined">
-                                        <DatePicker/>
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                    </inputLayout:SfTextInputLayout>
-
-                                    <inputLayout:SfTextInputLayout 
-                                    HorizontalOptions="EndAndExpand"
-                                    Hint="Días de crédito"
-                                    IsHintAlwaysFloated="false" 
-                                    ContainerType="Outlined">
-                                        <Entry Text="{Binding Email}" Keyboard="Numeric"/>
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                    </inputLayout:SfTextInputLayout>
-                                </StackLayout>
-
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <Grid VerticalOptions="StartAndExpand" Padding="0, 15">
                                 <StackLayout>
-
-                                    <inputLayout:SfTextInputLayout 
-                                    Hint="Forma de pago" 
-                                    ContainerType="Outlined" 
-                                    Padding="0" >
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                        <combobox:SfComboBox
-                                        DropDownBorderColor="{StaticResource Primary}"
-                                        DropDownTextColor="#696969"
-                                        FontFamily="PB"
-                                        
-                                        TextColor="#696969"
-                                        BorderColor="{StaticResource Primary}"
-                                        HorizontalOptions="FillAndExpand"
-                                        SelectedItem="{Binding FormasPagoSelected, Mode=TwoWay}"
-                                        DisplayMemberPath = "TextoLargo"
-                                        DataSource="{Binding DropDownFormasPago.Items}"
-                                        SelectedDropDownItemColor="White">
-                                        </combobox:SfComboBox>
-                                    </inputLayout:SfTextInputLayout>
-
-                                    <inputLayout:SfTextInputLayout 
-                                    Hint="Establecimiento" 
-                                    ContainerType="Outlined" 
-                                    Padding="0" >
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                        <combobox:SfComboBox
-                                        DropDownBorderColor="{StaticResource Primary}"
-                                        DropDownTextColor="#696969"
-                                        FontFamily="PB"
-                                        TextColor="#696969"
-                                        BorderColor="{StaticResource Primary}"
-                                        HorizontalOptions="FillAndExpand"
-                                        SelectedItem="{Binding EstablecimientoSelected, Mode=TwoWay}"
-                                        DisplayMemberPath = "TextoLargo"
-                                        DataSource="{Binding DropDownEstablecimientos.Items}"
-                                        SelectedDropDownItemColor="White">
-                                        </combobox:SfComboBox>
-                                    </inputLayout:SfTextInputLayout>
-
-
                                     <StackLayout Orientation="Horizontal" >
+
                                         <inputLayout:SfTextInputLayout 
-                                        HorizontalOptions="FillAndExpand"
-                                        Hint="Puntos de venta" 
-                                        ContainerType="Outlined" 
-                                        Padding="0" >
+                                            Hint="Fecha de Emisión"
+                                            HorizontalOptions="FillAndExpand"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <DatePicker/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
                                             </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <combobox:SfComboBox
-                                            DropDownBorderColor="{StaticResource Primary}"
-                                            DropDownTextColor="#696969"
-                                            FontFamily="PB"
-                                            TextColor="#696969"
-                                            BorderColor="{StaticResource Primary}"
-                                            HorizontalOptions="FillAndExpand"
-                                            SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
-                                            DisplayMemberPath = "TextoLargo"
-                                            DataSource="{Binding DropDownPuntoVentas.Items}"
-                                            SelectedDropDownItemColor="White">
-                                            </combobox:SfComboBox>
-
                                         </inputLayout:SfTextInputLayout>
+
                                         <inputLayout:SfTextInputLayout 
-                                        HorizontalOptions="EndAndExpand"
-                                        Hint="% Descuento"
-                                        IsHintAlwaysFloated="false" 
-                                        ContainerType="Outlined">
+                                            HorizontalOptions="EndAndExpand"
+                                            Hint="Días de crédito"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
                                             <Entry Text="{Binding Email}" Keyboard="Numeric"/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
@@ -137,82 +64,233 @@
                                         </inputLayout:SfTextInputLayout>
                                     </StackLayout>
 
-                                    <inputLayout:SfTextInputLayout 
-                                    Hint="Persona" 
-                                    ContainerType="Outlined" 
-                                    Padding="0" >
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                        <combobox:SfComboBox
-                                        DropDownBorderColor="{StaticResource Primary}"
-                                        DropDownTextColor="#696969"
-                                        FontFamily="PB"
-                                        TextColor="#696969"
-                                        BorderColor="{StaticResource Primary}"
-                                        HorizontalOptions="FillAndExpand"
-                                        SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
-                                        DisplayMemberPath = "TextoLargo"
-                                        DataSource="{Binding DropDownPersonas.Items}"
-                                        SelectedDropDownItemColor="White">
-                                        </combobox:SfComboBox>
-                                    </inputLayout:SfTextInputLayout>
+                                    <StackLayout>
 
-                                    <inputLayout:SfTextInputLayout 
-                                        Hint="Vendedor"
-                                        IsHintAlwaysFloated="false" 
-                                        ContainerType="Outlined">
-                                        <Entry Text="{Binding Email}" Keyboard="Numeric"/>
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                    </inputLayout:SfTextInputLayout>
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Forma de pago" 
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                        
+                                                TextColor="#696969"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding FormasPagoSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownFormasPago.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Establecimiento" 
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                                TextColor="#696969"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding EstablecimientoSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownEstablecimientos.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+
+                                        <StackLayout Orientation="Horizontal" >
+                                            <inputLayout:SfTextInputLayout 
+                                                HorizontalOptions="FillAndExpand"
+                                                Hint="Puntos de venta" 
+                                                ContainerType="Outlined" 
+                                                Padding="0" >
+                                                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                    </inputLayout:LabelStyle>
+                                                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <combobox:SfComboBox
+                                                    DropDownBorderColor="{StaticResource Primary}"
+                                                    DropDownTextColor="#696969"
+                                                    FontFamily="PB"
+                                                    TextColor="#696969"
+                                                    BorderColor="{StaticResource Primary}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
+                                                    DisplayMemberPath = "TextoLargo"
+                                                    DataSource="{Binding DropDownPuntoVentas.Items}"
+                                                    SelectedDropDownItemColor="White">
+                                                </combobox:SfComboBox>
+
+                                            </inputLayout:SfTextInputLayout>
+                                            <inputLayout:SfTextInputLayout 
+                                                HorizontalOptions="EndAndExpand"
+                                                Hint="% Descuento"
+                                                IsHintAlwaysFloated="false" 
+                                                ContainerType="Outlined">
+                                                <Entry Text="{Binding Email}" Keyboard="Numeric"/>
+                                                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                    </inputLayout:LabelStyle>
+                                                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            </inputLayout:SfTextInputLayout>
+                                        </StackLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Persona" 
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                                TextColor="#696969"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownPersonas.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Vendedor"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <Entry Text="{Binding Email}" Keyboard="Numeric"/>
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
 
 
 
-                                    <inputLayout:SfTextInputLayout 
+                                        <inputLayout:SfTextInputLayout 
                                     Hint="Comentarios adicionales"
                                     
                                     IsHintAlwaysFloated="false" 
                                     ContainerType="Outlined">
-                                        <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding Comentarios}"/>
+                                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding Comentarios}"/>
 
-                                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="KKR">
-                                            </inputLayout:LabelStyle>
-                                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                    </inputLayout:SfTextInputLayout>
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="KKR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
 
 
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </Grid>
-                    </syncfusion:SfExpander.Content>
-                </syncfusion:SfExpander>
-
-                <syncfusion:SfExpander x:Name="expanderDetalle" HeaderBackgroundColor="White" >
-                    <syncfusion:SfExpander.Header >
-                        <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
-
-                            <Grid  HorizontalOptions="StartAndExpand">
-                                <Label TextColor="#696969" Text="DETALLE FACTURA" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
-
                             </Grid>
-                        </yummy:PancakeView>
-                    </syncfusion:SfExpander.Header>
-                    <syncfusion:SfExpander.Content>
-                        <Grid>
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
 
-                        </Grid>
-                    </syncfusion:SfExpander.Content>
-                </syncfusion:SfExpander>
+                    <syncfusion:SfExpander x:Name="expanderDetalle" HeaderBackgroundColor="White" >
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
 
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="DETALLE FACTURA" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
 
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <StackLayout VerticalOptions="StartAndExpand">
+                                <CollectionView ItemsSource="{Binding ItemsFactura}" Margin="0, 10, 0, 0">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <yummy:PancakeView  
+                                                    BackgroundColor="White"
+                                                    CornerRadius="12">
+                                                    <Grid ColumnDefinitions="10*,60*,30*" HorizontalOptions="FillAndExpand" HeightRequest="80">
+                                                        <StackLayout Grid.Column="0"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="5,0,0,0">
+                                                            <!--<Label Text="&#xf044;" TextColor="{StaticResource Secondary}" FontFamily="FA" FontSize="30"/>-->
+                                                            <Label Text="&#xf00d;" TextColor="{StaticResource Red}" FontFamily="FA" FontSize="30" VerticalTextAlignment="Center"/>
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer 
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FacturaPageViewModel}}, Path=RemoveItemCommand}"
+                                                                    CommandParameter="{Binding .}">
+
+                                                                </TapGestureRecognizer>
+                                                            </StackLayout.GestureRecognizers>
+                                                        </StackLayout>
+                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreItem}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                                                        <StackLayout Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Spacing="0">
+                                                            <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="{Binding Cantidad}" Style="{StaticResource RegularLabel}" FontSize="18"/>
+                                                                        <Span FontSize="16" Text=" x " Style="{StaticResource BoldLabel}" TextColor="{StaticResource Accent}"/>
+                                                                        <Span Text="{Binding PrecioUnitario, Converter={StaticResource currencyConverter}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                            <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="Desc. : " Style="{StaticResource BoldLabel}" FontSize="16"/>
+                                                                        <Span Text="{Binding Descuento, StringFormat={StaticResource formatdecimaltwoplaces}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
+                                                                        <Span Text=" %" FontSize="18" Style="{StaticResource RegularLabel}"/>
+
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                        </StackLayout>
+                                                    </Grid>
+                                                </yummy:PancakeView>
+
+                                            </StackLayout>
+
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                    <CollectionView.EmptyView>
+                                        <ContentView>
+                                            <StackLayout 
+                                                HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="CenterAndExpand">
+                                                <Label 
+                                                    Text="Agregue items a la factura."
+                                                    Margin="10,25,10,10"
+                                                    FontSize="18"
+                                                    FontAttributes="Bold"
+                                                    Style="{StaticResource RegularLabel}"
+                                                    HorizontalOptions="Fill"
+                                                    HorizontalTextAlignment="Center" />
+                                            </StackLayout>
+                                        </ContentView>
+                                    </CollectionView.EmptyView>
+                                </CollectionView>
+                            </StackLayout>
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
+                <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR NUEVA FACTURA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
             </StackLayout>
-
-        </ScrollView>
-        
+        </StackLayout>
     </ContentPage.Content>
 </views:BaseNavigationBarPage>

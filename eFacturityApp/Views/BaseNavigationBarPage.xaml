@@ -5,6 +5,7 @@
     xmlns:xaml="http://prismlibrary.com"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False"
+    
     x:Class="eFacturityApp.Views.BaseNavigationBarPage">
     <ContentPage.ControlTemplate>
         <ControlTemplate>
@@ -18,7 +19,8 @@
                         TextColor="#696969"
                         VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{xaml:GoBack}" />
+                            <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped"/>
+                            <!-- Command="{xaml:GoBack}"-->
                         </Label.GestureRecognizers>
                     </Label>
                     <Label

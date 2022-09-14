@@ -1,8 +1,10 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using eFacturityApp.Views;
 using Prism;
 using Prism.Ioc;
+using System.Linq;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace eFacturityApp.Droid
@@ -24,6 +26,17 @@ namespace eFacturityApp.Droid
 
             App.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().
             UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+        }
+
+
+        public override void OnBackPressed()
+        {
+            // this is really not necessary, but in Android user has both Nav bar back button 
+            // and physical back button, so its safe to cover the both events
+
+
+            base.OnBackPressed();
+
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

@@ -56,6 +56,7 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>("RegisterPage");
             containerRegistry.RegisterForNavigation<RecoverAccountPage, RecoveryAccountPageViewModel>("RecoverAccount");
             containerRegistry.RegisterForNavigation<FacturaPage, FacturaPageViewModel>("FacturaPage");
+            containerRegistry.RegisterForNavigation<AlertFacturaItemPopupPage, AlertFacturaItemPopupPageViewModel>("AlertFacturaItemPopupPage");
 
         }
     }

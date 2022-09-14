@@ -23,7 +23,7 @@ namespace eFacturityApp.Services
         {
             NavigationParameters nav = new NavigationParameters();
             nav.Add("LoadingText", text);
-            var result = await NavigationService.NavigateAsync("LoaderPopup", nav);
+            var result = await NavigationService.NavigateAsync("LoaderPopupPage", nav);
             if (!result.Success)
             {
                 System.Diagnostics.Debugger.Break();

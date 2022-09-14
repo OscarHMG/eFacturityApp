@@ -44,6 +44,7 @@
                     Command="{Binding NoCommand}"
                     IsVisible="{Binding InputType, Converter={StaticResource DisplayAlertTypeToIsVisibleConverter}, ConverterParameter='YESNO'}"
                     WidthRequest="50"
+                    Style="{StaticResource NegativeButton}"
                     Text="NO" />
                 <button:SfButton
                     Command="{Binding YesCommand}"

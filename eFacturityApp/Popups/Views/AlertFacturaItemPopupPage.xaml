@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:views="clr-namespace:eFacturityApp.Views"                           
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" 
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:numeric="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    x:Class="eFacturityApp.Popups.Views.AlertFacturaItemPopupPage">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        Margin="15,0"
+        HorizontalOptions="CenterAndExpand">
+        <Frame CornerRadius="8" >
+
+            <StackLayout>
+                <Label Text="NUEVO ITEM FACTURA" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
+                <StackLayout Orientation="Horizontal" >
+
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Cantidad"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <numeric:SfNumericUpDown Font="PR" IsEditable="False" Minimum="1" SpinButtonAlignment="Both" UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="0" Value="{Binding NewItemFactura.Cantidad}"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Escoga Art/Servicio" 
+                        ContainerType="Outlined" 
+                        Padding="0" >
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        <combobox:SfComboBox
+                            DropDownBorderColor="{StaticResource Primary}"
+                            DropDownTextColor="#696969"
+                            FontFamily="PB"
+                                        
+                            TextColor="#696969"
+                            BorderColor="{StaticResource Primary}"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedItem="{Binding ArticuloSelected, Mode=TwoWay}"
+                            DisplayMemberPath = "TextoLargo"
+                            DataSource="{Binding DropDownArticulos.Items}"
+                            SelectedDropDownItemColor="White">
+                        </combobox:SfComboBox>
+                    </inputLayout:SfTextInputLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Precio Unitario"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <Entry Text="{Binding NewItemFactura.PrecioUnitario}" Keyboard="Numeric"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout 
+                        Hint="% Descuento"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <Entry Text="{Binding NewItemFactura.Descuento}" Keyboard="Numeric"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                </StackLayout>
+
+                <Label Text="{Binding ErrorMessage}" Style="{StaticResource BoldLabel}" FontSize="16" TextColor="{StaticResource Red}"/>
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="0, 5, 0, 5" HorizontalOptions="EndAndExpand">
+                    <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}" WidthRequest="100" Style="{StaticResource NegativeButton}"/>
+                    <syncfusion:SfButton Text="AGREGAR" Command="{Binding AddNewItemCommand}" WidthRequest="100"/>
+                </StackLayout>
+
+
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+
+</pages:PopupPage>
