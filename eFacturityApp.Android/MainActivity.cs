@@ -35,7 +35,8 @@ namespace eFacturityApp.Droid
             // and physical back button, so its safe to cover the both events
 
 
-            base.OnBackPressed();
+            //base.OnBackPressed();
+            
 
         }
 

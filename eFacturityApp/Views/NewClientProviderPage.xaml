@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    Title="Nuevo cliente/proveedor"
+    x:Class="eFacturityApp.Views.NewClientProviderPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView HorizontalScrollBarVisibility="Never">
+                <StackLayout Padding="0,15">
+                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Tipo persona" 
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                TextColor="#696969"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding TipoPersonaSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownTipoPersona.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="RUC/Cédula"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Razón social/Nombres completos"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Razón social/Nombres completos"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Dirección"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Teléfono"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Correo 1"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Correo 2"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Email}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" IsChecked="False" Text="Contribuyente especial"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" IsChecked="False" Text="Extranjero"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <syncfusion:SfButton Command="{Binding CreateNewClientProviderCommand}" Text="REGISTRAR NUEVO CLIENTE/PROVEEDOR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

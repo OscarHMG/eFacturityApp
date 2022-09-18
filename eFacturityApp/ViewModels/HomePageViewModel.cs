@@ -43,14 +43,14 @@ namespace eFacturityApp.ViewModels
             Op1.Name = "Nuevo Doc. electrónico";
 
             MenuItemOption Op2= new MenuItemOption();
-            Op2.Id = 1;
+            Op2.Id = 2;
             Op2.ImageIcon = "";
-            Op2.Name = "Nuevo Doc. electrónico";
+            Op2.Name = "Nuevo prod/servicio";
 
             MenuItemOption Op3 = new MenuItemOption();
-            Op3.Id = 1;
+            Op3.Id = 3;
             Op3.ImageIcon = "";
-            Op3.Name = "Nuevo Doc. electrónico";
+            Op3.Name = "Nuevo cliente/proveedor";
             
             MenuItemOption Op4 = new MenuItemOption();
             Op4.Id = 1;
@@ -77,8 +77,14 @@ namespace eFacturityApp.ViewModels
                 case 1:
                     await Navigate(_navigationService, "AlertDocumentTypePopupPage");
                     break;
+                case 2:
+                    await Navigate(_navigationService, "NewProductPage");
+                    break;
+                case 3:
+                    await Navigate(_navigationService, "NewClientProviderPage");
+                    break;
                 default:
-                    await ShowAlert("Menú", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await ShowAlert("Menú", "Módulo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
                     break;
             }
