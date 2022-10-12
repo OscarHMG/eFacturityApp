@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using eFacturityApp.Utils;
+using static eFacturityApp.Infraestructure.ApiModels.APIModels;
+
 namespace eFacturityApp.ViewModels
 {
     public class ChangePasswordPageViewModel : ViewModelBase
@@ -24,7 +26,7 @@ namespace eFacturityApp.ViewModels
 
         public ICommand ChangePasswordCommand { get; set; }
 
-        public ChangePasswordPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
+        public ChangePasswordPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             ChangePasswordCommand = new Command(async () => await ChangePasswordAsync());
         }
@@ -48,20 +50,15 @@ namespace eFacturityApp.ViewModels
                 {
                     _loaderService.setNavigationService(_navigationService);
                     await _loaderService.Show("Cambiando contraseña..");
-
-                    //var Response = await _apiService.ChangePassword(GetDataToSend());
-
+                    var UserInformation = await _userService.GetUserInformationProfile();
+                    var response = await _apiService.ChangePassword(new ChangePasswordAPIModel(UserInformation.Correo, NewPassword.Trim()));
                     await _loaderService.Hide();
-                    //await Utils.Utils.ShowAlert("Cambio contraseña", Response, AlertConfirmationPopupPageViewModel.EnumInputType.Ok);
-                    await _navigationService.ClearPopupStackAsync();
-
-
-                    var Result = await _navigationService.NavigateAsync("/MainPage/Nav/HomePage", animated: false);
-                    if (!Result.Success)
+                    if (await Utility.HandleAPIResponse(response.statusCode, response.message, "Cambio de contraseña.", _navigationService))
                     {
-                        Debugger.Break();
+                        await Utility.ShowAlert("Cambio contraseña", "Su cambio de contraseña fue exitoso. Por favor intente logear nuevamente, con sus nuevas credenciales", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                        _userService.CerrarSession();
+                        await Utility.Navigate(_navigationService, "/Nav/LoginPage");
                     }
-
                 }
             }
             catch (Exception err)

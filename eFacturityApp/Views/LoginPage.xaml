@@ -119,10 +119,10 @@
                         Spacing="10"
                         Padding="25">
                         <inputLayout:SfTextInputLayout 
-                            Hint="Email"
+                            Hint="Usuario"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" x:Name="Username"/>
+                            <Entry Text="{Binding User}" x:Name="Username"/>
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -141,20 +141,15 @@
                             </inputLayout:SfTextInputLayout.HintLabelStyle>
                         </inputLayout:SfTextInputLayout>
 
-                        <Label Text="¿No tienes cuenta? ¡Regístrate!" Style="{StaticResource RegularLabel}"  HorizontalOptions="End"  Padding="0, 5" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 20,0,0" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding RegisterCommand}"></TapGestureRecognizer>
-                            </Label.GestureRecognizers>
-                        </Label>
-
-                        <Label Text="Olvidé contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 10,0,0" HorizontalOptions="End"  Padding="0, 5" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
+                        
+                        <Label Text="Olvidé mi contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='19'}" Margin="0, 10,0,0" HorizontalOptions="End"  Padding="0, 5" HorizontalTextAlignment="End" TextColor="{StaticResource Accent}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding RecoverAccountCommand}"></TapGestureRecognizer>
                             </Label.GestureRecognizers>
                         </Label>
 
 
-                        <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,15,0, 0"  Padding="0,10"/>
+                        <button:SfButton Command="{Binding LoginCommand}" Text="INICIAR SESIÓN" Margin="0,25,0, 0"  VerticalOptions="EndAndExpand" Padding="0,10"/>
 
 
                     </StackLayout>

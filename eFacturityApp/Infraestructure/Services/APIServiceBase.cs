@@ -1,5 +1,6 @@
 ﻿using eFacturityApp.Infraestructure.ApiModels;
 using Newtonsoft.Json;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,7 +14,7 @@ namespace eFacturityApp.Infraestructure.Services
 {
     public class APIServiceBase
     {
-#if !DEBUG
+#if DEBUG
         
         protected HttpClient Client = PreparedClient();
         public static HttpClient PreparedClient()
@@ -62,7 +63,7 @@ namespace eFacturityApp.Infraestructure.Services
             }
             else
             {
-                throw (new Exception("Credenciales incorrectas, por favor inténtelo nuevamente"));
+                return null;
             }
         }
 

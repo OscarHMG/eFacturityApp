@@ -49,6 +49,9 @@
     <Compile Update="Popups\Views\AlertFacturaItemPopupPage.xaml.cs">
       <DependentUpon>AlertFacturaItemPopupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ProductosPage.xaml.cs">
+      <DependentUpon>ProductosPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +67,9 @@
     <EmbeddedResource Update="Popups\Views\AlertFacturaItemPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ClientProvidersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\FacturaPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -77,6 +83,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\NewProductPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProductosPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RecoverAccountPage.xaml">

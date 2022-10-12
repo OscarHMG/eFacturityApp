@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters"
+    Title="Productos/Servicios"
+    x:Class="eFacturityApp.Views.ProductosPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <CollectionView ItemsSource="{Binding ProductsList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        
+                        <StackLayout Padding="5">
+                            <yummy:PancakeView
+                                BackgroundColor="White"
+                                CornerRadius="12" >
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Thickness="1" Color="#EFEFEF"  />
+                                </yummy:PancakeView.Border>
+                                <yummy:PancakeView.Shadow>
+                                    <yummy:DropShadow BlurRadius="5" />
+                                </yummy:PancakeView.Shadow>
+                                <StackLayout
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="FillAndExpand"
+                                    Padding="15,10">
+                                    <Label LineBreakMode="TailTruncation" MaxLines="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Codigo}" Style="{StaticResource BoldLabel}"/>
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Nombre}" Style="{StaticResource BoldLabel}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label LineBreakMode="TailTruncation" MaxLines="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Precio: " Style="{StaticResource BoldLabel}"/>
+                                                <Span Text="{Binding Precio, Converter={StaticResource currencyConverter}}" Style="{StaticResource RegularLabel}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="{Binding Descripcion}" Style="{StaticResource RegularLabel}" MaxLines="2" LineBreakMode="TailTruncation"/>
+
+
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End" Margin="0,0, 15,0">
+                                        <button:SfButton Text="&#xf303;" FontFamily="FA"  WidthRequest="50" HeightRequest="50"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductosPageViewModel}}, Path=SelectedProductCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                        <button:SfButton 
+                                        Text="&#xf1f8;" FontFamily="FA" WidthRequest="50" HeightRequest="50"
+                                        Style="{StaticResource NegativeButton}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductosPageViewModel}}, Path=DeleteProductCommand}"
+                                        CommandParameter="{Binding .}" />
+                                    </StackLayout>
+
+                                </StackLayout>
+
+                            </yummy:PancakeView>
+                        </StackLayout>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout 
+                            HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand">
+                            <Label 
+                                Text="No existen productos/servicios que mostrar"
+                                Style="{StaticResource RegularLabel}"
+                                FontSize="17"
+                                HorizontalTextAlignment="Center" />
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+            <button:SfButton 
+                Grid.Row="0" 
+                Text="&#xf067;"
+                FontFamily="FA"
+                HasShadow="True"
+                HorizontalOptions="End" 
+                WidthRequest="70" 
+                HeightRequest="70" 
+                Margin="0,0,15,15" 
+                VerticalOptions="End" 
+                CornerRadius="35"
+                Command="{Binding NewProductCommand}"/>
+
+        </Grid>
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

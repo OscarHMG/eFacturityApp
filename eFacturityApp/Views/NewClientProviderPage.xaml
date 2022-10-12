@@ -7,11 +7,11 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
-    Title="Nuevo cliente/proveedor"
+    Title="{Binding TitlePage}"
     x:Class="eFacturityApp.Views.NewClientProviderPage">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView HorizontalScrollBarVisibility="Never">
+            <ScrollView VerticalScrollBarVisibility="Never">
                 <StackLayout Padding="0,15">
                     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <inputLayout:SfTextInputLayout 
@@ -40,7 +40,7 @@
                             Hint="RUC/Cédula"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.Ruc}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -53,7 +53,7 @@
                             Hint="Razón social/Nombres completos"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.RazonSocial}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -61,10 +61,10 @@
                         </inputLayout:SfTextInputLayout>
                         <inputLayout:SfTextInputLayout 
                             HorizontalOptions="FillAndExpand"
-                            Hint="Razón social/Nombres completos"
+                            Hint="Nombre comercial"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.NombreComercial}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -77,7 +77,7 @@
                             Hint="Dirección"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.Direccion}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -88,7 +88,7 @@
                             Hint="Teléfono"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.Telefono}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -99,7 +99,7 @@
                             Hint="Correo 1"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.Correo}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -110,7 +110,7 @@
                             Hint="Correo 2"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
-                            <Entry Text="{Binding Email}" />
+                            <Entry Text="{Binding PersonaProveedorSelected.Correo2}" />
                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                 </inputLayout:LabelStyle>
@@ -119,8 +119,8 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Horizontal">
-                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" IsChecked="False" Text="Contribuyente especial"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
-                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" IsChecked="False" Text="Extranjero"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" FontFamily="PR" IsChecked="{Binding PersonaProveedorSelected.EsContribuyenteEspecial}" Text="Contribuyente especial"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                        <syncfusion:SfCheckBox HorizontalOptions="FillAndExpand" FontFamily="PR" IsChecked="{Binding PersonaProveedorSelected.Extranjero}" Text="Extranjero"  FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

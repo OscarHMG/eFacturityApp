@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 
 namespace eFacturityApp.Utils
 {
@@ -105,7 +107,22 @@ namespace eFacturityApp.Utils
                 this.TextoLargo = TextoLargo;
             }
         }
-
+        public static ItemPicker SetSelectedValuesDropDown(long? IdSelected, List<ItemPicker> Options)
+        {
+            ItemPicker ItemSelected = new ItemPicker();
+            if (IdSelected != null)
+            {
+                var Item = Options.FirstOrDefault(c => c.Id == IdSelected);
+                if (Item != null)
+                {
+                    
+                    ItemSelected.Id = Item.Id;
+                    ItemSelected.TextoCorto = Item.TextoCorto;
+                    ItemSelected.TextoLargo = Item.TextoLargo;
+                }
+            }
+            return ItemSelected;
+        }
 
 
         public static async Task ShowAlert(string Title, string Message, AlertConfirmationPopupPageViewModel.EnumInputType Type, INavigationService navigationService)
@@ -154,6 +171,22 @@ namespace eFacturityApp.Utils
             {
                 Debugger.Break();
             }
+        }
+
+
+        public static async Task<bool> HandleAPIResponse(int statusCode, string message, string TitleModal, INavigationService navigationService)
+        {
+            bool success = false;
+            if (statusCode == 400 || statusCode == 500)
+            {
+                await Utility.ShowAlert(TitleModal, message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, navigationService);
+            }
+            else if (statusCode == 200)
+            {
+                success = true;
+            }
+
+            return success;
         }
     }
 }

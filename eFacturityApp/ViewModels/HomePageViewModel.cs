@@ -78,10 +78,10 @@ namespace eFacturityApp.ViewModels
                     await Navigate(_navigationService, "AlertDocumentTypePopupPage");
                     break;
                 case 2:
-                    await Navigate(_navigationService, "NewProductPage");
+                    await Navigate(_navigationService, "ProductosPage");
                     break;
                 case 3:
-                    await Navigate(_navigationService, "NewClientProviderPage");
+                    await Navigate(_navigationService, "ClientProvidersPage");
                     break;
                 default:
                     await ShowAlert("Menú", "Módulo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);

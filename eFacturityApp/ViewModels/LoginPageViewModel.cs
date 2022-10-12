@@ -14,13 +14,14 @@ using Xamarin.Forms;
 using eFacturityApp.Utils;
 using System.Threading.Tasks;
 using eFacturityApp.Popups.ViewModels;
+using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 
 namespace eFacturityApp.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        [Reactive] public string Email { get; set; } = "LMAO";
-        [Reactive] public string Password { get; set; } = "123456";
+        [Reactive] public string User { get; set; }
+        [Reactive] public string Password { get; set; }
         [Reactive] public string Version { get; set; }
         public ICommand LoginCommand { get; set; }
 
@@ -28,7 +29,7 @@ namespace eFacturityApp.ViewModels
 
         public ICommand RecoverAccountCommand { get; set; }
 
-        public LoginPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
+        public LoginPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             Version = $"Versión: {VersionTracking.CurrentVersion} ({VersionTracking.CurrentBuild})";
 
@@ -43,16 +44,48 @@ namespace eFacturityApp.ViewModels
 
         private async Task Login()
         {
+            GenericResponseObject<PerfilUsuarioResponse> response = new GenericResponseObject<PerfilUsuarioResponse>();
             try
             {
                 if (await ValidateFieldsForm())
                 {
-                    await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage");
+                    await _loaderService.Show("Iniciando sesión..");
+                    var TokenResponse = await _apiService.GetToken(User.Trim(), Password.Trim());
+
+                    if (TokenResponse != null)
+                    {
+                        await _userService.StoreToken(User, TokenResponse.AccessToken, TokenResponse.Expires);
+                        response = await _apiService.Login(new LoginUsuarioRequest(User.Trim(), Password.Trim()));
+                        
+
+
+                        if (await Utility.HandleAPIResponse(response.statusCode, response.message, "Login", _navigationService))
+                        {
+                            //Login its OK - Save Token and UserData
+                            response.data.Token = TokenResponse.AccessToken;
+                            await _userService.SaveUserInformationProfile(response.data);
+                            await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage");
+                        }
+                        else
+                        {
+                            _userService.CerrarSession();
+                        }
+
+                    }
+                    else
+                    {
+                        await Utility.ShowAlert("Error - Login", "Credenciales incorrectas, intente nuevamente." , AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                        _userService.CerrarSession();
+                    }
+
+
+                    await _loaderService.Hide();
+                    
                 }
             }
             catch (Exception err)
             {
-                await Utility.ShowAlert("Error - Login", err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await Utility.ShowAlert("Error - Login", "Ocurrio un error inesperado: " +err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
         }
@@ -61,7 +94,7 @@ namespace eFacturityApp.ViewModels
         private async Task<bool> ValidateFieldsForm()
         {
             bool IsValid = false;
-            if (string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(User) && string.IsNullOrEmpty(Password))
             {
                 await Utility.ShowAlert("Campos obligatorios", "Deben completarse los campos, para proceder con el ingreso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }

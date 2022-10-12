@@ -1,4 +1,5 @@
 ﻿using eFacturityApp.Services;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 
 namespace eFacturityApp.Infraestructure.Services
 {
@@ -36,19 +38,22 @@ namespace eFacturityApp.Infraestructure.Services
             await SecureStorage.SetAsync("authVersion", "v1.1");
         }
 
-        public async Task HandleLogin(string Username, string Password)
+        public async Task SaveUserInformationProfile(PerfilUsuarioResponse perfilInformation)
         {
+            //string expireDate = perfilInformation.expiresIn.ToString("yyyy-MM-dd HH:mm:ss");
 
-            var respuesta = await Api.GetToken(Username.Trim(), Password.Trim());
-
-
-            await StoreToken(Username.Trim(), respuesta.AccessToken, respuesta.Expires);
-            var r = await Api.GetUserClient("C");
-            if (!r.Equals(Username))
-            {
-                await StoreToken("", "", DateTime.Now);
-            }
+            await SecureStorage.SetAsync("UserInfo", JsonConvert.SerializeObject(perfilInformation));
         }
+
+
+        public async Task<PerfilUsuarioResponse> GetUserInformationProfile()
+        {
+            return JsonConvert.DeserializeObject<PerfilUsuarioResponse>(await SecureStorage.GetAsync("UserInfo"));
+        }
+
+
+
+        
 
 
 
@@ -63,32 +68,6 @@ namespace eFacturityApp.Infraestructure.Services
         /// <returns></returns>
         public async Task<bool> HasValidToken()
         {
-            // 14-04-2022 validacion para corregir error de token
-            var authVersion = await SecureStorage.GetAsync("authVersion");
-            if (authVersion == null || authVersion != "v1.1")
-                return false;
-
-            var token = await SecureStorage.GetAsync("oauth_token");
-            if (token == null)
-                return false;
-
-            var fechaExpiracionToken = await SecureStorage.GetAsync("expiresIn");
-            if (fechaExpiracionToken == null)
-                return false;
-
-            try
-            {
-                var fechaExpiracionReal = DateTime.ParseExact(fechaExpiracionToken, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                return DateTime.Now.CompareTo(fechaExpiracionReal) < 0;
-            }
-            catch (Exception e)
-            {
-                // Agregar log para debug.
-                return false;
-            }
-
-            // Codigo Original
-            /*
             var token = await SecureStorage.GetAsync("oauth_token");
             if (token != null)
             {
@@ -97,7 +76,7 @@ namespace eFacturityApp.Infraestructure.Services
 
                 return (DateTime.Now.CompareTo(expirationDate) < 0);
             }
-            return false;*/
+            return false;
         }
 
         public async Task HandleOnResume()

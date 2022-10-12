@@ -2,6 +2,7 @@ using eFacturityApp.Infraestructure.Services;
 using eFacturityApp.Popups.ViewModels;
 using eFacturityApp.Popups.Views;
 using eFacturityApp.Services;
+using eFacturityApp.Utils;
 using eFacturityApp.ViewModels;
 using eFacturityApp.Views;
 using Prism;
@@ -26,11 +27,9 @@ namespace eFacturityApp
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2Mzk5QDMxMzgyZTMzMmUzMGFwRnBJZkZzNnp1TXBjNzl4OEM2M01SL2tyTlB3WHJQa0dHSXl1R2txaVE9");
 
-            var Result = await NavigationService.NavigateAsync("/MainPage/Nav/LoginPage");
-            if (!Result.Success)
-            {
-                Debugger.Break();
-            }
+            UserService userService = new UserService(NavigationService, null);
+            string PathToNavigate = await userService.HasValidToken() ? "/MainPage/Nav/HomePage" : "/Nav/LoginPage";
+            await Utility.Navigate(NavigationService, PathToNavigate);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -59,6 +58,8 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<AlertFacturaItemPopupPage, AlertFacturaItemPopupPageViewModel>("AlertFacturaItemPopupPage");
             containerRegistry.RegisterForNavigation<NewProductPage, NewProductPageViewModel>("NewProductPage");
             containerRegistry.RegisterForNavigation<NewClientProviderPage, NewClientProviderPageViewModel>("NewClientProviderPage");
+            containerRegistry.RegisterForNavigationOnIdiom<ProductosPage, ProductosPageViewModel>("ProductosPage");
+            containerRegistry.RegisterForNavigation<ClientProvidersPage, ClientProvidersPageViewModel>("ClientProvidersPage");
         }
     }
 }

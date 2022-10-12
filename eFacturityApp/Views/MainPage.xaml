@@ -36,14 +36,14 @@
                         <TapGestureRecognizer Command="{Binding ChangePasswordCommand}"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
-                
-                
-                <!--<StackLayout Padding="15, 10">
-                    <Label Text="Cerrar Sesión" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+
+
+                <StackLayout Padding="15, 10">
+                    <Label Text="Cerrar sesión" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CloseSessionCommand}"/>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
                     </StackLayout.GestureRecognizers>
-                </StackLayout> -->
+                </StackLayout>
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>

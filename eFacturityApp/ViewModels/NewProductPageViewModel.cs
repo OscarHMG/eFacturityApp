@@ -3,19 +3,23 @@ using eFacturityApp.Infraestructure.Services;
 using eFacturityApp.Popups.ViewModels;
 using eFacturityApp.Services;
 using Prism.Navigation;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 using static eFacturityApp.Utils.Utility;
 
 namespace eFacturityApp.ViewModels
 {
-    public class NewProductPageViewModel: ViewModelBase
+    public class NewProductPageViewModel : ViewModelBase
     {
+        [Reactive] public string TitlePage { get; set; }
         [Reactive] public DropDown DropDownTipoArticulo { get; set; }
 
         [Reactive] public ItemPicker TipoArticuloSelected { get; set; }
@@ -31,19 +35,51 @@ namespace eFacturityApp.ViewModels
         public ICommand CreateNewProductoCommand { get; set; }
         public ICommand LoadDropDownsCommand { get; set; }
 
-        public NewProductPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
+        [Reactive] public ProductoModel Product { get; set; } = new ProductoModel();
+
+
+        public NewProductPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             LoadDropDownsCommand = new Command(() => LoadDropDowns());
 
-            CreateNewProductoCommand = new Command(async()=> await CreateNewProduct());
+            CreateNewProductoCommand = new Command(async () => await CreateNewProduct());
+
+
         }
 
         private async Task CreateNewProduct()
         {
-            await ShowAlert("Nuevo producto", "Su producto fue creado.",AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+            if (await ValidateFields())
+            {
+                try
+                {
+                    Product.IdTipoItem = 2;
+                    Product.IdImpuesto = 1;
+                    Product.IdUnidadMedida = 1;
 
-            await NavigateBack(_navigationService);
-        
+                    //Product.IdTipoItem = TipoArticuloSelected.Id;
+                    //Product.IdImpuesto = ImpuestoSelected.Id;
+                    //Product.IdUnidadMedida = UnidadMedidaSelected.Id;
+
+                    await _loaderService.Show("Un momento..");
+                    var response = await _apiService.CreateEditProduct(Product);
+
+                    if (await HandleAPIResponse(response.statusCode, response.message, TitlePage, _navigationService))
+                    {
+                        string Message = Product.IdProducto == 0 ? "Su producto fue creado." : "Su producto fue editado correctamente.";
+                        await ShowAlert(TitlePage, Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                        NavigationParameters parameters = new NavigationParameters();
+                        parameters.Add("Refresh", true);
+                        await NavigateBack(_navigationService, parameters);
+                    }
+                }
+                catch (Exception err) 
+                {
+                    await ShowAlert("Error - "+TitlePage, "Error inesperado: " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+            }
         }
 
         private void LoadDropDowns()
@@ -72,13 +108,53 @@ namespace eFacturityApp.ViewModels
             DropDownTipoArticulo = new DropDown(TipoArticulos);
             DropDownImpuestos = new DropDown(Impuestos);
             DropDownUnidadMedidas = new DropDown(UnidadMedidas);
+
+
+            if (Product.IdProducto != 0)
+            {
+                TipoArticuloSelected = SetSelectedValuesDropDown(Product.IdTipoItem, TipoArticulos);
+                ImpuestoSelected = SetSelectedValuesDropDown(Product.IdImpuesto, Impuestos);
+                UnidadMedidaSelected = SetSelectedValuesDropDown(Product.IdUnidadMedida, UnidadMedidas);
+
+                this.RaisePropertyChanged("TipoArticuloSelected");
+                this.RaisePropertyChanged("ImpuestoSelected");
+                this.RaisePropertyChanged("UnidadMedidaSelected");
+            }
         }
+
+        private async Task<bool> ValidateFields()
+        {
+            bool isValid = true;
+            if (TipoArticuloSelected == null || string.IsNullOrEmpty(Product.Nombre) || ImpuestoSelected == null ||
+                string.IsNullOrEmpty(Product.Codigo) || /*UnidadMedidaSelected == null ||*/ string.IsNullOrEmpty(Product.CodigoAuxiliar)
+                )
+            {
+                isValid = false;
+                await ShowAlert(TitlePage, "Complete los campos, para proceder con el registro.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            else
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
+
 
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
+            Product = parameters.GetValue<ProductoModel>("ProductSelected") == null ? new ProductoModel() : parameters.GetValue<ProductoModel>("ProductSelected");
+            TitlePage = Product.IdProducto == 0 ? "Nuevo producto" : "Editar producto";
             LoadDropDownsCommand.Execute(null);
         }
+
+
+        
+
+
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
