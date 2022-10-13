@@ -60,6 +60,7 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<NewClientProviderPage, NewClientProviderPageViewModel>("NewClientProviderPage");
             containerRegistry.RegisterForNavigationOnIdiom<ProductosPage, ProductosPageViewModel>("ProductosPage");
             containerRegistry.RegisterForNavigation<ClientProvidersPage, ClientProvidersPageViewModel>("ClientProvidersPage");
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>("ProfilePage");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace eFacturityApp.ViewModels
 
         public NewProductPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
-            LoadDropDownsCommand = new Command(() => LoadDropDowns());
+            LoadDropDownsCommand = new Command(async() => await LoadDropDowns());
 
             CreateNewProductoCommand = new Command(async () => await CreateNewProduct());
 
@@ -53,13 +53,10 @@ namespace eFacturityApp.ViewModels
             {
                 try
                 {
-                    Product.IdTipoItem = 2;
-                    Product.IdImpuesto = 1;
-                    Product.IdUnidadMedida = 1;
 
-                    //Product.IdTipoItem = TipoArticuloSelected.Id;
-                    //Product.IdImpuesto = ImpuestoSelected.Id;
-                    //Product.IdUnidadMedida = UnidadMedidaSelected.Id;
+                    Product.IdTipoArticulo = TipoArticuloSelected.Id;
+                    Product.IdImpuesto = ImpuestoSelected.Id;
+                    Product.IdUnidadMedida = UnidadMedidaSelected.Id;
 
                     await _loaderService.Show("Un momento..");
                     var response = await _apiService.CreateEditProduct(Product);
@@ -82,43 +79,59 @@ namespace eFacturityApp.ViewModels
             }
         }
 
-        private void LoadDropDowns()
+        private async Task LoadDropDowns()
         {
+            List<ItemPicker> TipoArticulos = new List<ItemPicker>();
+            List<ItemPicker> Impuestos = new List<ItemPicker>();
+            List<ItemPicker> UnidadMedidas = new List<ItemPicker>();
 
-            List<ItemPicker> TipoArticulos = new List<ItemPicker>()
+            DropDownTipoArticulo = new DropDown();
+            DropDownImpuestos = new DropDown();
+            DropDownUnidadMedidas = new DropDown();
+
+            try
             {
-                new ItemPicker(1, "001 Bien", "001 Bien"),
-                new ItemPicker(2, "002 Servicio", "001 Servicio")
-            };
+                var response = await _apiService.GetCatalogosProducto();
 
-            List<ItemPicker> Impuestos = new List<ItemPicker>()
+                if (await HandleAPIResponse(response.statusCode, response.message, TitlePage, _navigationService))
+                {
+                    response.data.TiposArticulos.ForEach(x=> 
+                    {
+                        TipoArticulos.Add(new ItemPicker(x.IdTipoArticulo, (x.CodigoArticulo + " " + x.Nombre).ToUpper(), (x.CodigoArticulo + " " + x.Nombre).ToUpper()));
+                    });
+
+                    response.data.TiposImpuestos.ForEach(x => 
+                    {
+                        Impuestos.Add(new ItemPicker(x.IdImpuesto, (x.IdImpuesto + " " + x.Nombre).ToUpper(), (x.IdImpuesto + " " + x.Nombre).ToUpper())); 
+                    });
+                    response.data.UnidadesMedida.ForEach(x => 
+                    { 
+                        UnidadMedidas.Add(new ItemPicker(x.IdUnidadMedida, x.Nombre.ToUpper(), x.Nombre.ToUpper())); 
+                    });
+
+                    DropDownTipoArticulo = new DropDown(TipoArticulos);
+                    DropDownImpuestos = new DropDown(Impuestos);
+                    DropDownUnidadMedidas = new DropDown(UnidadMedidas);
+
+                    if (Product.IdProducto != 0)
+                    {
+                        TipoArticuloSelected = SetSelectedValuesDropDown(Product.IdTipoArticulo, TipoArticulos);
+                        ImpuestoSelected = SetSelectedValuesDropDown(Product.IdImpuesto, Impuestos);
+                        UnidadMedidaSelected = SetSelectedValuesDropDown(Product.IdUnidadMedida, UnidadMedidas);
+                        this.RaisePropertyChanged("TipoArticuloSelected");
+                        this.RaisePropertyChanged("ImpuestoSelected");
+                        this.RaisePropertyChanged("UnidadMedidaSelected");
+                    }
+                }
+                else
+                {
+                    await ShowAlert(TitlePage, "Ocurrió un problema en la consulta. Inténtelo más tarde.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await NavigateBack(_navigationService);
+                }
+            }
+            catch (Exception err)
             {
-                new ItemPicker(1, "001 IVA 12%", "001 IVA 12%"),
-                new ItemPicker(2, "001 IVA 0%", "002 IVA 0%"),
-                new ItemPicker(3, "003 NO OBJETO DE IVA", "003 NO OBJETO DE IVA"),
-            };
-
-            List<ItemPicker> UnidadMedidas = new List<ItemPicker>()
-            {
-                new ItemPicker(1, "001 Unidad", "001 Unidad"),
-                new ItemPicker(2, "002 Metro", "002 Metro"),
-                new ItemPicker(3, "003 KG", "003 KG"),
-            };
-
-            DropDownTipoArticulo = new DropDown(TipoArticulos);
-            DropDownImpuestos = new DropDown(Impuestos);
-            DropDownUnidadMedidas = new DropDown(UnidadMedidas);
-
-
-            if (Product.IdProducto != 0)
-            {
-                TipoArticuloSelected = SetSelectedValuesDropDown(Product.IdTipoItem, TipoArticulos);
-                ImpuestoSelected = SetSelectedValuesDropDown(Product.IdImpuesto, Impuestos);
-                UnidadMedidaSelected = SetSelectedValuesDropDown(Product.IdUnidadMedida, UnidadMedidas);
-
-                this.RaisePropertyChanged("TipoArticuloSelected");
-                this.RaisePropertyChanged("ImpuestoSelected");
-                this.RaisePropertyChanged("UnidadMedidaSelected");
+                await ShowAlert(TitlePage, "Error : "+ err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
         }
 

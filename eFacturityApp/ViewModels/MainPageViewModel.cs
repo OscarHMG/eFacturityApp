@@ -14,11 +14,19 @@ namespace eFacturityApp.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+
+        public ICommand HomeCommand { get; set; }
         public ICommand ChangePasswordCommand { get; set; }
 
         public ICommand LogoutCommand { get; set; }
+
+        public ICommand GoToProfilePageCommand { get; set; }
         public MainPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService)
         {
+
+            HomeCommand = new Command(async()=> {
+                await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage");
+            });
             ChangePasswordCommand = new Command(async () => {
                 await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage/ChangePasswordPage");
                 
@@ -29,6 +37,10 @@ namespace eFacturityApp.ViewModels
             {
                 _userService.CerrarSession();
                 await Utility.Navigate(_navigationService, "/Nav/LoginPage");
+            });
+
+            GoToProfilePageCommand = new Command(async()=> {
+                await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage/ProfilePage");
             });
         }
     }

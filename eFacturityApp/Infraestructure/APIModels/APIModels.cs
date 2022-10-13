@@ -65,6 +65,11 @@ namespace eFacturityApp.Infraestructure.ApiModels
                 Username = username;
                 Password = password;
             }
+
+            public LoginUsuarioRequest()
+            {
+
+            }
         }
 
         public class ChangePasswordAPIModel
@@ -100,23 +105,98 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Correo { get; set; }
         }
 
-        public class ProductoModel
+        public class CatalogosProductoModel
         {
-            public long IdProducto { set; get; }
-            public long IdTipoItem { set; get; }
-            public long? IdCategoria { set; get; }
-            public long? IdUnidadMedida { set; get; }
-            public long IdImpuesto { set; get; }
+            public List<TipoArticuloModel> TiposArticulos { get; set; }
 
+            public CatalogosProductoModel()
+            {
+                TiposArticulos = new List<TipoArticuloModel>();
+                TiposImpuestos = new List<TipoImpuestoModel>();
+                UnidadesMedida = new List<UnidadMedidaModel>();
+            }
+
+            public List<TipoImpuestoModel> TiposImpuestos { get; set; }
+            public List<UnidadMedidaModel> UnidadesMedida { get; set; }
+        }
+        public class TipoArticuloModel
+        {
+            public long IdTipoArticulo { get; set; }
+            public string CodigoArticulo { get; set; }
+            public string Nombre { get; set; }
+        }
+        public class TipoImpuestoModel
+        {
+            public long IdImpuesto { set; get; }
+            public string Codigo { set; get; }
+            public string Nombre { set; get; }
+            public decimal? Tarifa { set; get; }
+        }
+        public class UnidadMedidaModel
+        {
+            public long IdUnidadMedida { set; get; }
             public string Codigo { set; get; }
             public string Nombre { set; get; }
 
+            public long? IdEmpresa { set; get; }
+        }
+
+
+        public class PerfilUsuarioModel
+        {
+            public long IdUsuario { set; get; }
+            public long IdTipoPersona { set; get; }
+            public string Ruc { set; get; }
+            public string RazonSocial { set; get; }
+            public string NombreComercial { set; get; }
+            public string NumeroEstablecimientos { set; get; }
+            public string NumeroPuntoEmision { set; get; }
+            public bool ObligadollevarContabilidad { set; get; }
+            public bool EsContribuyenteEspecial { set; get; }
+            public string NumerodeResolucion { set; get; }
+            public long? IdTipoExportador { set; get; }
+            public bool EsContribuyenteRimpe { set; get; }
+            public long? IdTipoContribuyenteRimpe { set; get; }
+            public bool AgenteRetencíon { set; get; }
+            public string Ciudad { set; get; }
+            public string Movil { set; get; }
+            public string Telefono { set; get; }
+            public string Correo { set; get; }
+            public string DireccionDomiciaria { set; get; }
+            public long? IdActividadEconomica { set; get; }
+            public string LogoEmpresa { set; get; }
+            public string ActividadEconomica { set; get; }
+            public int? NumDecimales { set; get; }
+
+            public string RutaImagen { set; get; }
+            public string NombreImagen { set; get; }
+            public long? IdTipoPlan { set; get; }
+            public DateTime? FechaInicioPlan { set; get; }
+            public DateTime? FechaFinalPlan { set; get; }
+        }
+
+
+        public class ProductoModel
+        {
+            public long IdProducto { set; get; }
+            public long IdTipoArticulo { set; get; }
+            public long? IdCategoria { set; get; }
+            public long? IdUnidadMedida { set; get; }
+            public string NombredUnidadMedida { set; get; }
+            public long IdImpuesto { set; get; }
+            public long IdEmpresa { set; get; }
+            public string NombreImpuesto { set; get; }
+            public string Codigo { set; get; }
+            public string Nombre { set; get; }
             public decimal Precio { set; get; }
+
+            public decimal StrinPrecio { set; get; }
 
             public string CodigoAuxiliar { set; get; }
             public string Descripcion { set; get; }
             public string ProductoIva { set; get; }
-            public bool? PrecioManual { set; get; }
+            public int? NumDecimales { set; get; }
+            public bool PrecioManual { set; get; }
         }
 
 
@@ -124,12 +204,10 @@ namespace eFacturityApp.Infraestructure.ApiModels
         public class PersonaModel
         {
             public long IdPersona { set; get; }
+            public long IdEmpresa { set; get; }
             public long IdTipoTipoPersona { set; get; }
+            public string NombreTipoTipoPersona { set; get; }
             public bool EsContribuyenteEspecial { set; get; }
-
-            public string Identificacion { set; get; }
-
-
             public string Ruc { set; get; }
             public string RazonSocial { set; get; }
             public string NombreComercial { set; get; }
@@ -138,21 +216,11 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public bool Extranjero { set; get; }
             public string Correo { set; get; }
             public string Correo2 { set; get; }
-
+            public string Usuario { set; get; }
             public long? IdUsuario { set; get; }
-            public bool? EsAgenteRetencion { set; get; }
             public long? IdRegimen { set; get; }
-            public string NumIdentificacion { set; get; }
-            public bool? ObligadoLlevarContabilidad { set; get; }
-            public string NumeroResolucion { set; get; }
-            public long? IdTipoExportador { set; get; }
-            public long? IdTipoRegimen { set; get; }
-            public string Ciudad { set; get; }
-            public string Movil { set; get; }
-            public long? IdActividadEconomica { set; get; }
-            public long? IdTipoContribuyenteRimpe { set; get; }
-
-            public long IdEmpresa { set; get; }
+            public string NombreRegimen { set; get; }
+            public bool? EsAgenteRetencion { set; get; }
         }
 
         #endregion

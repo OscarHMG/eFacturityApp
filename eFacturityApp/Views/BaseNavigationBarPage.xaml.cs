@@ -50,7 +50,7 @@ namespace eFacturityApp.Views
             {
                 this.CustomBackButtonAction = async () =>
                 {
-                    var Response = await ShowYesNoAlert("", "¿Está seguro que desea salir sin guardar los cambios?");
+                    var Response = await ShowYesNoAlert("Salir sin guardar", "¿Está seguro que desea salir sin guardar los cambios?");
 
                     if (Response)
                     {
@@ -67,7 +67,7 @@ namespace eFacturityApp.Views
 
             if (EnableBackButtonOverride)
             {
-                var Response = await ShowYesNoAlert("", "¿Está seguro que desea salir sin guardar los cambios?");
+                var Response = await ShowYesNoAlert("Salir sin guardar", "¿Está seguro que desea salir sin guardar los cambios?");
                 if (Response)
                 {
                     await Navigation.PopAsync(true);

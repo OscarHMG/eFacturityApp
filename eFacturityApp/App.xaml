@@ -86,7 +86,7 @@
                 <Setter Property="FontFamily" Value="PB" />
                 <Setter Property="FontSize" Value="{d:OnPlatform Android='18', iOS='20'}" />
                 <Setter Property="BackgroundColor" Value="{StaticResource Secondary}"/>
-
+                <Setter Property="TextColor" Value="White"/>
                 <Setter Property="CornerRadius" Value="8"/>
                 <Setter Property="HasShadow" Value="True"/>
                 <Setter Property="Padding" Value="0, 30"/>

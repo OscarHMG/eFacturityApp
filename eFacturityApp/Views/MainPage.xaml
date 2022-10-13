@@ -7,9 +7,10 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     ios:MasterDetailPage.ApplyShadow="true"
+    x:Name="LOL"
     x:Class="eFacturityApp.Views.MainPage">
 
-    <MasterDetailPage.Master>
+    <MasterDetailPage.Master >
         <ContentPage Title="Menu">
             <StackLayout Margin="8, 0, 8, 0">
                 <StackLayout Margin="10, 50, 10, 10">
@@ -26,10 +27,19 @@
                 <StackLayout Padding="15, 10">
                     <Label Text="Inicio" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Nav/BottomNavigationBar?selectedTab=LocationPage"></TapGestureRecognizer>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
 
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
+                
+                <StackLayout Padding="15, 10">
+                    <Label Text="Mi perfil" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToProfilePageCommand}" />
+
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                
                 <StackLayout Padding="15, 10">
                     <Label Text="Cambio de Contraseña" Style="{StaticResource RegularLabel}" FontSize="{d:OnPlatform Android='18', iOS='20'}"/>
                     <StackLayout.GestureRecognizers>

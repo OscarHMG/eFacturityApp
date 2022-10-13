@@ -8,6 +8,7 @@
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
     Title="{Binding TitlePage}"
+    EnableBackButtonOverride="True"
     x:Class="eFacturityApp.Views.NewClientProviderPage">
     <ContentPage.Content>
         <StackLayout>

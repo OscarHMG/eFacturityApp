@@ -88,6 +88,11 @@ namespace eFacturityApp.Utils
             {
                 this.Items = new ObservableCollection<ItemPicker>(Items);
             }
+
+            public DropDown()
+            {
+                this.Items = new ObservableCollection<ItemPicker>();
+            }
         }
 
 

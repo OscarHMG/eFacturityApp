@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -237,6 +238,59 @@ namespace eFacturityApp.Infraestructure.Services
                     throw new Exception(parserResponse.Message);
                 }
             }
+        }
+
+
+
+        public async Task<bool> PostDataWithPhotos<T>(string EndPoint, T request, List<string> FotosRuta)
+        {
+
+            bool enviaImagenes = false;
+            List<StreamContent> streamContents = new List<StreamContent>();
+            try
+            {
+                var oauthToken = await SecureStorage.GetAsync("oauth_token");
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                //Creo el Multipart.
+                var multipartContent = new MultipartFormDataContent();
+                multipartContent.Headers.ContentType.MediaType = "multipart/form-data";
+
+                //Agrego el Data.
+                multipartContent.Add(new StringContent(JsonConvert.SerializeObject(request)), "Data");
+
+                //Agrego ahora en el multi part, las fotografias.
+                string imagetag = "Fotos";
+                FotosRuta.ForEach(c =>
+                {
+                    var fs = new FileStream(c, FileMode.Open);
+                    var fn = Path.GetFileName(fs.Name);
+                    string filename = fn;
+                    var fotoContent = new StreamContent(fs, (int)fs.Length);
+                    fotoContent.Headers.TryAddWithoutValidation("Content-Disposition", "form-data; name=" + imagetag + "; filename=" + filename);
+                    fotoContent.Headers.TryAddWithoutValidation("Content-Type", "image / png");
+                    multipartContent.Add(fotoContent, imagetag, filename);
+                    streamContents.Add(fotoContent);
+                });
+
+
+                var uri = new Uri(EndPoint);
+
+                var response = await Client.PostAsync(uri, multipartContent);
+                enviaImagenes = response.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            finally
+            {
+
+                streamContents.ForEach(x => x.Dispose());
+            }
+
+            // Retorna el estado de la llamada
+            return enviaImagenes;
         }
 
     }

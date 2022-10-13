@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+    xmlns:converters="clr-namespace:eFacturityApp.Converters"
+    Title="Mi perfil"
+    EnableBackButtonOverride="{Binding ConfirmationBackPromptModal}"
+    x:Class="eFacturityApp.Views.ProfilePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="Not" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <StackLayout>
+            <ScrollView VerticalScrollBarVisibility="Never" Margin="15, 25">
+
+                <StackLayout>
+                    <Grid IsVisible="{Binding ContainerEditInformationProfile, Converter={StaticResource Not}}" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" Padding="{x:OnPlatform iOS='0,70,0,10', Android='0,40,0,20'}">
+                        <!-- Step 1. Main information-->
+
+                        <!-- Syncfusion Avatar View (Rounded image)-->
+                        <sfavatar:SfAvatarView 
+                            Grid.ColumnSpan="2" Grid.Row="0"  
+                            BorderWidth="1"
+                            ContentType="Custom" 
+                            ImageSource="{Binding ProfileImageAvatar}" 
+                            HorizontalOptions="Center" 
+                            VerticalOptions="Start" 
+                            WidthRequest="140" 
+                            HeightRequest="140" 
+                            CornerRadius="70" 
+                            Margin="0,0,0,15" />
+                        <!-- Name & role description-->
+                        <Label Grid.ColumnSpan="2" Grid.Row="1" Text="Catherine Massey " HorizontalOptions="Center" Style="{StaticResource BoldLabel}" FontSize="26" CharacterSpacing="1"/>
+                        <!--<Label Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding Perfil.Ruc}"  Style="{StaticResource RegularLabel}" HorizontalOptions="Center" TextColor="Silver" FontSize="20"/>-->
+                        <Label Grid.ColumnSpan="2" Grid.Row="2" HorizontalOptions="Center" TextColor="Silver" FontSize="20">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="RUC/Cédula: " Style="{StaticResource BoldLabel}" FontSize="20"/>
+                                    <Span Text="{Binding Perfil.Ruc}" Style="{StaticResource RegularLabel}" FontSize="20"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!-- Followers information-->
+                        <StackLayout Grid.Row="3" Grid.ColumnSpan="2" >
+                            <Label Text="MI PLAN" TextColor="#696969" Style="{StaticResource BoldLabel}" FontSize="23" CharacterSpacing="1" HorizontalTextAlignment="Center"/>
+                            <Grid RowDefinitions="*,*" ColumnDefinitions="Auto,*,Auto" Margin="30,10,30,0" >
+                                <Label Grid.Row="0" Grid.Column="0" Text="80" FontAttributes="Bold" FontSize="23" HorizontalTextAlignment="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="Posts" FontSize="17" TextColor="#565660" HorizontalTextAlignment="Center"/>
+
+                                <Label Grid.Row="0" Grid.Column="1" Text="110" FontAttributes="Bold" FontSize="23" HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="Followers" FontSize="17" TextColor="#565660" HorizontalTextAlignment="Center"/>
+
+                                <Label Grid.Row="0" Grid.Column="2" Text="152" FontAttributes="Bold" FontSize="23" HorizontalOptions="Center"/>
+                                <Label Grid.Row="1" Grid.Column="2" Text="Following" FontSize="17" TextColor="#565660" HorizontalOptions="Center"/>
+                            </Grid>
+                        </StackLayout>
+
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2" Spacing="15" Margin="0, 10">
+                            <!-- Buttons-->
+                            <syncfusion:SfButton  Text="Actualizar foto"  HorizontalOptions="FillAndExpand"  BorderColor="{StaticResource Accent}" BorderWidth="1" TextColor="{StaticResource Accent}" BackgroundColor="White" FontSize="18"  Command="{Binding TomarFotosGaleriaCommad}"/>
+                            <syncfusion:SfButton  Style="{StaticResource Button4}" Text="Actualizar datos"  HorizontalOptions="FillAndExpand" FontSize="18"  Command="{Binding EnableEditProfileInformationCommand}"/>
+                        </StackLayout>
+
+                    </Grid>
+
+
+                    <!-- FORMULARIO-->
+                    <StackLayout IsVisible="{Binding ContainerEditInformationProfile}" Spacing="0">
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="RUC"
+                            IsEnabled="False"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.Ruc}" IsEnabled="False"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Razón Social"
+                            IsEnabled="False"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.RazonSocial}" IsEnabled="False"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Nombre comercial"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.NombreComercial}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Nro. de Resolución"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.NumerodeResolucion}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Ciudad"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.Ciudad}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Teléfono"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.Telefono}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Móvil"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.Movil}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Correo"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.Correo}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Dirección domiciliaria"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding Perfil.DireccionDomiciaria}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <!--<inputLayout:SfTextInputLayout 
+                            Hint="Tipo de artículo" 
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                TextColor="#696969"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding TipoArticuloSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownTipoArticulo.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>-->
+                        <StackLayout Margin="0, 15, 0, 0">
+                            <Label Text="INFORMACION ADICIONAL" Style="{StaticResource BoldLabel}" HorizontalTextAlignment="Center" FontSize="19"/>
+                            <StackLayout Orientation="Vertical">
+                                <syncfusion:SfCheckBox  IsChecked="{Binding Perfil.ObligadollevarContabilidad}" Text="Obligado a llevar a contabilidad" FontFamily="PR" FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                                <syncfusion:SfCheckBox IsChecked="{Binding Perfil.EsContribuyenteEspecial}" Text="Contribuyente especial" FontFamily="PR" FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                                <syncfusion:SfCheckBox IsChecked="{Binding Perfil.EsContribuyenteRimpe}" Text="Contribuyente RIMPE" FontFamily="PR" FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+                                <syncfusion:SfCheckBox IsChecked="{Binding Perfil.AgenteRetencíon}" Text="Agente de retención" FontFamily="PR" FontSize="18" CheckedColor="{StaticResource Accent}" UncheckedColor="{StaticResource Primary}"/>
+
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal" IsVisible="{Binding ContainerEditInformationProfile}">
+                <syncfusion:SfButton Text="CANCELAR" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}" Command="{Binding CancelCommand}"/>
+                <syncfusion:SfButton Text="GUARDAR" HorizontalOptions="FillAndExpand" Command="{Binding SaveCommand}"/>
+            </StackLayout>
+        </StackLayout>
+        
+
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

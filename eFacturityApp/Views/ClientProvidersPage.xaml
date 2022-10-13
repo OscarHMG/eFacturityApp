@@ -37,7 +37,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="RUC/Cédula:" Style="{StaticResource BoldLabel}"/>
-                                                <Span Text="{Binding Ruc}" Style="{StaticResource BoldLabel}"/>
+                                                <Span Text="{Binding Ruc}" Style="{StaticResource RegularLabel}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
@@ -54,7 +54,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="Ciudad: " Style="{StaticResource BoldLabel}"/>
-                                                <Span Text="{Binding Ciudad}" Style="{StaticResource RegularLabel}"/>
+                                                <Span Text="{Binding Direccion}" Style="{StaticResource RegularLabel}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>

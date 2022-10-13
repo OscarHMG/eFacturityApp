@@ -55,7 +55,7 @@ namespace eFacturityApp.ViewModels
                 if (responsePrompt)
                 {
                     await _loaderService.Show("Un momento..");
-                    var response = await _apiService.DeleteProduct(personaSelected.IdPersona);
+                    var response = await _apiService.DeleteClienteProveedor(personaSelected.IdPersona);
 
                     if (await HandleAPIResponse(response.statusCode, response.message, "Cliente/proveedor", _navigationService))
                     {

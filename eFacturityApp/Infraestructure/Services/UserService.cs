@@ -38,7 +38,7 @@ namespace eFacturityApp.Infraestructure.Services
             await SecureStorage.SetAsync("authVersion", "v1.1");
         }
 
-        public async Task SaveUserInformationProfile(PerfilUsuarioResponse perfilInformation)
+        public async Task SaveUserInformationProfile(PerfilUsuarioModel perfilInformation)
         {
             //string expireDate = perfilInformation.expiresIn.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -46,9 +46,9 @@ namespace eFacturityApp.Infraestructure.Services
         }
 
 
-        public async Task<PerfilUsuarioResponse> GetUserInformationProfile()
+        public async Task<PerfilUsuarioModel> GetUserInformationProfile()
         {
-            return JsonConvert.DeserializeObject<PerfilUsuarioResponse>(await SecureStorage.GetAsync("UserInfo"));
+            return JsonConvert.DeserializeObject<PerfilUsuarioModel>(await SecureStorage.GetAsync("UserInfo"));
         }
 
 

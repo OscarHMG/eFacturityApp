@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactiveUI.Fody.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -10,10 +11,10 @@ namespace eFacturityApp.Popups.ViewModels
 {
     public class AlertConfirmationPopupPageViewModel
     {
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public string InputValue { get; set; }
-        public EnumInputType InputType { get; set; }
+        [Reactive] public string Title { get; set; }
+        [Reactive] public string Message { get; set; }
+        [Reactive] public string InputValue { get; set; }
+        [Reactive] public EnumInputType InputType { get; set; }
 
         public enum EnumInputType { Ok, YesNo, OkCancel, OkCancelWithInput }
         public enum EnumOutputType { Ok, Yes, No, Cancel }
