@@ -2,9 +2,12 @@
 using eFacturityApp.Infraestructure.Services;
 using eFacturityApp.Services;
 using Prism.Navigation;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,12 +19,19 @@ namespace eFacturityApp.Popups.ViewModels
 {
     public class AlertFacturaItemPopupPageViewModel : ViewModelBase
     {
-        public ItemFactura NewItemFactura { get; set; } = new ItemFactura();
+        [Reactive] public List<ProductoModel> ProductosServicios { get; set; } = new List<ProductoModel>();
+
+        [Reactive] public decimal Descuento { get; set; }
+
+        [Reactive] public decimal Precio { get; set; }
+        [Reactive] public ItemFacturaModel NewItemFactura { get; set; } = new ItemFacturaModel();
         [Reactive] public string ErrorMessage { get; set; } = string.Empty;
 
         [Reactive] public DropDown DropDownArticulos { get; set; }
 
         [Reactive] public ItemPicker ArticuloSelected { get; set; }
+        [Reactive] public bool EnableDescuentoEntry { get; set; } = true;
+        [Reactive] public bool EnablePrecioEntry { get; set; } = true;
         public ICommand LoadArticulosCatalogosCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
@@ -29,29 +39,52 @@ namespace eFacturityApp.Popups.ViewModels
 
 
 
-        public AlertFacturaItemPopupPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
+        public AlertFacturaItemPopupPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
-            LoadArticulosCatalogosCommand = new Command(() => LoadDropDowns());
+            Descuento = 0;
+            LoadArticulosCatalogosCommand = new Command(() => LoadDropDowns(ProductosServicios));
 
-            CancelCommand = new Command(async()=> await NavigateBack(_navigationService));
+            CancelCommand = new Command(async () => await NavigateBack(_navigationService));
 
-            AddNewItemCommand = new Command(async()=> await CreateNewItemFacturaAsync());
+            AddNewItemCommand = new Command(async () => await CreateNewItemFacturaAsync());
 
-
+            this.WhenAnyValue(x => x.ArticuloSelected)
+                .Where(x => x != null)
+                .InvokeCommand(new Command(async () =>
+                {
+                    if (ArticuloSelected != null)
+                    {
+                        var item = ProductosServicios.ToList().FirstOrDefault(c => c.IdProducto == ArticuloSelected.Id);
+                        if (item != null)
+                        {
+                            Precio = item.Precio;
+                            EnablePrecioEntry = item.PrecioManual.GetValueOrDefault();
+                        }
+                    }
+                }
+                ));
 
 
         }
 
 
-
-
-
-        
-
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            LoadArticulosCatalogosCommand.Execute(null);
+
+            ProductosServicios = parameters.GetValue<List<ProductoModel>>("ListProductos");
+            Descuento = parameters.GetValue<decimal>("DescuentoGlobal");
+            if (ProductosServicios != null)
+            {
+                if (Descuento != 0)
+                {
+                    //NewItemFactura.Descuento = Descuento;
+                    EnableDescuentoEntry = false;
+
+                }
+
+                LoadArticulosCatalogosCommand.Execute(null);
+            }
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -70,17 +103,14 @@ namespace eFacturityApp.Popups.ViewModels
         }
 
 
-        private void LoadDropDowns()
+        private void LoadDropDowns(List<ProductoModel> ListProductos)
         {
 
-            List<ItemPicker> ItemsArticulos = new List<ItemPicker>()
-            {
-                new ItemPicker(1, "Item descripcion nombre largo", "Item descripcion nombre largo"),
-                new ItemPicker(2, "Item 2", "Item 2")
-            };
+            List<ItemPicker> ItemsProductosServicios = new List<ItemPicker>();
 
+            ListProductos.ForEach(x => ItemsProductosServicios.Add(new ItemPicker(x.IdProducto, (x.Codigo + " " + x.Nombre).ToUpper(), (x.Codigo + " " + x.Nombre).ToUpper())));
 
-            DropDownArticulos = new DropDown(ItemsArticulos);
+            DropDownArticulos = new DropDown(ItemsProductosServicios);
         }
 
 
@@ -92,9 +122,12 @@ namespace eFacturityApp.Popups.ViewModels
             }
             else
             {
+
+                NewItemFactura.IdProducto = ArticuloSelected.Id;
+                NewItemFactura.NombreProducto = ArticuloSelected.TextoLargo;
+                NewItemFactura.Precio = Precio;
+                NewItemFactura.Descuento = Descuento;
                 
-                NewItemFactura.IdItem = ArticuloSelected.Id;
-                NewItemFactura.NombreItem = ArticuloSelected.TextoLargo;
                 NavigationParameters NavParams = new NavigationParameters();
                 NavParams.Add("NewItemFactura", NewItemFactura);
 

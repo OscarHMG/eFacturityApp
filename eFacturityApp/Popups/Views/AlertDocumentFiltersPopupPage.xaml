@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    x:Class="eFacturityApp.Popups.Views.AlertDocumentFiltersPopupPage">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+
+
+    </pages:PopupPage.Animation>
+
+    <Frame 
+        CornerRadius="8"
+        Padding="25, 10"
+        BackgroundColor="White"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center"
+        WidthRequest="280"
+        MinimumHeightRequest="150" >
+        
+        <StackLayout Orientation="Vertical">
+            <Label Text="FILTROS" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
+            <inputLayout:SfTextInputLayout 
+                Hint="Persona" 
+                ContainerType="Outlined" 
+                Padding="0" >
+                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                    </inputLayout:LabelStyle>
+                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                <combobox:SfComboBox
+                    DropDownBorderColor="{StaticResource Primary}"
+                    DropDownTextColor="#696969"
+                    FontFamily="PB"
+                    TextColor="#696969"
+                    IsEditableMode="true" 
+                    AllowFiltering="true"
+                    ShowSuggestionsOnFocus="True"
+                    SuggestionMode="Contains"
+                    BorderColor="{StaticResource Primary}"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
+                    DisplayMemberPath = "TextoLargo"
+                    DataSource="{Binding DropDownPersonas.Items}"
+                    SelectedDropDownItemColor="White">
+                </combobox:SfComboBox>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout 
+                Hint="Estado" 
+                ContainerType="Outlined" 
+                Padding="0" >
+                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                    </inputLayout:LabelStyle>
+                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                <combobox:SfComboBox
+                    DropDownBorderColor="{StaticResource Primary}"
+                    DropDownTextColor="#696969"
+                    FontFamily="PB"
+                    TextColor="#696969"
+                    IsEditableMode="true" 
+                    AllowFiltering="true"
+                    ShowSuggestionsOnFocus="True"
+                    SuggestionMode="Contains"
+                    BorderColor="{StaticResource Primary}"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedItem="{Binding EstadoSelected, Mode=TwoWay}"
+                    DisplayMemberPath = "TextoLargo"
+                    DataSource="{Binding DropDownTipoEstado.Items}"
+                    SelectedDropDownItemColor="White">
+                </combobox:SfComboBox>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout 
+                HorizontalOptions="EndAndExpand"
+                Hint="Cód. de secuencia"     
+                IsHintAlwaysFloated="false" 
+                ContainerType="Outlined">
+                <Entry Text="{Binding Codigo}" />
+                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                    </inputLayout:LabelStyle>
+                </inputLayout:SfTextInputLayout.HintLabelStyle>
+            </inputLayout:SfTextInputLayout>
+            <StackLayout Orientation="Horizontal" Spacing="10" Margin="0, 5, 0, 5" HorizontalOptions="EndAndExpand">
+                <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}" WidthRequest="100" Style="{StaticResource NegativeButton}"/>
+                <syncfusion:SfButton Text="APLICAR FILTROS" Command="{Binding ApplyFiltersCommand}" WidthRequest="100"/>
+            </StackLayout>
+        </StackLayout>
+        
+    </Frame>
+</pages:PopupPage>

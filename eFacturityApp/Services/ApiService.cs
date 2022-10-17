@@ -9,7 +9,7 @@ namespace eFacturityApp.Services
 {
     public class ApiService : APIServiceBase
     {
-        public const string BASE_URL = "https://96ff-2800-bf0-8027-1187-84c1-bc38-c49e-f60e.sa.ngrok.io/";
+        public const string BASE_URL = "https://da56-2800-bf0-8027-1187-5080-2157-d690-2951.ngrok.io/";
 
         private const string BASE_API = "api/";
         private const string GET_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/GetPerfil";
@@ -25,6 +25,11 @@ namespace eFacturityApp.Services
         private const string DELETE_CLIENTE_PROVEEDOR =  BASE_URL + BASE_API + "Catalogos/EliminarPersona?id={0}";
 
         private const string CATALOGOS_PRODUCTOS_SERVICIOS = BASE_URL + BASE_API + "Catalogos/GetCatalogosProducto";
+
+        private const string CATALOGOS_FACTURA = BASE_URL + BASE_API + "Facturas/GetCatalogos";
+        private const string LOAD_PUNTOS_VENTA_POR_ESTABLECIMIENTO = BASE_URL + BASE_API + "Facturas/GetPuntosVenta?id={0}";
+        private const string CREATE_NEW_FACTURA = BASE_URL + BASE_API + "Facturas/Registrar";
+        private const string LOAD_FACTURAS_CREADAS = BASE_URL + BASE_API + "Facturas/GetFacturas";
         public ApiService() : base()
         {
             Client.BaseAddress = new Uri(BASE_URL);
@@ -86,6 +91,27 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<object>> UpdateProfileInformation(PerfilUsuarioModel data)
         {
             return await this.PostAsync<PerfilUsuarioModel, GenericResponseObject<object>>(data, EDIT_PROFILE_INFORMATION, null);
+        }
+
+        public async Task<GenericResponseObject<CatalogosApiModel>> GetCatalogosFactura()
+        {
+            return await this.GetAsync<GenericResponseObject<CatalogosApiModel>>(CATALOGOS_FACTURA);
+        }
+
+
+        public async Task<GenericResponseObject<List<PuntoVentaModel>>> GetCatalogosPuntoVenta(long IdEstablecimiento)
+        {
+            return await this.GetAsync<GenericResponseObject<List<PuntoVentaModel>>>(LOAD_PUNTOS_VENTA_POR_ESTABLECIMIENTO, new object[] { IdEstablecimiento.ToString()});
+        }
+
+        public async Task<GenericResponseObject<FacturaModel>> CreateNewFactura(FacturaModel data)
+        {
+            return await this.PostAsync<FacturaModel, GenericResponseObject<FacturaModel>>(data, CREATE_NEW_FACTURA, null);
+        }
+
+        public async Task<GenericResponseObject<ListarDocumentosGeneradosModel>> GetConsultaFacturas(FiltersApiModel filtros)
+        {
+            return await this.GetAsync<FiltersApiModel,GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
         }
     }
 }

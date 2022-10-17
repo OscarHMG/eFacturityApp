@@ -8,7 +8,8 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
     xmlns:numeric="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms" 
-    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     x:Class="eFacturityApp.Popups.Views.AlertFacturaItemPopupPage">
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation
@@ -31,21 +32,12 @@
 
             <StackLayout>
                 <Label Text="NUEVO ITEM FACTURA" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
-                <StackLayout Orientation="Horizontal" >
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
-                    <inputLayout:SfTextInputLayout 
-                        Hint="Cantidad"
+                    
+
+                    <inputLayout:SfTextInputLayout
                         HorizontalOptions="FillAndExpand"
-                        IsHintAlwaysFloated="false" 
-                        ContainerType="Outlined">
-                        <numeric:SfNumericUpDown Font="PR" IsEditable="False" Minimum="1" SpinButtonAlignment="Both" UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="0" Value="{Binding NewItemFactura.Cantidad}"/>
-                        <inputLayout:SfTextInputLayout.HintLabelStyle>
-                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
-                            </inputLayout:LabelStyle>
-                        </inputLayout:SfTextInputLayout.HintLabelStyle>
-                    </inputLayout:SfTextInputLayout>
-
-                    <inputLayout:SfTextInputLayout 
                         Hint="Escoga Art/Servicio" 
                         ContainerType="Outlined" 
                         Padding="0" >
@@ -57,7 +49,10 @@
                             DropDownBorderColor="{StaticResource Primary}"
                             DropDownTextColor="#696969"
                             FontFamily="PB"
-                                        
+                            IsEditableMode="true" 
+                            AllowFiltering="true"
+                            ShowSuggestionsOnFocus="True"
+                            SuggestionMode="Contains"
                             TextColor="#696969"
                             BorderColor="{StaticResource Primary}"
                             HorizontalOptions="FillAndExpand"
@@ -70,11 +65,23 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <inputLayout:SfTextInputLayout 
-                        Hint="Precio Unitario"
+                        Hint="Cantidad"
                         HorizontalOptions="FillAndExpand"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <Entry Text="{Binding NewItemFactura.PrecioUnitario}" Keyboard="Numeric"/>
+                        <numeric:SfNumericUpDown Font="PR" IsEditable="False" Minimum="1" SpinButtonAlignment="Both" UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="0" Value="{Binding NewItemFactura.Cantidad}"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Precio Unitario"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding EnablePrecioEntry}"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <Entry Text="{Binding Precio}" Keyboard="Numeric" IsEnabled="{Binding EnablePrecioEntry}"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>
@@ -83,9 +90,10 @@
                     <inputLayout:SfTextInputLayout 
                         Hint="% Descuento"
                         HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding EnableDescuentoEntry}"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <Entry Text="{Binding NewItemFactura.Descuento}" Keyboard="Numeric"/>
+                        <Entry Text="{Binding Descuento}" Keyboard="Numeric" IsEnabled="{Binding EnableDescuentoEntry}"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>
@@ -98,8 +106,6 @@
                     <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}" WidthRequest="100" Style="{StaticResource NegativeButton}"/>
                     <syncfusion:SfButton Text="AGREGAR" Command="{Binding AddNewItemCommand}" WidthRequest="100"/>
                 </StackLayout>
-
-
             </StackLayout>
         </Frame>
     </StackLayout>

@@ -9,10 +9,10 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
     xmlns:ext="clr-namespace:eFacturityApp.Converters"
-    Title="Factura"
     xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     EnableBackButtonOverride="True"
+    Title="{Binding TitlePage}"
     x:Class="eFacturityApp.Views.FacturaPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -44,7 +44,7 @@
                                             HorizontalOptions="FillAndExpand"
                                             IsHintAlwaysFloated="false" 
                                             ContainerType="Outlined">
-                                            <DatePicker/>
+                                            <DatePicker Date="{Binding Factura.FechaEmision}"/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
@@ -54,9 +54,10 @@
                                         <inputLayout:SfTextInputLayout 
                                             HorizontalOptions="EndAndExpand"
                                             Hint="Días de crédito"
+                                            
                                             IsHintAlwaysFloated="false" 
                                             ContainerType="Outlined">
-                                            <Entry Text="{Binding Email}" Keyboard="Numeric"/>
+                                            <Entry Text="{Binding Factura.DiasCredito}" Keyboard="Numeric"/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
@@ -78,7 +79,6 @@
                                                 DropDownBorderColor="{StaticResource Primary}"
                                                 DropDownTextColor="#696969"
                                                 FontFamily="PB"
-                                        
                                                 TextColor="#696969"
                                                 BorderColor="{StaticResource Primary}"
                                                 HorizontalOptions="FillAndExpand"
@@ -101,6 +101,10 @@
                                                 DropDownBorderColor="{StaticResource Primary}"
                                                 DropDownTextColor="#696969"
                                                 FontFamily="PB"
+                                                IsEditableMode="true" 
+                                                AllowFiltering="true"
+                                                ShowSuggestionsOnFocus="True"
+                                                SuggestionMode="Contains"
                                                 TextColor="#696969"
                                                 BorderColor="{StaticResource Primary}"
                                                 HorizontalOptions="FillAndExpand"
@@ -127,6 +131,10 @@
                                                     DropDownTextColor="#696969"
                                                     FontFamily="PB"
                                                     TextColor="#696969"
+                                                    IsEditableMode="true" 
+                                                    AllowFiltering="true"
+                                                    ShowSuggestionsOnFocus="True"
+                                                    SuggestionMode="Contains"
                                                     BorderColor="{StaticResource Primary}"
                                                     HorizontalOptions="FillAndExpand"
                                                     SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
@@ -141,7 +149,7 @@
                                                 Hint="% Descuento"
                                                 IsHintAlwaysFloated="false" 
                                                 ContainerType="Outlined">
-                                                <Entry Text="{Binding Email}" Keyboard="Numeric"/>
+                                                <Entry Text="{Binding Factura.PorcentajeDescuento}" Keyboard="Numeric"/>
                                                 <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                     <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                     </inputLayout:LabelStyle>
@@ -162,6 +170,10 @@
                                                 DropDownTextColor="#696969"
                                                 FontFamily="PB"
                                                 TextColor="#696969"
+                                                IsEditableMode="true" 
+                                                AllowFiltering="true"
+                                                ShowSuggestionsOnFocus="True"
+                                                SuggestionMode="Contains"
                                                 BorderColor="{StaticResource Primary}"
                                                 HorizontalOptions="FillAndExpand"
                                                 SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
@@ -175,7 +187,7 @@
                                             Hint="Vendedor"
                                             IsHintAlwaysFloated="false" 
                                             ContainerType="Outlined">
-                                            <Entry Text="{Binding Email}" Keyboard="Numeric"/>
+                                            <Entry Text="{Binding Factura.NombreVendedor}" Keyboard="Text"/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
@@ -185,14 +197,13 @@
 
 
                                         <inputLayout:SfTextInputLayout 
-                                    Hint="Comentarios adicionales"
-                                    
-                                    IsHintAlwaysFloated="false" 
-                                    ContainerType="Outlined">
-                                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding Comentarios}"/>
+                                            Hint="Comentarios adicionales"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding Factura.Descripcion}"/>
 
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="KKR">
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
                                             </inputLayout:SfTextInputLayout.HintLabelStyle>
                                         </inputLayout:SfTextInputLayout>
@@ -235,14 +246,14 @@
                                                                 </TapGestureRecognizer>
                                                             </StackLayout.GestureRecognizers>
                                                         </StackLayout>
-                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreItem}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreProducto}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
                                                         <StackLayout Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Spacing="0">
                                                             <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
                                                                 <Label.FormattedText>
                                                                     <FormattedString>
                                                                         <Span Text="{Binding Cantidad}" Style="{StaticResource RegularLabel}" FontSize="18"/>
                                                                         <Span FontSize="16" Text=" x " Style="{StaticResource BoldLabel}" TextColor="{StaticResource Accent}"/>
-                                                                        <Span Text="{Binding PrecioUnitario, Converter={StaticResource currencyConverter}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
+                                                                        <Span Text="{Binding Precio, Converter={StaticResource currencyConverter}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
                                                                     </FormattedString>
                                                                 </Label.FormattedText>
                                                             </Label>
@@ -286,10 +297,15 @@
                     </syncfusion:SfExpander>
                 </StackLayout>
             </ScrollView>
+            
 
-            <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
-                <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR NUEVA FACTURA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
-                <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" >
+                
+                <StackLayout Orientation="Horizontal">
+                    <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR NUEVA FACTURA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                    <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
+                </StackLayout>
+                
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

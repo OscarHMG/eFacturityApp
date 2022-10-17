@@ -240,7 +240,66 @@ namespace eFacturityApp.Infraestructure.Services
             }
         }
 
+        public async Task<U> GetAsync<T, U>(T data, string Endpoint, object[] args = null)
+        {
+            try
+            {
+                var oauthToken = await SecureStorage.GetAsync("oauth_token");
+                if (!string.IsNullOrEmpty(oauthToken))
+                {
+                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
+                }
+                Uri uri = null;
+                if (args == null || args.Length == 0)
+                {
+                    uri = new Uri(Endpoint);
+                }
+                else
+                {
+                    string url = string.Format(Endpoint, args);
+                    uri = new Uri(url);
+                }
 
+
+                var body = JsonConvert.SerializeObject(data);
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage
+                {
+                    RequestUri = uri,
+                    Content = content,
+                    Method = HttpMethod.Get,
+                    Headers =
+                    {
+                        {"X-Version", $"{VersionTracking.CurrentVersion} ({VersionTracking.CurrentBuild})" },
+                    }
+                };
+                var response = await Client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var parsedResponse = JsonConvert.DeserializeObject<U>(json);
+                    return parsedResponse;
+                }
+                else
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        await HandleUnauthorized();
+                        return default;
+                    }
+                    else
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var parserResponse = JsonConvert.DeserializeObject<BadRequest>(json);
+                        throw new Exception(parserResponse.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("Error al realizar la consulta: \n\n{0}", e.Message), e); ;
+            }
+        }
 
         public async Task<bool> PostDataWithPhotos<T>(string EndPoint, T request, List<string> FotosRuta)
         {

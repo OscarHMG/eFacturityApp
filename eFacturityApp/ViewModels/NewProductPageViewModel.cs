@@ -123,11 +123,6 @@ namespace eFacturityApp.ViewModels
                         this.RaisePropertyChanged("UnidadMedidaSelected");
                     }
                 }
-                else
-                {
-                    await ShowAlert(TitlePage, "Ocurrió un problema en la consulta. Inténtelo más tarde.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-                    await NavigateBack(_navigationService);
-                }
             }
             catch (Exception err)
             {

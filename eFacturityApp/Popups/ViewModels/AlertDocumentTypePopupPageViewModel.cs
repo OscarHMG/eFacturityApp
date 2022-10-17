@@ -36,6 +36,9 @@ namespace eFacturityApp.Popups.ViewModels
         public ICommand CancelCommand { get; set; }
         [Reactive] public string ErrorMessage { get; set; }
 
+        [Reactive] public bool GoToConsultasDocumentsPage { get; set; }
+
+
         public AlertDocumentTypePopupPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
         {
             
@@ -53,6 +56,7 @@ namespace eFacturityApp.Popups.ViewModels
         {
             base.Initialize(parameters);
             LoadDocumentTypesCommand.Execute(null);
+            GoToConsultasDocumentsPage = parameters.GetValue<bool>("GoToConsultasPages");
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -79,7 +83,8 @@ namespace eFacturityApp.Popups.ViewModels
                 switch (DocumentTypeChecked.Id)
                 {
                     case (long)DOC_TYPE.FACTURA:
-                        await Navigate(_navigationService, "FacturaPage");
+                        string RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaFacturaPage" : "FacturaPage";
+                        await Navigate(_navigationService, RouteNavigation);
                         break;
                     default:
                         await ShowAlert("Tipo de Documento", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);

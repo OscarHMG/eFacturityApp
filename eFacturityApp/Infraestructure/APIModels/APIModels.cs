@@ -1,4 +1,5 @@
-﻿using Syncfusion.XForms.Buttons;
+﻿using ReactiveUI.Fody.Helpers;
+using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,6 +120,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public List<TipoImpuestoModel> TiposImpuestos { get; set; }
             public List<UnidadMedidaModel> UnidadesMedida { get; set; }
         }
+
+
         public class TipoArticuloModel
         {
             public long IdTipoArticulo { get; set; }
@@ -196,7 +199,10 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Descripcion { set; get; }
             public string ProductoIva { set; get; }
             public int? NumDecimales { set; get; }
-            public bool PrecioManual { set; get; }
+            public bool? PrecioManual { set; get; }
+
+
+             
         }
 
 
@@ -223,6 +229,195 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public bool? EsAgenteRetencion { set; get; }
         }
 
+        public class CatalogosApiModel
+        {
+            public CatalogosApiModel()
+            {
+                Personas = new List<PersonaModel>();
+                FormasPago = new List<FormaPagoModel>();
+                Establecimientos = new List<EstablecimientoModel>();
+                PuntosVenta = new List<PuntoVentaModel>();
+                Productos = new List<ProductoModel>();
+            }
+            public List<PersonaModel> Personas { get; set; }
+            public List<FormaPagoModel> FormasPago { get; set; }
+            public List<EstablecimientoModel> Establecimientos { get; set; }
+            public List<PuntoVentaModel> PuntosVenta { get; set; }
+            public List<ProductoModel> Productos { get; set; }
+        }
+
+        public class FormaPagoModel
+        {
+            public long IdFormaPago { set; get; }
+            public string Codigo { set; get; }
+            public string Nombre { set; get; }
+        }
+        public class EstablecimientoModel
+        {
+            public long IdEstablecimiento { set; get; }
+            public long? IdEmpresa { set; get; }
+            public string Nombre { set; get; }
+            public string Codigo { set; get; }
+            public string Direccion { set; get; }
+            public long? IdUsuario { set; get; }
+        }
+        public class PuntoVentaModel
+        {
+            public long IdPuntoVenta { set; get; }
+            public long IdEstablecimiento { set; get; }
+
+            public string Nombre { set; get; }
+            public string Codigo { set; get; }
+
+            public long? IdUsuario { set; get; }
+            public long? IdEmpresa { set; get; }
+        }
+
+
+        #region FACTURA
+        public class FacturaModel 
+        {
+
+            public FacturaModel()
+            {
+                Items = new List<ItemFacturaModel>();
+                ErroresDocumentos = new List<ErroresDocumentos>();
+                FechaEmision = DateTime.Now;
+                DiasCredito = 0;
+                PorcentajeDescuento = 0;
+            }
+            public List<ItemFacturaModel> Items { get; set; }
+            public List<ErroresDocumentos> ErroresDocumentos { get; set; }
+            public long? IdDocumentoCabecera { set; get; }
+            public long IdTipoDocumento { set; get; }
+            public string TipoDocumento { set; get; }
+            public long? IdEmpresa { set; get; }
+            public string NombreEmpresa { set; get; }
+            public long? IdEstablecimiento { set; get; }
+            public string CodigoEstablecimiento { set; get; }
+            public long? IdPuntoVenta { set; get; }
+            public string CodigoPuntoVenta { set; get; }
+            public DateTime FechaEmision { set; get; }
+            public DateTime FechaRegistro { set; get; }
+            public DateTime? FechaAnulacion { set; get; }
+            public DateTime? FechaCobro { set; get; }
+            public bool? DocXmlGenerado { set; get; }
+            public bool? DocFirmado { set; get; }
+            public bool? DocRecibido { set; get; }
+            public bool? DocAutorizado { set; get; }
+            public bool? DocRide { set; get; }
+            public bool? DocEnviar { set; get; }
+            public bool DocAnulado { set; get; }
+            public bool DocCobrado { set; get; }
+            public string FechaEmision2 { set; get; }
+
+            public long IdPersona { set; get; }
+            public string NombrePersona { set; get; }
+            public DateTime FechaVencimiento { set; get; }
+            public string DireccionMatriz { set; get; }
+            public string DireccionSucursal { set; get; }
+
+            public int NumDocumento { set; get; }
+
+            public string Info1Direccion { set; get; }
+
+            public string Info2Email { set; get; }
+
+            public long? IdFormaPago { set; get; }
+
+            public string NombreFormaPago { set; get; }
+            public string NombreTipoDocumento { set; get; }
+            //public long? IdTipoDocumentoModificado { set; get; }
+            //public string ComprobanteModifica { set; get; }
+            //public string RazonModificacion { set; get; }
+
+            public string ClaveAccesoXML { set; get; }
+
+            public string Secuencial { set; get; }
+
+            public decimal ComprobantevSubtotal0 { set; get; }
+
+            public decimal ComprobantevTotal { set; get; }
+
+            public string Estado { set; get; }
+            public string Descripcion { set; get; }
+            public decimal ComprobantevSubtotal { get; set; }
+            public decimal ComprobantevIvatotal { get; set; }
+            public string Mensaje { get; set; }
+            public bool Exitoso { get; set; }
+            public long? DiasCredito { set; get; }
+            public string CodVendedor { set; get; }
+
+            public string NombreVendedor { get; set; }
+
+            public decimal? PorcentajeDescuento { set; get; }
+            public decimal TotalDescuento { set; get; }
+            public int NumeroDecimales { set; get; }
+            public string MensajeErrorDocXmlGenerado { set; get; }
+            public string MensajeErrorocFirmado { set; get; }
+            public string MensajeErrorDocRecibido { set; get; }
+            public string MensajeErrorDocAutorizado { set; get; }
+            public string MensajeErrorDocRide { set; get; }
+            public string MensajeErrorCorreoEnviado { set; get; }
+        }
+
+        public class ItemFacturaModel
+        {
+            public long? IdDocumentoCabecera { set; get; }
+            public decimal Cantidad { get; set; } = 1;
+            public decimal Subtotal { set; get; }
+            public decimal Total { set; get; }
+            [Reactive] public decimal Descuento { set; get; }
+            public decimal ValorDescuento { set; get; }
+            public decimal Ivatotal { set; get; }
+            public decimal Precio { set; get; }
+
+            public bool? PrecioManual { get; set; }
+
+            //public decimal? PrecioManual { set; get; }
+            public string Descripcion { set; get; }
+            public string NombreProducto { set; get; }
+            public long IdProducto { set; get; }
+
+            public string GUID { get; set; }
+        }
+
+        public class ErroresDocumentos
+        {
+            public string Error { get; set; }
+            public string TipoError { get; set; }
+        }
+
+        public class ListarDocumentosGeneradosModel
+        {
+            public ListarDocumentosGeneradosModel()
+            {
+                Documentos = new List<FacturaModel>();
+            }
+            public List<FacturaModel> Documentos;
+        }
+
+
+        public class FiltersApiModel
+        {
+            public DateTime? Desde { get; set; }
+            public DateTime? Hasta { get; set; }
+            public string Estado { get; set; }
+            public string Codigo { get; set; }
+            public long? IdTipoDocumento { get; set; }
+            public long? IdPersona { get; set; }
+
+            public FiltersApiModel()
+            {
+                Desde = DateTime.Now.AddDays(-7);
+                Hasta = DateTime.Now;
+            }
+        }
+
+
+
+        #endregion
+
         #endregion
 
 
@@ -240,70 +435,5 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string ImageIcon { get; set; }
 
         }
-
-
-        #region Factura
-        public class Factura
-        {
-            public DateTime FechaEmision { get; set; }
-            public int DiasCredito { get; set; }
-
-            public long IdFormaPago { get; set; }
-            public long IdEstablecimiento { get; set; }
-
-            public long IdPuntoVenta { get; set; }
-
-            public long IdPersona { get; set; }
-
-            public string Vendedor { get; set; }
-
-            public string ComentariosFactura { get; set; }
-
-
-            public List<ItemFactura> ItemsFactura { get; set; }
-
-            public Factura(DateTime fechaEmision, int diasCredito, long idFormaPago, long idEstablecimiento, long idPuntoVenta, long idPersona, string vendedor, string comentariosFactura)
-            {
-                FechaEmision = fechaEmision;
-                DiasCredito = diasCredito;
-                IdFormaPago = idFormaPago;
-                IdEstablecimiento = idEstablecimiento;
-                IdPuntoVenta = idPuntoVenta;
-                IdPersona = idPersona;
-                Vendedor = vendedor;
-                ComentariosFactura = comentariosFactura;
-                ItemsFactura = new List<ItemFactura>();
-            }
-
-            public Factura()
-            {
-                ItemsFactura = new List<ItemFactura>();
-            }
-        }
-
-
-        public class ItemFactura
-        {
-            public string GUID { get; set; }
-            public int Cantidad { get; set; } = 1;
-
-            public long IdItem { get; set; }
-
-            public string NombreItem { get; set; }
-
-            public decimal PrecioUnitario { get; set; }
-
-            public decimal Descuento { get; set; }
-
-            public decimal Subtotal { get; set; }
-
-            public ItemFactura()
-            {
-                GUID = Guid.NewGuid().ToString();
-            }
-        }
-        #endregion
-
-
     }
 }

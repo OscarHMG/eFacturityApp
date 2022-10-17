@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    Title="Consultar facturas"
+    x:Class="eFacturityApp.Views.ConsultaFacturaPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Desde"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <DatePicker Date="{Binding Filtros.Desde}"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Hasta"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <DatePicker Date="{Binding Filtros.Hasta}"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <button:SfButton 
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Text="&#xf0b0;"
+                        FontFamily="FA"
+                        HasShadow="True"
+                        HorizontalOptions="End" 
+                        VerticalOptions="Center"
+                        Command="{Binding ShowFilterPopUpCommand}"/>
+                    
+                </StackLayout>
+            </StackLayout>
+            <CollectionView ItemsSource="{Binding Facturas}">
+
+            </CollectionView>
+        </StackLayout>
+        
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

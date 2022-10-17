@@ -44,7 +44,8 @@ namespace eFacturityApp
             //POPUP PAGES
             containerRegistry.RegisterForNavigation<LoaderPopupPage, LoaderPopupPageViewModel>("LoaderPopupPage");
             containerRegistry.RegisterForNavigation<AlertDocumentTypePopupPage, AlertDocumentTypePopupPageViewModel>("AlertDocumentTypePopupPage");
-
+            containerRegistry.RegisterForNavigation<AlertFacturaItemPopupPage, AlertFacturaItemPopupPageViewModel>("AlertFacturaItemPopupPage");
+            containerRegistry.RegisterForNavigation<AlertDocumentFiltersPopupPage, AlertDocumentFiltersPopupPageViewModel>("AlertDocumentFiltersPopupPage");
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
 
@@ -55,12 +56,13 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>("RegisterPage");
             containerRegistry.RegisterForNavigation<RecoverAccountPage, RecoveryAccountPageViewModel>("RecoverAccount");
             containerRegistry.RegisterForNavigation<FacturaPage, FacturaPageViewModel>("FacturaPage");
-            containerRegistry.RegisterForNavigation<AlertFacturaItemPopupPage, AlertFacturaItemPopupPageViewModel>("AlertFacturaItemPopupPage");
+            
             containerRegistry.RegisterForNavigation<NewProductPage, NewProductPageViewModel>("NewProductPage");
             containerRegistry.RegisterForNavigation<NewClientProviderPage, NewClientProviderPageViewModel>("NewClientProviderPage");
-            containerRegistry.RegisterForNavigationOnIdiom<ProductosPage, ProductosPageViewModel>("ProductosPage");
+            containerRegistry.RegisterForNavigation<ProductosPage, ProductosPageViewModel>("ProductosPage");
             containerRegistry.RegisterForNavigation<ClientProvidersPage, ClientProvidersPageViewModel>("ClientProvidersPage");
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>("ProfilePage");
+            containerRegistry.RegisterForNavigation<ConsultaFacturaPage, ConsultaFacturaPageViewModel>("ConsultaFacturaPage");
         }
     }
 }

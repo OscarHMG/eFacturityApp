@@ -165,6 +165,7 @@ namespace eFacturityApp.Utils
             var Result = await navigationService.NavigateAsync(route, parameters);
             if (!Result.Success)
             {
+                string URI = navigationService.GetNavigationUriPath();
                 Debugger.Break();
             }
         }
