@@ -24,6 +24,7 @@
             <Color x:Key="Green">#00B050</Color>
             <Color x:Key="Gold">#ffd700</Color>
             <Color x:Key="Red">#FF0000</Color>
+            <Color x:Key="Naranja">#FF8200</Color>
             <!--<Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />

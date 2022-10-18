@@ -46,8 +46,16 @@
                             </Label.GestureRecognizers>
                         </Label>
                         <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand" Spacing="0"  Margin="0, 25, 15, 0">
-                            <Label Text="Hola," Style="{StaticResource BoldLabel}" FontSize="18" TextColor="White" HorizontalTextAlignment="End"/>
-                            <Label Text="Oscar Moncayo" Style="{StaticResource RegularLabel}" FontSize="22" TextColor="White"/>
+                            <Label Text="Bienvenido," Style="{StaticResource BoldLabel}" FontSize="18" TextColor="White" HorizontalTextAlignment="End"/>
+                            <Label LineBreakMode="TailTruncation" MaxLines="1" VerticalOptions="End" Style="{StaticResource RegularLabel}" FontSize="22" WidthRequest="250">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Nombres}" Style="{StaticResource RegularLabel}" FontSize="22" TextColor="White"/>
+                                        <Span Text=" "  FontSize="22" TextColor="White"/>
+                                        <Span Text="{Binding Apellidos}" Style="{StaticResource RegularLabel}" FontSize="22" TextColor="White"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                         </StackLayout>
                     </StackLayout>
                     
@@ -65,7 +73,7 @@
                         <DataTemplate>
                             <StackLayout Padding="5" Spacing="0">
                                 <yummy:PancakeView
-                                    HeightRequest="140"
+                                    HeightRequest="150"
                                     BackgroundColor="White"
                                     CornerRadius="12">
                                     
@@ -73,12 +81,12 @@
                                         <yummy:DropShadow BlurRadius="10" />
                                     </yummy:PancakeView.Shadow>
                                     <StackLayout HorizontalOptions="CenterAndExpand"  Padding="0, 20">
-                                        <Image Source="eFacturityLogo1" WidthRequest="100"></Image>
+                                        <Image Source="{Binding ImageIcon}" WidthRequest="70"></Image>
                                         <Label 
                                             MaxLines="2"
                                             LineBreakMode="TailTruncation" 
                                             Text="{Binding Name}" 
-                                            Style="{StaticResource RegularLabel}" 
+                                            Style="{StaticResource BoldLabel}" 
                                             FontSize="17" 
                                             HorizontalTextAlignment="Center" 
                                             Margin="8, 0"/>

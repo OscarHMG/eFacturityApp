@@ -43,7 +43,9 @@ namespace eFacturityApp.ViewModels
 
         [Reactive] public List<ProductoModel> ProductosServicios { get; set; } = new List<ProductoModel>();
         [Reactive] public ObservableCollection<ItemFacturaModel> ItemsFactura { get; set; } = new ObservableCollection<ItemFacturaModel>();
+        [Reactive] public bool EnableControls { get; set; } = true;
 
+        [Reactive] public bool ShowPrompt { get; set; } = true;
         public ICommand LoadDropDownsCommand { get; set; }
 
         public ICommand NewItemCommand { get; set; }
@@ -51,6 +53,7 @@ namespace eFacturityApp.ViewModels
         public ICommand RemoveItemCommand { get; set; }
 
         public ICommand CreateNewFacturaCommand { get; set; }
+        
         public FacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             LoadDropDownsCommand = new Command(async () => await LoadDropDowns());
@@ -96,6 +99,8 @@ namespace eFacturityApp.ViewModels
 
                     ProductosServicios = new List<ProductoModel>(response.data.Productos);
                     await _loaderService.Hide();
+
+
                 }
             }
             catch (Exception err)
@@ -110,6 +115,19 @@ namespace eFacturityApp.ViewModels
                 DropDownPersonas = new DropDown(ItemsPersonas);
                 //Dropdown, dependiente de Establecimiento sea escogido.
                 DropDownPuntoVentas = new DropDown(ItemsPuntoVentas);
+
+                if (Factura.IdDocumentoCabecera != 0)
+                {
+                    FormasPagoSelected = SetSelectedValuesDropDown(Factura.IdFormaPago, ItemsFormasPago);
+                    EstablecimientoSelected = SetSelectedValuesDropDown(Factura.IdEstablecimiento, ItemsEstablecimiento);
+                    PuntoVentaSelected = SetSelectedValuesDropDown(Factura.IdPuntoVenta, ItemsPuntoVentas);
+                    PersonaSelected = SetSelectedValuesDropDown(Factura.IdPersona, ItemsPersonas);
+                    this.RaisePropertyChanged("FormasPagoSelected");
+                    this.RaisePropertyChanged("EstablecimientoSelected");
+                    this.RaisePropertyChanged("PuntoVentaSelected");
+                    this.RaisePropertyChanged("PersonaSelected");
+                    
+                }
             }
 
         }
@@ -144,6 +162,17 @@ namespace eFacturityApp.ViewModels
         {
             base.Initialize(parameters);
             TitlePage = "Nueva factura";
+
+            
+            var FacturaDetalle = parameters.GetValue<FacturaModel>("FacturaDetalle");
+            if (FacturaDetalle != null)
+            {
+                Factura = FacturaDetalle;
+                ItemsFactura = new ObservableCollection<ItemFacturaModel>(Factura.Items);
+                EnableControls = false;
+                TitlePage = "Detalle de Factura";
+                ShowPrompt = false;
+            }
             LoadDropDownsCommand.Execute(null);
         }
 
@@ -172,12 +201,22 @@ namespace eFacturityApp.ViewModels
 
         private async Task DeleteItem(ItemFacturaModel Item)
         {
-            var Response = await ShowYesNoAlert("Eliminar item", "¿Desea eliminar este item?", _navigationService);
-            if (Response)
+            if (Factura.IdDocumentoCabecera != 0)
             {
-                var FilteredList = ItemsFactura.ToList().Where(x => !x.GUID.Equals(Item.GUID));
-                ItemsFactura = new ObservableCollection<ItemFacturaModel>(FilteredList);
+                await ShowAlert("Detalle de factura", "No se puede modificar la factura, en modo VISUALIZADOR", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
+            else
+            {
+                var Response = await ShowYesNoAlert("Eliminar item", "¿Desea eliminar este item?", _navigationService);
+                if (Response)
+                {
+                    var FilteredList = ItemsFactura.ToList().Where(x => !x.GUID.Equals(Item.GUID));
+                    ItemsFactura = new ObservableCollection<ItemFacturaModel>(FilteredList);
+                }
+            }
+
+
+            
         }
 
         private Dictionary<bool, string> ValidateFields()

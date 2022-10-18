@@ -24,11 +24,22 @@ namespace eFacturityApp.ViewModels
         public List<ItemPicker> ItemsPersonas { get; set; }
 
         public List<ItemPicker> Estados { get; set; }
+
+        [Reactive] public string NoItemsMessage { get; set; } = "";
         public ICommand LoadFacturasCommand { get; set; }
         public ICommand ShowFilterPopUpCommand { get; set; }
 
-        [Reactive] public ICommand LoadFiltersCommand { get; set; }
+        public ICommand LoadFiltersCommand { get; set; }
 
+        public ICommand ViewDetalleCommand { get; set; }
+
+        public ICommand DownloadPDFCommand { get; set; }
+
+        public ICommand DownloadXMLCommand { get; set; }
+
+        public ICommand CobrarFacturaCommand { get; set; }
+
+        public ICommand EnviarFacturaSRICommand { get; set; }
 
         public ConsultaFacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
@@ -41,6 +52,98 @@ namespace eFacturityApp.ViewModels
                 parameters.Add("Estados", Estados);
                 await Navigate(_navigationService, "AlertDocumentFiltersPopupPage", parameters);
             });
+
+            ViewDetalleCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            {
+                NavigationParameters parameters = new NavigationParameters();
+                parameters.Add("FacturaDetalle", FacturaSelected);
+                await Navigate(_navigationService, "FacturaPage", parameters);
+            });
+
+            CobrarFacturaCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            {
+                var Response = await ShowYesNoAlert("Cobrar factura", "¿Desea enviar a cobro la factura"+ FacturaSelected.Secuencial+  "?", _navigationService);
+                if (Response)
+                {
+                    await CobrarFactura(FacturaSelected);
+                }
+                
+            });
+
+            EnviarFacturaSRICommand = new Command<FacturaModel>(async(FacturaSelected) => 
+            {
+                var Response = await ShowYesNoAlert("Enviar al SRI", "¿Desea enviar al SRI la factura" + FacturaSelected.Secuencial + "?", _navigationService);
+                if (Response)
+                {
+                    await EnviarSRI(FacturaSelected);
+                }
+            });
+
+            DownloadPDFCommand = new Command<FacturaModel>(async(FacturaSelected)=> 
+            {
+                var Response = await ShowYesNoAlert("Factura - Descargar PDF", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
+                if (Response)
+                {
+                    
+                }
+            });
+
+            DownloadXMLCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            {
+                var Response = await ShowYesNoAlert("Factura - Descargar XML", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
+                if (Response)
+                {
+
+                }
+            });
+        }
+
+        private async Task EnviarSRI(FacturaModel facturaSelected)
+        {
+            try
+            {
+                await _loaderService.Show("Enviando al SRI..");
+                var response = await _apiService.EnviarSRIFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                await _loaderService.Hide();
+                if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
+                {
+                    await ShowAlert("Consulta de facturas", "La  Factura " + facturaSelected.Secuencial + " fue enviada con éxito al SRI.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+            }
+            catch (Exception err)
+            {
+                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            finally
+            {
+                LoadFacturasCommand.Execute(null);
+            }
+        }
+
+        private async Task CobrarFactura(FacturaModel facturaSelected)
+        {
+            try
+            {
+                await _loaderService.Show("Cobrando su factura..");
+                var response = await _apiService.CobrarFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                await _loaderService.Hide();
+                if (await HandleAPIResponse(response.statusCode, response.message, "Cobrar factura", _navigationService))
+                {
+                    await ShowAlert("Consulta de facturas", "La  Factura " +facturaSelected.Secuencial + " fue cobrada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+            }
+            catch (Exception err)
+            {
+                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            finally
+            {
+                LoadFacturasCommand.Execute(null);
+            }
         }
 
         private async Task LoadFacturas()
@@ -53,13 +156,14 @@ namespace eFacturityApp.ViewModels
                 if (await HandleAPIResponse(response.statusCode, response.message, "Consultar facturas", _navigationService))
                 {
                     Facturas = new ObservableCollection<FacturaModel>(response.data.Documentos);
+                    NoItemsMessage = Facturas.Count == 0 ? "No se encontraron facturas con los criterios de búsqueda escogidos." : "";
                 }
-                
+
             }
             catch (Exception err)
             {
                 await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-
+                NoItemsMessage = "Ocurrió un error en la consulta.";
             }
         }
 
@@ -68,14 +172,14 @@ namespace eFacturityApp.ViewModels
             ItemsPersonas = new List<ItemPicker>();
             try
             {
-                await _loaderService.Show("Un momento..");
+                //await _loaderService.Show("Un momento..");
                 var response = await _apiService.GetCatalogosFactura();
-                await _loaderService.Hide();
+                //await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Filtros", _navigationService))
                 {
                     response.data.Personas.ForEach(x => ItemsPersonas.Add(new ItemPicker(x.IdPersona, x.Ruc.ToUpper(), x.Ruc.ToUpper())));
 
-                    
+
                 }
             }
             catch (Exception err)

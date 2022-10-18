@@ -176,6 +176,10 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public long? IdTipoPlan { set; get; }
             public DateTime? FechaInicioPlan { set; get; }
             public DateTime? FechaFinalPlan { set; get; }
+            public string NombrePlan { set; get; }
+
+            public string Nombres { get; set; }
+            public string Apellidos { get; set; }
         }
 
 

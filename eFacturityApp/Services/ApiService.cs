@@ -30,6 +30,9 @@ namespace eFacturityApp.Services
         private const string LOAD_PUNTOS_VENTA_POR_ESTABLECIMIENTO = BASE_URL + BASE_API + "Facturas/GetPuntosVenta?id={0}";
         private const string CREATE_NEW_FACTURA = BASE_URL + BASE_API + "Facturas/Registrar";
         private const string LOAD_FACTURAS_CREADAS = BASE_URL + BASE_API + "Facturas/GetFacturas";
+        private const string COBRAR_FACTURA =  BASE_URL + BASE_API + "Facturas/Cobrar?id={0}";
+        private const string ENVIAR_FACTURA_SRI = BASE_URL + BASE_API + "Facturas/EnviarSRI?id={0}";
+
         public ApiService() : base()
         {
             Client.BaseAddress = new Uri(BASE_URL);
@@ -112,6 +115,18 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<ListarDocumentosGeneradosModel>> GetConsultaFacturas(FiltersApiModel filtros)
         {
             return await this.GetAsync<FiltersApiModel,GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
+        }
+
+
+        public async Task<GenericResponseObject<object>> CobrarFactura(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<object>>(COBRAR_FACTURA, new object[] { Id.ToString() });
+        }
+
+
+        public async Task<GenericResponseObject<object>> EnviarSRIFactura(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<object>>(ENVIAR_FACTURA_SRI, new object[] { Id.ToString() });
         }
     }
 }

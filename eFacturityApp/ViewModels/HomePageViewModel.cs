@@ -22,12 +22,26 @@ namespace eFacturityApp.ViewModels
         [Reactive] public ICommand LoadMenuItemsOptionCommad { get; set; }
         [Reactive] public ICommand MenuOptionSelectedCommand { get; set; }
 
-        public HomePageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader)
+        [Reactive] public ICommand LoadUserInformationCommand { get; set; }
+        [Reactive] public string Nombres { get; set; }
+        [Reactive] public string Apellidos { get; set; }
+
+        public HomePageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService)
         {
             MenuOptionSelectedCommand = new Command<MenuItemOption>(async (OptionSelected)=>  await GoToPageSelectedAsync(OptionSelected));
 
 
             LoadMenuItemsOptionCommad = new Command(() => LoadMenuItems());
+
+            LoadUserInformationCommand = new Command(async()=> 
+            {
+                var user = await userService.GetUserInformationProfile();
+                if (user != null)
+                {
+                    Nombres = user.Nombres;
+                    Apellidos = user.Apellidos;
+                }
+            });
         }
 
 
@@ -39,22 +53,22 @@ namespace eFacturityApp.ViewModels
 
             MenuItemOption Op1 = new MenuItemOption();
             Op1.Id = 1;
-            Op1.ImageIcon = "";
+            Op1.ImageIcon = "NewDoc.png";
             Op1.Name = "Nuevo Doc. electrónico";
 
             MenuItemOption Op2= new MenuItemOption();
             Op2.Id = 2;
-            Op2.ImageIcon = "";
+            Op2.ImageIcon = "NewProduct.png";
             Op2.Name = "Nuevo prod/servicio";
 
             MenuItemOption Op3 = new MenuItemOption();
             Op3.Id = 3;
-            Op3.ImageIcon = "";
+            Op3.ImageIcon = "NewClient.png";
             Op3.Name = "Nuevo cliente/proveedor";
             
             MenuItemOption Op4 = new MenuItemOption();
             Op4.Id = 4;
-            Op4.ImageIcon = "";
+            Op4.ImageIcon = "SearchDoc.png";
             Op4.Name = "Consulta de Doc. electrónicos";
 
             //MenuItemOption Op5 = new MenuItemOption();
@@ -101,6 +115,7 @@ namespace eFacturityApp.ViewModels
         {
             base.Initialize(parameters);
             LoadMenuItemsOptionCommad.Execute(null);
+            LoadUserInformationCommand.Execute(null);
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)

@@ -39,7 +39,18 @@
                             CornerRadius="70" 
                             Margin="0,0,0,15" />
                         <!-- Name & role description-->
-                        <Label Grid.ColumnSpan="2" Grid.Row="1" Text="Catherine Massey " HorizontalOptions="Center" Style="{StaticResource BoldLabel}" FontSize="26" CharacterSpacing="1"/>
+                        <Label Grid.ColumnSpan="2" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center" FontSize="26" CharacterSpacing="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+
+                                    <Span Text="{Binding Perfil.Nombres}" Style="{StaticResource BoldLabel}" FontSize="26" CharacterSpacing="1" />
+                                    <Span Text=" "  FontSize="22" TextColor="White"/>
+                                    <Span Text="{Binding Perfil.Apellidos}" Style="{StaticResource BoldLabel}" FontSize="26" CharacterSpacing="1"  />
+
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
                         <!--<Label Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding Perfil.Ruc}"  Style="{StaticResource RegularLabel}" HorizontalOptions="Center" TextColor="Silver" FontSize="20"/>-->
                         <Label Grid.ColumnSpan="2" Grid.Row="2" HorizontalOptions="Center" TextColor="Silver" FontSize="20">
                             <Label.FormattedText>
@@ -52,16 +63,15 @@
 
                         <!-- Followers information-->
                         <StackLayout Grid.Row="3" Grid.ColumnSpan="2" >
-                            <Label Text="MI PLAN" TextColor="#696969" Style="{StaticResource BoldLabel}" FontSize="23" CharacterSpacing="1" HorizontalTextAlignment="Center"/>
                             <Grid RowDefinitions="*,*" ColumnDefinitions="Auto,*,Auto" Margin="30,10,30,0" >
-                                <Label Grid.Row="0" Grid.Column="0" Text="80" FontAttributes="Bold" FontSize="23" HorizontalTextAlignment="Center" />
-                                <Label Grid.Row="1" Grid.Column="0" Text="Posts" FontSize="17" TextColor="#565660" HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="0" Grid.Column="0" Text="" FontAttributes="Bold" FontSize="23" HorizontalTextAlignment="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="" FontSize="17" TextColor="#565660" HorizontalTextAlignment="Center"/>
 
-                                <Label Grid.Row="0" Grid.Column="1" Text="110" FontAttributes="Bold" FontSize="23" HorizontalTextAlignment="Center"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="Followers" FontSize="17" TextColor="#565660" HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Perfil.NombrePlan}" Style="{StaticResource RegularLabel}" FontSize="23" HorizontalTextAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="PLAN" FontSize="17" TextColor="#565660" Style="{StaticResource BoldLabel}" HorizontalTextAlignment="Center"/>
 
-                                <Label Grid.Row="0" Grid.Column="2" Text="152" FontAttributes="Bold" FontSize="23" HorizontalOptions="Center"/>
-                                <Label Grid.Row="1" Grid.Column="2" Text="Following" FontSize="17" TextColor="#565660" HorizontalOptions="Center"/>
+                                <Label Grid.Row="0" Grid.Column="2" Text="" FontAttributes="Bold" FontSize="23" HorizontalOptions="Center"/>
+                                <Label Grid.Row="1" Grid.Column="2" Text="" FontSize="17" TextColor="#565660" HorizontalOptions="Center"/>
                             </Grid>
                         </StackLayout>
 
