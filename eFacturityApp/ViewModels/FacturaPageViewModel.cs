@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 using static eFacturityApp.Utils.Utility;
 
@@ -46,6 +47,11 @@ namespace eFacturityApp.ViewModels
         [Reactive] public bool EnableControls { get; set; } = true;
 
         [Reactive] public bool ShowPrompt { get; set; } = true;
+
+        [Reactive] public bool ShowControlesFacturaCreada { get; set; } = false;
+        public long IdFacturaCreada { get; set; } = 0;
+
+        [Reactive] public bool IsLoadingTotales { get; set; } = false;
         public ICommand LoadDropDownsCommand { get; set; }
 
         public ICommand NewItemCommand { get; set; }
@@ -53,7 +59,27 @@ namespace eFacturityApp.ViewModels
         public ICommand RemoveItemCommand { get; set; }
 
         public ICommand CreateNewFacturaCommand { get; set; }
-        
+
+        public ICommand FinalizarCommand { get; set; }
+
+        public ICommand EnviarSRICommand { get; set; }
+
+        public ICommand CalcularTotalesCommand { get; set; }
+
+        public ICommand EntryDescuentoUnfocusedCommand { get; protected set; }
+
+
+        //Valores de Totales
+        [Reactive] public decimal SubtotalItemsMasIva { get; set; }
+        [Reactive] public decimal SubtotalItemsIva { get; set; }
+        [Reactive] public decimal SubtotalItemsICE { get; set; }
+        [Reactive] public decimal SubtotalItemsCeroIva { get; set; }
+        [Reactive] public decimal SubtotalItemsNoGrabaIva { get; set; }
+        [Reactive] public decimal TotalDocumentoElectronico { get; set; }
+        [Reactive] public decimal TotalDescuento { get; set; }
+
+
+
         public FacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             LoadDropDownsCommand = new Command(async () => await LoadDropDowns());
@@ -70,13 +96,52 @@ namespace eFacturityApp.ViewModels
 
             CreateNewFacturaCommand = new Command(async () => await CreateNewFactura());
 
+
+            FinalizarCommand = new Command(async () => await NavigateBack(_navigationService));
+
+            EnviarSRICommand = new Command(async () => await EnviarFacturaSRI());
+
+            CalcularTotalesCommand = new Command(async () => await CalcularTotales());
+
             this.WhenAnyValue(x => x.EstablecimientoSelected)
                 .Where(x => x != null)
                 .InvokeCommand(new Command(async () => await LoadPuntosVenta()));
 
+
+            EntryDescuentoUnfocusedCommand = new Command(()=> RecalcularValores());
+
         }
 
+        private void RecalcularValores()
+        {
+            if (ItemsFactura.Count != 0)
+            {
+                var List = ItemsFactura.ToList();
+                List.ForEach(c => c.Descuento = Factura.PorcentajeDescuento.GetValueOrDefault());
+                ItemsFactura = new ObservableCollection<ItemFacturaModel>(List);
+                CalcularTotalesCommand.Execute(null);
+            }
+        }
 
+        private async Task EnviarFacturaSRI()
+        {
+            try
+            {
+                await _loaderService.Show("Enviando factura al SRI..");
+                var response = await _apiService.EnviarSRIFactura(IdFacturaCreada);
+                await _loaderService.Hide();
+                if (await HandleAPIResponse(response.statusCode, response.message, "Envío SRI", _navigationService))
+                {
+                    await ShowAlert("Envío SRI", "Su factura fue enviada al SRI de manera exitosa.", Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await NavigateBack(_navigationService);
+                }
+            }
+            catch (Exception err)
+            {
+                await ShowAlert(TitlePage, err.Message, Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+        }
 
         private async Task LoadDropDowns()
         {
@@ -88,7 +153,7 @@ namespace eFacturityApp.ViewModels
             {
                 await _loaderService.Show("Un momento..");
                 var response = await _apiService.GetCatalogosFactura();
-                
+
                 if (await HandleAPIResponse(response.statusCode, response.message, "Factura", _navigationService))
                 {
                     response.data.FormasPago.ForEach(x => ItemsFormasPago.Add(new ItemPicker(x.IdFormaPago, (x.Codigo + " " + x.Nombre).ToUpper(), (x.Codigo + " " + x.Nombre).ToUpper())));
@@ -126,7 +191,7 @@ namespace eFacturityApp.ViewModels
                     this.RaisePropertyChanged("EstablecimientoSelected");
                     this.RaisePropertyChanged("PuntoVentaSelected");
                     this.RaisePropertyChanged("PersonaSelected");
-                    
+
                 }
             }
 
@@ -158,12 +223,41 @@ namespace eFacturityApp.ViewModels
         }
 
 
+        private async Task CalcularTotales()
+        {
+            try
+            {
+                IsLoadingTotales = true;
+                var response = await _apiService.CalcularTotales(ItemsFactura.ToList());
+                if (response.statusCode == 200)
+                {
+                    var Totales = response.data;
+                    SubtotalItemsMasIva = Totales.SubtotalItemsMasIva;
+                    SubtotalItemsIva = Totales.SubtotalItemsIva;
+                    SubtotalItemsICE = Totales.SubtotalItemsICE;
+                    SubtotalItemsCeroIva = Totales.SubtotalItemsCeroIva;
+                    SubtotalItemsNoGrabaIva = Totales.SubtotalItemsNoGrabaIva;
+                    TotalDocumentoElectronico = Totales.TotalDocumentoElectronico;
+                    TotalDescuento = Totales.TotalDescuento;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                IsLoadingTotales = false;
+            }
+        }
+
+
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
             TitlePage = "Nueva factura";
 
-            
+
             var FacturaDetalle = parameters.GetValue<FacturaModel>("FacturaDetalle");
             if (FacturaDetalle != null)
             {
@@ -172,6 +266,16 @@ namespace eFacturityApp.ViewModels
                 EnableControls = false;
                 TitlePage = "Detalle de Factura";
                 ShowPrompt = false;
+                //Cargar totales desde el API
+                TotalDocumentoElectronico = Factura.ComprobantevTotal;
+                SubtotalItemsMasIva = Factura.ComprobantevSubtotal;
+                SubtotalItemsIva = Factura.ComprobantevIvatotal;
+                SubtotalItemsICE = Factura.ComprobantevICEtotal;
+                SubtotalItemsCeroIva = Factura.ComprobantevSubtotal0;
+                SubtotalItemsNoGrabaIva = 0; // Revisar con castillo.
+                TotalDescuento = Factura.TotalDescuento;
+
+
             }
             LoadDropDownsCommand.Execute(null);
         }
@@ -196,6 +300,7 @@ namespace eFacturityApp.ViewModels
             if (NewItem != null)
             {
                 ItemsFactura.Add(NewItem);
+                CalcularTotalesCommand.Execute(null);
             }
         }
 
@@ -212,11 +317,16 @@ namespace eFacturityApp.ViewModels
                 {
                     var FilteredList = ItemsFactura.ToList().Where(x => !x.GUID.Equals(Item.GUID));
                     ItemsFactura = new ObservableCollection<ItemFacturaModel>(FilteredList);
+                    if (ItemsFactura.Count != 0)
+                    {
+                        CalcularTotalesCommand.Execute(null);
+
+                    }
                 }
             }
 
 
-            
+
         }
 
         private Dictionary<bool, string> ValidateFields()
@@ -290,6 +400,15 @@ namespace eFacturityApp.ViewModels
                     {
 
                         await ShowAlert(TitlePage, "Su factura fue creada de manera exitosa.", Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                        if (response.data.IdDocumentoCabecera != null)
+                        {
+                            //Bloqueo todos los controles
+                            EnableControls = false;
+                            TitlePage = "Detalle de Factura";
+                            IdFacturaCreada = response.data.IdDocumentoCabecera.GetValueOrDefault();
+                            ShowControlesFacturaCreada = true;
+                        }
+
                     }
                     //await NavigateBack(_navigationService);
                 }

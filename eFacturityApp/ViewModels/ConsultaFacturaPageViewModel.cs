@@ -7,7 +7,9 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -26,6 +28,10 @@ namespace eFacturityApp.ViewModels
         public List<ItemPicker> Estados { get; set; }
 
         [Reactive] public string NoItemsMessage { get; set; } = "";
+
+        [Reactive] public bool IsDownloadingFile { get; set; }
+        [Reactive] public double ProgressValue { get; set; }
+
         public ICommand LoadFacturasCommand { get; set; }
         public ICommand ShowFilterPopUpCommand { get; set; }
 
@@ -41,7 +47,9 @@ namespace eFacturityApp.ViewModels
 
         public ICommand EnviarFacturaSRICommand { get; set; }
 
-        public ConsultaFacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
+        public ICommand AnularFacturaCommand { get; set; }
+
+        public ConsultaFacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService/*, IDownloadService downloadService*/) : base(navigationService, loader, userService, apiService/*, downloadService*/)
         {
             LoadFacturasCommand = new Command(async () => await LoadFacturas());
             LoadFiltersCommand = new Command(async () => await LoadFilters());
@@ -50,6 +58,7 @@ namespace eFacturityApp.ViewModels
                 NavigationParameters parameters = new NavigationParameters();
                 parameters.Add("Personas", ItemsPersonas);
                 parameters.Add("Estados", Estados);
+                parameters.Add("FiltersSelected", Filtros);
                 await Navigate(_navigationService, "AlertDocumentFiltersPopupPage", parameters);
             });
 
@@ -85,6 +94,7 @@ namespace eFacturityApp.ViewModels
                 if (Response)
                 {
                     
+                    await StartDownloadAsync(FacturaSelected, ".pdf");
                 }
             });
 
@@ -93,7 +103,16 @@ namespace eFacturityApp.ViewModels
                 var Response = await ShowYesNoAlert("Factura - Descargar XML", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
+                    await StartDownloadAsync(FacturaSelected, ".xml");
+                }
+            });
 
+            AnularFacturaCommand = new Command<FacturaModel>(async(FacturaSelected) => 
+            {
+                var Response = await ShowYesNoAlert("Anular Factura", "¿Desea anular la factura " + FacturaSelected.Secuencial + "?", _navigationService);
+                if (Response)
+                {
+                    await AnularFactura(FacturaSelected);
                 }
             });
         }
@@ -114,6 +133,31 @@ namespace eFacturityApp.ViewModels
             catch (Exception err)
             {
                 await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            finally
+            {
+                LoadFacturasCommand.Execute(null);
+            }
+        }
+
+
+        private async Task AnularFactura(FacturaModel facturaSelected)
+        {
+            try
+            {
+                await _loaderService.Show("Anulando factura..");
+                var response = await _apiService.AnularFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                await _loaderService.Hide();
+                if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
+                {
+                    await ShowAlert("Anular factura", "La  Factura " + facturaSelected.Secuencial + " fue anulada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+            }
+            catch (Exception err)
+            {
+                await ShowAlert("Anular factura", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
             finally
@@ -166,6 +210,48 @@ namespace eFacturityApp.ViewModels
                 NoItemsMessage = "Ocurrió un error en la consulta.";
             }
         }
+
+        public async Task StartDownloadAsync(FacturaModel facturaModel, string extension)
+        {
+            var progressIndicator = new Progress<double>(ReportProgress);
+            var cts = new CancellationTokenSource();
+            try
+            {
+                IsDownloadingFile = true;
+                await _loaderService.Show("Descargando documento..");
+
+                var url = "http://agrega.juntadeandalucia.es/repositorio/01022011/19/es-an_2011020113_9122046/ODE-a52ae1e2-1203-388d-bcc7-51d33d8ffdc4/Biografia_Darwin.pdf";
+
+                
+                DownloadService downloadService = new DownloadService();
+                await downloadService.DownloadFileAsync(url, progressIndicator, cts.Token, facturaModel.Secuencial, extension);
+
+                await ShowAlert("Documento descargado", "Su documento ha sido descargado en la carpeta de Descargas", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            catch (OperationCanceledException ex)
+            {
+                await ShowAlert("Documento descargado", ex.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                //Manage cancellation here
+            }
+            catch (Exception err)
+            {
+                await ShowAlert("Documento descargado", err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+            finally
+            {
+                IsDownloadingFile = false;
+                await _loaderService.Hide();
+            }
+        }
+
+        internal void ReportProgress(double value)
+        {
+            ProgressValue = value;
+        }
+
 
         private async Task LoadFilters()
         {
@@ -220,8 +306,8 @@ namespace eFacturityApp.ViewModels
             var currentFilters = parameters.GetValue<FiltersApiModel>("Filtros");
             if (currentFilters != null)
             {
-                if (!currentFilters.Estado.Equals(Filtros.Estado) || currentFilters.IdPersona != Filtros.IdPersona ||
-                    !currentFilters.Codigo.Equals(Filtros.Codigo))
+                if (!(currentFilters.Estado == (Filtros.Estado)) || currentFilters.IdPersona != Filtros.IdPersona ||
+                    !(currentFilters.Codigo == (Filtros.Codigo)))
                 {
                     Filtros.Codigo = currentFilters.Codigo;
                     Filtros.Estado = currentFilters.Estado;

@@ -202,6 +202,22 @@
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=ViewDetalleCommand}"/>
 
                                 <button:SfButton 
+                                    Text="&#xf057;"
+                                    TextColor="Red"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Red"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=AnularFacturaCommand}"/>
+                                
+                                
+                                <button:SfButton 
                                     Text="&#xf1d8;"
                                     TextColor="DarkGreen"
                                     BackgroundColor="Transparent"

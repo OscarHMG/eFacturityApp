@@ -12,7 +12,7 @@
         <StackLayout>
             
             <StackLayout  VerticalOptions="FillAndExpand" TranslationY="60">
-                <Image Source="mail_password" WidthRequest="150"/>
+                <Image Source="mail_password" WidthRequest="110"/>
                 <StackLayout 
                     HorizontalOptions="{OnIdiom Phone=FillAndExpand, Tablet=Center}"
                     VerticalOptions="StartAndExpand"

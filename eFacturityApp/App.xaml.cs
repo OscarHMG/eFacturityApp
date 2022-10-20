@@ -41,6 +41,7 @@ namespace eFacturityApp
             containerRegistry.RegisterSingleton<UserService>();
             containerRegistry.RegisterSingleton<LoaderService>();
 
+            //containerRegistry.Register<IDownloadService, DownloadService>();
             //POPUP PAGES
             containerRegistry.RegisterForNavigation<LoaderPopupPage, LoaderPopupPageViewModel>("LoaderPopupPage");
             containerRegistry.RegisterForNavigation<AlertDocumentTypePopupPage, AlertDocumentTypePopupPageViewModel>("AlertDocumentTypePopupPage");

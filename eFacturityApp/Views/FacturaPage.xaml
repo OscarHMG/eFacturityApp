@@ -10,7 +10,7 @@
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
     xmlns:ext="clr-namespace:eFacturityApp.Converters"
     xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
-    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:behaviors="http://prismlibrary.com"
     EnableBackButtonOverride="{Binding ShowPrompt}"
     Title="{Binding TitlePage}"
     x:Class="eFacturityApp.Views.FacturaPage">
@@ -157,7 +157,13 @@
                                                 Hint="% Descuento"
                                                 IsHintAlwaysFloated="false" 
                                                 ContainerType="Outlined">
-                                                <Entry Text="{Binding Factura.PorcentajeDescuento}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}"/>
+                                                <Entry Text="{Binding Factura.PorcentajeDescuento}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}">
+                                                    <Entry.Behaviors>
+                                                        <behaviors:EventToCommandBehavior 
+                                                        EventName="Unfocused" 
+                                                        Command="{Binding EntryDescuentoUnfocusedCommand}" />
+                                                    </Entry.Behaviors>
+                                                </Entry>
                                                 <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                     <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                     </inputLayout:LabelStyle>
@@ -239,7 +245,7 @@
                         </syncfusion:SfExpander.Header>
                         <syncfusion:SfExpander.Content>
                             <StackLayout VerticalOptions="StartAndExpand">
-                                <CollectionView ItemsSource="{Binding ItemsFactura}" Margin="0, 10, 0, 0">
+                                <CollectionView ItemsSource="{Binding ItemsFactura}" Margin="0, 10, 0, 0" HeightRequest="200">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <StackLayout>
@@ -307,6 +313,47 @@
                             </StackLayout>
                         </syncfusion:SfExpander.Content>
                     </syncfusion:SfExpander>
+                    
+                    <!-- Totales -->
+                    <syncfusion:SfExpander x:Name="expanderTotales" HeaderBackgroundColor="White" >
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
+
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="TOTALES" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <StackLayout>
+                                <StackLayout IsVisible="{Binding IsLoadingTotales}" HorizontalOptions="CenterAndExpand" Margin="0, 10,0, 15">
+                                    <ActivityIndicator Color="{StaticResource Accent}" IsRunning="True" Scale="0.7"/>
+                                    <Label Text="Calculando totales.." FontSize="15" Style="{StaticResource RegularLabel}"/>
+                                </StackLayout>
+                                <Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="25*, 25*, 25*, 25*">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="Sub. 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubtotalItemsMasIva, Converter={StaticResource currencyConverter}}"  HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="0" Grid.Column="2" Text="Sub. 0%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding SubtotalItemsCeroIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Text="Sub. No objeto de IVA:" LineBreakMode="WordWrap" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SubtotalItemsNoGrabaIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="Descuento:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding TotalDescuento, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Text="IVA 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SubtotalItemsIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Text="ICE:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="2" Grid.Column="3" Text="{Binding SubtotalItemsICE, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+
+                                    <Label Grid.Row="3" Grid.Column="0" Text="TOTAL:" Style="{StaticResource BoldLabel}" FontSize="20"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding TotalDocumentoElectronico, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                </Grid>
+                            </StackLayout>
+                            
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
                 </StackLayout>
             </ScrollView>
 
@@ -318,6 +365,15 @@
                     <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
                 </StackLayout>
                 
+            </StackLayout>
+
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesFacturaCreada}">
+
+                <StackLayout Orientation="Horizontal">
+                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                    <button:SfButton Command="{Binding FinalizarCommand}" Text="FINALIZAR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}"/>
+                </StackLayout>
+
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

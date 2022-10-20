@@ -23,6 +23,8 @@ namespace eFacturityApp.Infraestructure
 
         protected readonly UserService _userService;
         protected LoaderService _loaderService { get; private set; }
+
+        protected readonly IDownloadService _downloadService;
         [Reactive] public string Title { get; set; }
 
         [Reactive] public bool HasInternetConnecion { get; set; }
@@ -49,23 +51,31 @@ namespace eFacturityApp.Infraestructure
         }
 
 
-        public ViewModelBase(INavigationService navigationService, LoaderService loader, UserService userService = null, ApiService apiService = null)
+        //public ViewModelBase(INavigationService navigationService, LoaderService loader, UserService userService = null, ApiService apiService = null)
+        //{
+
+
+        //    _navigationService = navigationService;
+        //    _apiService = apiService;
+        //    _userService = userService;
+        //    loader.setNavigationService(_navigationService);
+        //    _loaderService = loader;
+        //    _downloadService = null;
+        //    NavigateCommand = new DelegateCommand<string>(Navigate);
+        //}
+
+
+        public ViewModelBase(INavigationService navigationService, LoaderService loader, UserService userService = null, ApiService apiService = null/*, IDownloadService downloadService = null*/)
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.None || Connectivity.NetworkAccess == NetworkAccess.Unknown)
-            {
-                //var alert = new AlertModel("Aviso", "Por favor conectese a una red", "OK");
-            }
-            else
-            {
-                _navigationService = navigationService;
-                _apiService = apiService;
-                _userService = userService;
-                loader.setNavigationService(_navigationService);
-                _loaderService = loader;
 
-                NavigateCommand = new DelegateCommand<string>(Navigate);
-            }
 
+            _navigationService = navigationService;
+            _apiService = apiService;
+            _userService = userService;
+            loader.setNavigationService(_navigationService);
+            _loaderService = loader;
+            //_downloadService = downloadService;
+            NavigateCommand = new DelegateCommand<string>(Navigate);
         }
 
 

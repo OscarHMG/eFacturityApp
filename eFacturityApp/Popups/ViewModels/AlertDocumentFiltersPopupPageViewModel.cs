@@ -5,6 +5,7 @@ using Prism.Navigation;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -48,7 +49,7 @@ namespace eFacturityApp.Popups.ViewModels
                 FiltersApiModel filtros = new FiltersApiModel();
                 filtros.Codigo = Codigo;
                 filtros.IdPersona = PersonaSelected?.Id;
-                filtros.IdTipoDocumento = 1;
+                filtros.IdTipoDocumento = 2;
                 filtros.Estado = EstadoSelected?.TextoLargo;
                 parameters.Add("Filtros", filtros);
 
@@ -63,6 +64,7 @@ namespace eFacturityApp.Popups.ViewModels
             base.Initialize(parameters);
             var Estados = parameters.GetValue<List<ItemPicker>>("Estados");
             var ItemsPersonas = parameters.GetValue<List<ItemPicker>>("Personas");
+            var Filters = parameters.GetValue<FiltersApiModel>("FiltersSelected");
             if (Estados != null)
             {
                 DropDownTipoEstado = new DropDown(Estados);
@@ -71,6 +73,15 @@ namespace eFacturityApp.Popups.ViewModels
             if (ItemsPersonas != null)
             {
                 DropDownPersonas = new DropDown(ItemsPersonas);
+            }
+
+            if (Filters != null)
+            {
+                Estado = Filters.Estado;
+                EstadoSelected = DropDownTipoEstado.Items.FirstOrDefault(c=> c.TextoLargo == Filters.Estado );
+                IdPersona = Filters.IdPersona;
+                PersonaSelected = DropDownPersonas.Items.FirstOrDefault(c=> c.Id == Filters.IdPersona);
+                Codigo = Filters.Codigo;
             }
             
         }

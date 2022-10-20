@@ -1,4 +1,5 @@
-﻿using ReactiveUI.Fody.Helpers;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
@@ -206,7 +207,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public bool? PrecioManual { set; get; }
 
 
-             
+
         }
 
 
@@ -279,9 +280,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
 
 
         #region FACTURA
-        public class FacturaModel 
+        public class FacturaModel
         {
-
             public FacturaModel()
             {
                 Items = new List<ItemFacturaModel>();
@@ -347,6 +347,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Descripcion { set; get; }
             public decimal ComprobantevSubtotal { get; set; }
             public decimal ComprobantevIvatotal { get; set; }
+
+            public decimal ComprobantevICEtotal { get; set; }
             public string Mensaje { get; set; }
             public bool Exitoso { get; set; }
             public long? DiasCredito { set; get; }
@@ -356,6 +358,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
 
             public decimal? PorcentajeDescuento { set; get; }
             public decimal TotalDescuento { set; get; }
+
             public int NumeroDecimales { set; get; }
             public string MensajeErrorDocXmlGenerado { set; get; }
             public string MensajeErrorocFirmado { set; get; }
@@ -418,7 +421,16 @@ namespace eFacturityApp.Infraestructure.ApiModels
             }
         }
 
-
+        public class FacturaTotales
+        {
+            public decimal SubtotalItemsMasIva { get; set; }
+            public decimal SubtotalItemsIva { get; set; }
+            public decimal SubtotalItemsICE { get; set; }
+            public decimal SubtotalItemsCeroIva { get; set; }
+            public decimal SubtotalItemsNoGrabaIva { get; set; }
+            public decimal TotalDocumentoElectronico { get; set; }
+            public decimal TotalDescuento { get; set; }
+        }
 
         #endregion
 
