@@ -52,6 +52,7 @@ namespace eFacturityApp.ViewModels
             {
                 ContainerEditInformationProfile = false;
                 ConfirmationBackPromptModal = false;
+                LoadProfileInformationCommand.Execute(null);
             });
 
             LoadProfileInformationCommand = new Command(async()=> {
@@ -82,21 +83,27 @@ namespace eFacturityApp.ViewModels
             {
                 if (await ValidateFields())
                 {
-                    await _loaderService.Show("Actualizando su perfil..");
-                    var response = await _apiService.UpdateProfileInformation(Perfil);
+                    var Response = await ShowYesNoAlert("Actualizar perfil", "¿Está seguro que desea actualizar su información?", _navigationService);
 
-                    if (await HandleAPIResponse(response.statusCode, response.message, "Mi perfil", _navigationService))
+                    if (Response)
                     {
-                        //Update information after edited
-                        var responseProfile = await _apiService.GetProfileInformation(new LoginUsuarioRequest());
-                        if (responseProfile.statusCode == 200)
+                        await _loaderService.Show("Actualizando su perfil..");
+                        var response = await _apiService.UpdateProfileInformation(Perfil);
+
+                        if (await HandleAPIResponse(response.statusCode, response.message, "Mi perfil", _navigationService))
                         {
-                            await _userService.SaveUserInformationProfile(responseProfile.data);
-                            await ShowAlert("Mi Perfil", "Su información de perfil, se ha actualizado", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-                            LoadProfileInformationCommand.Execute(null);
-                            CancelCommand.Execute(null);
+                            //Update information after edited
+                            var responseProfile = await _apiService.GetProfileInformation(new LoginUsuarioRequest());
+                            if (responseProfile.statusCode == 200)
+                            {
+                                await _userService.SaveUserInformationProfile(responseProfile.data);
+                                await ShowAlert("Mi Perfil", "Su información de perfil, se ha actualizado", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                                LoadProfileInformationCommand.Execute(null);
+                                CancelCommand.Execute(null);
+                            }
                         }
                     }
+                    
                 }
             }
             catch (Exception err)

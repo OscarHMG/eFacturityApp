@@ -214,7 +214,7 @@
 
 
                                         <inputLayout:SfTextInputLayout 
-                                            Hint="Comentarios adicionales"
+                                            Hint="Descripción factura"
                                             IsEnabled="{Binding EnableControls}"
                                             IsHintAlwaysFloated="false" 
                                             ContainerType="Outlined">
@@ -264,7 +264,7 @@
                                                                 </TapGestureRecognizer>
                                                             </StackLayout.GestureRecognizers>
                                                         </StackLayout>
-                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreProducto}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreProducto}" FontSize="18" MaxLines="3" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
                                                         <StackLayout Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Spacing="0">
                                                             <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
                                                                 <Label.FormattedText>
@@ -278,9 +278,9 @@
                                                             <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
                                                                 <Label.FormattedText>
                                                                     <FormattedString>
-                                                                        <Span Text="Desc. : " Style="{StaticResource BoldLabel}" FontSize="16"/>
+                                                                        <Span Text="Desc.: " Style="{StaticResource BoldLabel}" FontSize="16"/>
                                                                         <Span Text="{Binding Descuento, StringFormat={StaticResource formatdecimaltwoplaces}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
-                                                                        <Span Text=" %" FontSize="18" Style="{StaticResource RegularLabel}"/>
+                                                                        
 
                                                                     </FormattedString>
                                                                 </Label.FormattedText>
@@ -331,24 +331,25 @@
                                     <ActivityIndicator Color="{StaticResource Accent}" IsRunning="True" Scale="0.7"/>
                                     <Label Text="Calculando totales.." FontSize="15" Style="{StaticResource RegularLabel}"/>
                                 </StackLayout>
-                                <Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="25*, 25*, 25*, 25*">
-                                    <Label Grid.Row="0" Grid.Column="0" Text="Sub. 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                <!--<Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="25*, 25*, 25*, 25*">
+                                    
+                                </Grid>-->
+                                <Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="50*, 50*">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="Subtotal 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubtotalItemsMasIva, Converter={StaticResource currencyConverter}}"  HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
-                                    <Label Grid.Row="0" Grid.Column="2" Text="Sub. 0%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
-                                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding SubtotalItemsCeroIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="Subtotal 0%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SubtotalItemsCeroIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="2" Grid.Column="0" Text="Sub. No objeto de IVA:" LineBreakMode="WordWrap" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SubtotalItemsNoGrabaIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Text="Descuento:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding TotalDescuento, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="4" Grid.Column="0" Text="IVA 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding SubtotalItemsIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="5" Grid.Column="0" Text="ICE:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding SubtotalItemsICE, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
 
-                                    <Label Grid.Row="1" Grid.Column="0" Text="Sub. No objeto de IVA:" LineBreakMode="WordWrap" Style="{StaticResource BoldLabel}" FontSize="19"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SubtotalItemsNoGrabaIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
-                                    <Label Grid.Row="1" Grid.Column="2" Text="Descuento:" Style="{StaticResource BoldLabel}" FontSize="19"/>
-                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding TotalDescuento, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
-
-                                    <Label Grid.Row="2" Grid.Column="0" Text="IVA 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SubtotalItemsIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Text="ICE:" Style="{StaticResource BoldLabel}" FontSize="19"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Text="{Binding SubtotalItemsICE, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
-
-                                    <Label Grid.Row="3" Grid.Column="0" Text="TOTAL:" Style="{StaticResource BoldLabel}" FontSize="20"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding TotalDocumentoElectronico, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="6" Grid.Column="0" Text="TOTAL:" Style="{StaticResource BoldLabel}" FontSize="20"/>
+                                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding TotalDocumentoElectronico, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
                                 </Grid>
                             </StackLayout>
                             
@@ -360,18 +361,20 @@
 
             <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding EnableControls}">
                 
-                <StackLayout Orientation="Horizontal">
-                    <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR NUEVA FACTURA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                <StackLayout Orientation="Vertical">
                     <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
+                    <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR NUEVA FACTURA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+
                 </StackLayout>
                 
             </StackLayout>
 
             <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesFacturaCreada}">
 
-                <StackLayout Orientation="Horizontal">
-                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                <StackLayout Orientation="Vertical">
                     <button:SfButton Command="{Binding FinalizarCommand}" Text="FINALIZAR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}"/>
+
+                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
             </StackLayout>

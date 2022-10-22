@@ -306,7 +306,7 @@ namespace eFacturityApp.ViewModels
 
         private async Task DeleteItem(ItemFacturaModel Item)
         {
-            if (Factura.IdDocumentoCabecera != 0)
+            if (Factura.IdDocumentoCabecera != null && Factura.IdDocumentoCabecera != 0)
             {
                 await ShowAlert("Detalle de factura", "No se puede modificar la factura, en modo VISUALIZADOR", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
@@ -322,11 +322,19 @@ namespace eFacturityApp.ViewModels
                         CalcularTotalesCommand.Execute(null);
 
                     }
+                    else
+                    {
+                        //Sino hay items, encerar todo..
+                        TotalDocumentoElectronico = 0;
+                        SubtotalItemsMasIva = 0;
+                        SubtotalItemsIva = 0;
+                        SubtotalItemsICE = 0;
+                        SubtotalItemsCeroIva = 0;
+                        SubtotalItemsNoGrabaIva = 0;
+                        TotalDescuento = 0;
+                    }
                 }
             }
-
-
-
         }
 
         private Dictionary<bool, string> ValidateFields()

@@ -15,7 +15,7 @@ namespace eFacturityApp.Infraestructure.Services
 {
     public class APIServiceBase
     {
-#if DEBUG
+#if !DEBUG
         
         protected HttpClient Client = PreparedClient();
         public static HttpClient PreparedClient()

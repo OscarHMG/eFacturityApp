@@ -9,7 +9,7 @@ namespace eFacturityApp.Services
 {
     public class ApiService : APIServiceBase
     {
-        public const string BASE_URL = "https://a0e1-157-100-111-45.ngrok.io/";
+        public const string BASE_URL = "https://394f-66-231-239-198.ngrok.io/";
 
         private const string BASE_API = "api/";
         private const string GET_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/GetPerfil";

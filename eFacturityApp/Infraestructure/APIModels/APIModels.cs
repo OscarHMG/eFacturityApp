@@ -386,7 +386,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string NombreProducto { set; get; }
             public long IdProducto { set; get; }
 
-            public string GUID { get; set; }
+            public string GUID { get; set; } = Guid.NewGuid().ToString();
         }
 
         public class ErroresDocumentos
