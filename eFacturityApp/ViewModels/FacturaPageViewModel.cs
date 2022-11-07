@@ -2,6 +2,8 @@
 using eFacturityApp.Infraestructure.Services;
 using eFacturityApp.Popups.ViewModels;
 using eFacturityApp.Services;
+using eFacturityApp.Views;
+using Prism.AppModel;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -22,7 +24,7 @@ using static eFacturityApp.Utils.Utility;
 
 namespace eFacturityApp.ViewModels
 {
-    public class FacturaPageViewModel : ViewModelBase
+    public class FacturaPageViewModel : ViewModelBase, IPageLifecycleAware
     {
         [Reactive] public string TitlePage { get; set; }
 
@@ -78,7 +80,7 @@ namespace eFacturityApp.ViewModels
         [Reactive] public decimal TotalDocumentoElectronico { get; set; }
         [Reactive] public decimal TotalDescuento { get; set; }
 
-
+        [Reactive] public string DescuentoString { get; set; } = "0";
 
         public FacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
@@ -107,10 +109,18 @@ namespace eFacturityApp.ViewModels
                 .Where(x => x != null)
                 .InvokeCommand(new Command(async () => await LoadPuntosVenta()));
 
+            this.WhenAnyValue(x => x.DescuentoString)
+                .Where(x => string.IsNullOrEmpty(x))
+                .InvokeCommand(new Command(() => DescuentoString = "0"));
+
 
             EntryDescuentoUnfocusedCommand = new Command(()=> RecalcularValores());
 
+            
+
+
         }
+
 
         private void RecalcularValores()
         {
@@ -432,5 +442,23 @@ namespace eFacturityApp.ViewModels
                 await ShowAlert(TitlePage, e.Message, Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
         }
+
+        public void OnAppearing()
+        {
+            MessagingCenter.Subscribe<FacturaPage, decimal>(this, "ValorDesc", (sender, arg) =>
+            {
+                Factura.PorcentajeDescuento = arg;
+                this.RaisePropertyChanged("Factura.PorcentajeDescuento");
+                RecalcularValores();
+            });
+        }
+
+        public void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<FacturaPage, decimal>(this, "ValorDesc");
+        }
     }
+
+
+
 }

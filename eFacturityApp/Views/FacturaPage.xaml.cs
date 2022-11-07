@@ -19,5 +19,16 @@ namespace eFacturityApp.Views
 
             
         }
+
+        private void Entry_Unfocused(object sender, FocusEventArgs e)
+        {
+            Entry SenderEntry = sender as Entry;
+            if (SenderEntry != null)
+            {
+                decimal Valor = string.IsNullOrEmpty(SenderEntry.Text) ? 0 : decimal.Parse(SenderEntry.Text);
+                MessagingCenter.Send<FacturaPage, decimal>(this, "ValorDesc", Valor);
+            }
+            
+        }
     }
 }

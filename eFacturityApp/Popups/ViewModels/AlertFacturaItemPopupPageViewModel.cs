@@ -79,7 +79,7 @@ namespace eFacturityApp.Popups.ViewModels
                 if (Descuento != 0)
                 {
                     //NewItemFactura.Descuento = Descuento;
-                    EnableDescuentoEntry = false;
+                    EnableDescuentoEntry = true;
 
                 }
 

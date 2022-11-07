@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 
@@ -30,13 +32,30 @@ namespace eFacturityApp.Services
 
         public DownloadService(IFileService fileService)
         {
-            _client = new HttpClient();
+#if DEBUG
+            _client = PreparedClient();
+#else
+    _client = new HttpClient();
+#endif
             _fileService = fileService;
         }
 
         public DownloadService()
         {
-            _client = new HttpClient();
+#if DEBUG
+            _client = PreparedClient();
+#else
+    _client = new HttpClient();
+#endif
+
+
+        }
+
+        public static HttpClient PreparedClient()
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClient client = new HttpClient(handler); return client;
         }
 
         /// <summary>
@@ -51,15 +70,20 @@ namespace eFacturityApp.Services
             try
             {
                 // Step 1 : Get call
+                var oauthToken = await SecureStorage.GetAsync("oauth_token");
+                if (!string.IsNullOrEmpty(oauthToken))
+                {
+                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
+                }
+                //var response = _client.GetByteArrayAsync();
                 var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
-
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new Exception(string.Format("The request returned with HTTP status code {0}", response.StatusCode));
                 }
 
                 // Step 2 : Filename
-                var fileName = nombreArchivo + extension;
+                var fileName = "FAC_" +nombreArchivo + "_" +DateTime.Now.ToFileTime() + "." +extension;
 
                 // Step 3 : Get total of data
                 var totalData = response.Content.Headers.ContentLength.GetValueOrDefault(-1L);
@@ -103,6 +127,14 @@ namespace eFacturityApp.Services
                             }
                         } while (isMoreDataToRead);
                     }
+                }
+
+                if (filePath != null)
+                {
+                    await Launcher.OpenAsync(new OpenFileRequest
+                    {
+                        File = new ReadOnlyFile(filePath)
+                    });
                 }
             }
             catch (Exception e)

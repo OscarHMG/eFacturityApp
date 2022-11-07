@@ -94,7 +94,7 @@ namespace eFacturityApp.ViewModels
                 if (Response)
                 {
                     
-                    await StartDownloadAsync(FacturaSelected, ".pdf");
+                    await StartDownloadAsync(FacturaSelected, "pdf");
                 }
             });
 
@@ -103,7 +103,7 @@ namespace eFacturityApp.ViewModels
                 var Response = await ShowYesNoAlert("Factura - Descargar XML", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
-                    await StartDownloadAsync(FacturaSelected, ".xml");
+                    await StartDownloadAsync(FacturaSelected, "xml");
                 }
             });
 
@@ -220,8 +220,8 @@ namespace eFacturityApp.ViewModels
                 IsDownloadingFile = true;
                 await _loaderService.Show("Descargando documento..");
 
-                var url = "http://agrega.juntadeandalucia.es/repositorio/01022011/19/es-an_2011020113_9122046/ODE-a52ae1e2-1203-388d-bcc7-51d33d8ffdc4/Biografia_Darwin.pdf";
-
+                //var url = "http://agrega.juntadeandalucia.es/repositorio/01022011/19/es-an_2011020113_9122046/ODE-a52ae1e2-1203-388d-bcc7-51d33d8ffdc4/Biografia_Darwin.pdf";
+                var url = string.Format(_apiService.DOWNLOAD_DOC, facturaModel.IdDocumentoCabecera, extension);
                 
                 DownloadService downloadService = new DownloadService();
                 await downloadService.DownloadFileAsync(url, progressIndicator, cts.Token, facturaModel.Secuencial, extension);

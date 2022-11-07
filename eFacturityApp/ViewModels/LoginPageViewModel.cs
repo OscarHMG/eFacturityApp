@@ -56,7 +56,7 @@ namespace eFacturityApp.ViewModels
                     {
                         await _userService.StoreToken(User, TokenResponse.AccessToken, TokenResponse.Expires);
                         response = await _apiService.GetProfileInformation(new LoginUsuarioRequest(User.Trim(), Password.Trim()));
-                        
+                        await _loaderService.Hide();
 
 
                         if (await Utility.HandleAPIResponse(response.statusCode, response.message, "Login", _navigationService))
@@ -64,10 +64,11 @@ namespace eFacturityApp.ViewModels
                             //Login its OK - Save Token and UserData
                             //response.data.Token = TokenResponse.AccessToken;
                             await _userService.SaveUserInformationProfile(response.data);
-                            await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage");
+                            await Utility.Navigate(_navigationService, "/MainPage/Nav/HomePage"); //correcta pero cae primera vez que hace login
                         }
                         else
                         {
+                            await _loaderService.Hide();
                             _userService.CerrarSession();
                         }
 
@@ -77,16 +78,11 @@ namespace eFacturityApp.ViewModels
                         await Utility.ShowAlert("Error - Login", "Credenciales incorrectas, intente nuevamente." , AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
                         _userService.CerrarSession();
                     }
-
-
-                    await _loaderService.Hide();
-                    
                 }
             }
             catch (Exception err)
             {
                 await Utility.ShowAlert("Error - Login", "Ocurrio un error inesperado: " +err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-
             }
         }
 

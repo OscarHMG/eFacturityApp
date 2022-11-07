@@ -9,8 +9,8 @@ namespace eFacturityApp.Services
 {
     public class ApiService : APIServiceBase
     {
-        public const string BASE_URL = "https://394f-66-231-239-198.ngrok.io/";
-
+        public const string BASE_URL = "https://api.efacturity.com:44372/";
+        //public const string BASE_URL = "https://179e-2800-bf0-8027-1187-a569-d775-1f1a-d3e7.sa.ngrok.io/";
         private const string BASE_API = "api/";
         private const string GET_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/GetPerfil";
         private const string EDIT_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/Editar";
@@ -22,7 +22,7 @@ namespace eFacturityApp.Services
         private const string LOAD_CLIENTE_PROVEEDORES = BASE_URL + BASE_API + "Catalogos/GetPersonas";
 
         private const string CREATE_EDIT_CLIENTE_PROVEEDORES = BASE_URL + BASE_API + "Catalogos/CrearEditarPersona";
-        private const string DELETE_CLIENTE_PROVEEDOR =  BASE_URL + BASE_API + "Catalogos/EliminarPersona?id={0}";
+        private const string DELETE_CLIENTE_PROVEEDOR = BASE_URL + BASE_API + "Catalogos/EliminarPersona?id={0}";
 
         private const string CATALOGOS_PRODUCTOS_SERVICIOS = BASE_URL + BASE_API + "Catalogos/GetCatalogosProducto";
 
@@ -30,12 +30,13 @@ namespace eFacturityApp.Services
         private const string LOAD_PUNTOS_VENTA_POR_ESTABLECIMIENTO = BASE_URL + BASE_API + "Facturas/GetPuntosVenta?id={0}";
         private const string CREATE_NEW_FACTURA = BASE_URL + BASE_API + "Facturas/Registrar";
         private const string LOAD_FACTURAS_CREADAS = BASE_URL + BASE_API + "Facturas/GetFacturas";
-        private const string COBRAR_FACTURA =  BASE_URL + BASE_API + "Facturas/Cobrar?id={0}";
+        private const string COBRAR_FACTURA = BASE_URL + BASE_API + "Facturas/Cobrar?id={0}";
         private const string ENVIAR_FACTURA_SRI = BASE_URL + BASE_API + "Facturas/EnviarSRIFactura?id={0}";
         private const string ANULAR_FACTURA = BASE_URL + BASE_API + "Facturas/Anular?id={0}";
         private const string RECOVER_ACCOUNT = BASE_URL + BASE_API + "Seguridad/OlvideMiContrasenia?correoUsuario={0}";
         private const string GET_TOTALES_FACTURA = BASE_URL + BASE_API + "Facturas/CalcularTotales";
 
+        public string DOWNLOAD_DOC {get; set;} = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}"; 
         public ApiService() : base()
         {
             Client.BaseAddress = new Uri(BASE_URL);
@@ -117,7 +118,8 @@ namespace eFacturityApp.Services
 
         public async Task<GenericResponseObject<ListarDocumentosGeneradosModel>> GetConsultaFacturas(FiltersApiModel filtros)
         {
-            return await this.GetAsync<FiltersApiModel,GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
+            return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
+            //return await this.GetAsync<FiltersApiModel,GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
         }
 
 
