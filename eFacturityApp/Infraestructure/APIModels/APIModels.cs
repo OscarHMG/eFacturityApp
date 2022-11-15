@@ -379,9 +379,9 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public decimal Ivatotal { set; get; }
             public decimal Precio { set; get; }
 
-            public bool? PrecioManual { get; set; }
+            //public bool? PrecioManual { get; set; }
 
-            //public decimal? PrecioManual { set; get; }
+            public decimal? PrecioManual { set; get; }
             public string Descripcion { set; get; }
             public string NombreProducto { set; get; }
             public long IdProducto { set; get; }
@@ -409,7 +409,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
         {
             public DateTime? Desde { get; set; }
             public DateTime? Hasta { get; set; }
-            public string Estado { get; set; }
+            public string TipoSeleccion { get; set; }
             public string Codigo { get; set; }
             public long? IdTipoDocumento { get; set; }
             public long? IdPersona { get; set; }

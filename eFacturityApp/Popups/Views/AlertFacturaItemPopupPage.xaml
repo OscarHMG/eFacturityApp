@@ -9,7 +9,7 @@
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
     xmlns:numeric="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms" 
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
-    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:behav="clr-namespace:eFacturityApp.Behaviors"
     x:Class="eFacturityApp.Popups.Views.AlertFacturaItemPopupPage">
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation
@@ -81,7 +81,11 @@
                         IsEnabled="{Binding EnablePrecioEntry}"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <Entry Text="{Binding Precio}" Keyboard="Numeric" IsEnabled="{Binding EnablePrecioEntry}"/>
+                        <Entry Text="{Binding Precio}" Keyboard="Telephone" IsEnabled="{Binding EnablePrecioEntry}">
+                            <Entry.Behaviors>
+                                <behav:DecimalEntryBehavior/>
+                            </Entry.Behaviors>
+                        </Entry>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>

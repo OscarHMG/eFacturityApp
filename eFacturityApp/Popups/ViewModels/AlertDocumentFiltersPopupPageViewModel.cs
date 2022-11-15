@@ -50,7 +50,7 @@ namespace eFacturityApp.Popups.ViewModels
                 filtros.Codigo = Codigo;
                 filtros.IdPersona = PersonaSelected?.Id;
                 filtros.IdTipoDocumento = 2;
-                filtros.Estado = EstadoSelected?.TextoLargo;
+                filtros.TipoSeleccion = EstadoSelected?.TextoLargo;
                 parameters.Add("Filtros", filtros);
 
                 await NavigateBack(_navigationService, parameters);
@@ -77,8 +77,8 @@ namespace eFacturityApp.Popups.ViewModels
 
             if (Filters != null)
             {
-                Estado = Filters.Estado;
-                EstadoSelected = DropDownTipoEstado.Items.FirstOrDefault(c=> c.TextoLargo == Filters.Estado );
+                Estado = Filters.TipoSeleccion;
+                EstadoSelected = DropDownTipoEstado.Items.FirstOrDefault(c=> c.TextoLargo == Filters.TipoSeleccion );
                 IdPersona = Filters.IdPersona;
                 PersonaSelected = DropDownPersonas.Items.FirstOrDefault(c=> c.Id == Filters.IdPersona);
                 Codigo = Filters.Codigo;

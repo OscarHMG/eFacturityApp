@@ -277,10 +277,11 @@ namespace eFacturityApp.ViewModels
             {
                 Estados = new List<ItemPicker>()
                 {
-                    new ItemPicker(1, "TODAS", "TODAS"),
-                    new ItemPicker(2, "PENDIENTES", "PENDIENTES"),
-                    new ItemPicker(3, "EMITIDAS", "EMITIDAS"),
-                    new ItemPicker(4, "CADUCADAS", "CADUCADAS")
+                    new ItemPicker(1, "Todos", "Todos"),
+                    new ItemPicker(2, "Documentos Emitidos", "Documentos Emitidos"),
+                    new ItemPicker(3, "Documentos Pendientes", "Documentos Pendientes"),
+                    new ItemPicker(4, "Documentos Anulados", "Documentos Anulados"),
+                    new ItemPicker(5, "Documentos Cobrados", "Documentos Cobrados")
                 };
             }
         }
@@ -306,11 +307,11 @@ namespace eFacturityApp.ViewModels
             var currentFilters = parameters.GetValue<FiltersApiModel>("Filtros");
             if (currentFilters != null)
             {
-                if (!(currentFilters.Estado == (Filtros.Estado)) || currentFilters.IdPersona != Filtros.IdPersona ||
+                if (!(currentFilters.TipoSeleccion == (Filtros.TipoSeleccion)) || currentFilters.IdPersona != Filtros.IdPersona ||
                     !(currentFilters.Codigo == (Filtros.Codigo)))
                 {
                     Filtros.Codigo = currentFilters.Codigo;
-                    Filtros.Estado = currentFilters.Estado;
+                    Filtros.TipoSeleccion = currentFilters.TipoSeleccion;
                     Filtros.IdPersona = currentFilters.IdPersona;
                     Filtros.IdTipoDocumento = 2;
                     LoadFacturasCommand.Execute(null);

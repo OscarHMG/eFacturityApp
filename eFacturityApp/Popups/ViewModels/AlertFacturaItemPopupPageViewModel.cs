@@ -122,12 +122,21 @@ namespace eFacturityApp.Popups.ViewModels
             }
             else
             {
-
+                var item = ProductosServicios.ToList().FirstOrDefault(c => c.IdProducto == ArticuloSelected.Id);
                 NewItemFactura.IdProducto = ArticuloSelected.Id;
                 NewItemFactura.NombreProducto = ArticuloSelected.TextoLargo;
                 NewItemFactura.Precio = Precio;
                 NewItemFactura.Descuento = Descuento;
-                
+
+                if (item.PrecioManual != null && item.PrecioManual.Value)
+                {
+                    NewItemFactura.PrecioManual = Precio;
+                }
+                else
+                {
+                    NewItemFactura.PrecioManual = null;
+                }
+
                 NavigationParameters NavParams = new NavigationParameters();
                 NavParams.Add("NewItemFactura", NewItemFactura);
 
