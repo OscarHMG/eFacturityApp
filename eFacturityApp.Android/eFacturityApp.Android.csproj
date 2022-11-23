@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eFacturityApp\eFacturityApp.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{3D989F96-D92B-4784-B5F3-8D3FACCFFA01}</Project>
       <Name>eFacturityApp</Name>
     </ProjectReference>
   </ItemGroup>
