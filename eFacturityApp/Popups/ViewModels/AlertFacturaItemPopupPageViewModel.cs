@@ -25,8 +25,9 @@ namespace eFacturityApp.Popups.ViewModels
 
         [Reactive] public decimal Precio { get; set; }
         [Reactive] public ItemFacturaModel NewItemFactura { get; set; } = new ItemFacturaModel();
+        [Reactive] public ItemProforma NewItemProforma { get; set; } = new ItemProforma();
         [Reactive] public string ErrorMessage { get; set; } = string.Empty;
-
+        [Reactive] public string ReturnPageTo { get; set; }
         [Reactive] public DropDown DropDownArticulos { get; set; }
 
         [Reactive] public ItemPicker ArticuloSelected { get; set; }
@@ -74,6 +75,7 @@ namespace eFacturityApp.Popups.ViewModels
 
             ProductosServicios = parameters.GetValue<List<ProductoModel>>("ListProductos");
             Descuento = parameters.GetValue<decimal>("DescuentoGlobal");
+            ReturnPageTo = parameters.GetValue<string>("PageToReturn");
             if (ProductosServicios != null)
             {
                 if (Descuento != 0)
@@ -123,24 +125,53 @@ namespace eFacturityApp.Popups.ViewModels
             else
             {
                 var item = ProductosServicios.ToList().FirstOrDefault(c => c.IdProducto == ArticuloSelected.Id);
-                NewItemFactura.IdProducto = ArticuloSelected.Id;
-                NewItemFactura.NombreProducto = ArticuloSelected.TextoLargo;
-                NewItemFactura.Precio = Precio;
-                NewItemFactura.Descuento = Descuento;
-
-                if (item.PrecioManual != null && item.PrecioManual.Value)
+                if (ReturnPageTo.Equals("FacturaPage"))
                 {
-                    NewItemFactura.PrecioManual = Precio;
+                    NewItemFactura.IdProducto = ArticuloSelected.Id;
+                    NewItemFactura.NombreProducto = ArticuloSelected.TextoLargo;
+                    NewItemFactura.Precio = Precio;
+                    NewItemFactura.Descuento = Descuento;
+
+                    if (item.PrecioManual != null && item.PrecioManual.Value)
+                    {
+                        NewItemFactura.PrecioManual = Precio;
+                    }
+                    else
+                    {
+                        NewItemFactura.PrecioManual = null;
+                    }
+
+                    NavigationParameters NavParams = new NavigationParameters();
+                    NavParams.Add("NewItemFactura", NewItemFactura);
+
+                    await NavigateBack(_navigationService, NavParams);
                 }
-                else
+                else if (ReturnPageTo.Equals("ProformaPage"))
                 {
-                    NewItemFactura.PrecioManual = null;
+                    NewItemProforma.IdProducto = ArticuloSelected.Id;
+                    NewItemProforma.NombreProducto = ArticuloSelected.TextoLargo;
+                    NewItemProforma.Precio = Precio;
+                    NewItemProforma.Descuento = Descuento;
+
+                    if (item.PrecioManual != null && item.PrecioManual.Value)
+                    {
+                        NewItemProforma.PrecioManual = Precio;
+                    }
+                    else
+                    {
+                        NewItemProforma.PrecioManual = null;
+                    }
+
+                    NavigationParameters NavParams = new NavigationParameters();
+                    NavParams.Add("NewItemProforma", NewItemFactura);
+
+                    await NavigateBack(_navigationService, NavParams);
+
                 }
 
-                NavigationParameters NavParams = new NavigationParameters();
-                NavParams.Add("NewItemFactura", NewItemFactura);
 
-                await NavigateBack(_navigationService, NavParams);
+
+                
             }
         }
     }

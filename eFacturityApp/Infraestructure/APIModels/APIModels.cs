@@ -502,6 +502,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public long? DiasCredito { set; get; }
             public string CodVendedor { set; get; }
 
+
             public decimal? PorcentajeDescuento { set; get; }
             public decimal TotalDescuento { set; get; }
             public int NumeroDecimales { set; get; }
@@ -527,6 +528,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Descripcion { set; get; }
             public string NombreProducto { set; get; }
             public long IdProducto { set; get; }
+            public string GUID { get; set; }
 
         }
         #endregion

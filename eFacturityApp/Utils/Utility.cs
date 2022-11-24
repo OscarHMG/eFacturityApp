@@ -23,12 +23,13 @@ namespace eFacturityApp.Utils
         public enum DOC_TYPE
         {
             FACTURA,
+            PROFORMA,
             LIQ_COMPRA_BIENES_SERVICIOS,
             NOTA_CREDITO,
             NOTA_DEBITO,
             COMPROBANTE_RET,
             GUIA_REMISION,
-            PROFORMA
+            
         }
         public class ItemCheckBox : INotifyPropertyChanged
         {

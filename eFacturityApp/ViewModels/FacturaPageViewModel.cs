@@ -91,6 +91,7 @@ namespace eFacturityApp.ViewModels
                 NavigationParameters parameters = new NavigationParameters();
                 parameters.Add("DescuentoGlobal", Factura.PorcentajeDescuento);
                 parameters.Add("ListProductos", ProductosServicios);
+                parameters.Add("PageToReturn", "FacturaPage");
                 await Navigate(_navigationService, "AlertFacturaItemPopupPage", parameters);
             });
 

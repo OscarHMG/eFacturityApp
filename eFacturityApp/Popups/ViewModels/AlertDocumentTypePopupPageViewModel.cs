@@ -80,16 +80,23 @@ namespace eFacturityApp.Popups.ViewModels
             if (DocumentTypeChecked != null)
             {
                 ErrorMessage = string.Empty;
+                string RouteNavigation = string.Empty;
                 switch (DocumentTypeChecked.Id)
                 {
                     case (long)DOC_TYPE.FACTURA:
-                        string RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaFacturaPage" : "FacturaPage";
-                        await Navigate(_navigationService, RouteNavigation);
+                        RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaFacturaPage" : "FacturaPage";
+                        break;
+                    case (long)DOC_TYPE.PROFORMA:
+                        RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaProformaPage" : "ProformaPage";
                         break;
                     default:
                         await ShowAlert("Tipo de Documento", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
                         break;
                 }
+
+                if (!string.IsNullOrEmpty(RouteNavigation))
+                    await Navigate(_navigationService, RouteNavigation);
+                
             }
             else
             {
@@ -103,12 +110,13 @@ namespace eFacturityApp.Popups.ViewModels
             List<ItemCheckBox> DocTypes = new List<ItemCheckBox>()
             {
                 new ItemCheckBox(){Id= 0, Item = "Factura" , IsChecked = false},
+                new ItemCheckBox(){Id= 1,Item = "Proforma" , IsChecked = false},
                 new ItemCheckBox(){Id= 2,Item = "Liquidación de compra de bienes o servicios" , IsChecked = false},
                 new ItemCheckBox(){Id= 3,Item = "Notas de crédito" , IsChecked = false},
                 new ItemCheckBox(){Id= 4,Item = "Nota de débito" , IsChecked = false},
                 new ItemCheckBox(){Id= 5,Item = "Comprobante de retención" , IsChecked = false},
                 new ItemCheckBox(){Id= 6,Item = "Guía de remisión" , IsChecked = false},
-                new ItemCheckBox(){Id= 7,Item = "Proforma" , IsChecked = false},
+                
             };
 
             Items.Add(DocTypes);

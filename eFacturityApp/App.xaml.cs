@@ -64,6 +64,7 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<ClientProvidersPage, ClientProvidersPageViewModel>("ClientProvidersPage");
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>("ProfilePage");
             containerRegistry.RegisterForNavigation<ConsultaFacturaPage, ConsultaFacturaPageViewModel>("ConsultaFacturaPage");
+            containerRegistry.RegisterForNavigation<ProformaPage, ProformaPageViewModel>("ProformaPage");
         }
     }
 }

@@ -71,16 +71,11 @@ namespace eFacturityApp.ViewModels
             Op4.ImageIcon = "SearchDoc.png";
             Op4.Name = "Consulta de Doc. electrónicos";
 
-            //MenuItemOption Op5 = new MenuItemOption();
-            //Op5.Id = 1;
-            //Op5.ImageIcon = "";
-            //Op5.Name = "Nuevo Doc. electrónico";
 
             MenuOptionItems.Add(Op1);
             MenuOptionItems.Add(Op2);
             MenuOptionItems.Add(Op3);
             MenuOptionItems.Add(Op4);
-            //MenuOptionItems.Add(Op5);
 
         }
 
