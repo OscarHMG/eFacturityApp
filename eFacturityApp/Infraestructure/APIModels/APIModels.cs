@@ -435,13 +435,16 @@ namespace eFacturityApp.Infraestructure.ApiModels
         #endregion
 
         #region Cotizacion o Proforma
-        public class ProformaModel 
+        public class ProformaModel
         {
 
             public ProformaModel()
             {
                 Items = new List<ItemProforma>();
                 ErroresDocumentos = new List<ErroresDocumentos>();
+                FechaEmision = DateTime.Now;
+                DiasCredito = 0;
+                PorcentajeDescuento = 0;
             }
             public List<ItemProforma> Items { get; set; }
             public List<ErroresDocumentos> ErroresDocumentos { get; set; }
@@ -454,7 +457,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string CodigoEstablecimiento { set; get; }
             public long? IdPuntoVenta { set; get; }
             public string CodigoPuntoVenta { set; get; }
-            public DateTime FechaEmision { set; get; }
+            public DateTime FechaEmision { set; get; } = new DateTime();
             public DateTime FechaRegistro { set; get; }
             public DateTime? FechaAnulacion { set; get; }
             public DateTime? FechaCobro { set; get; }
@@ -528,7 +531,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Descripcion { set; get; }
             public string NombreProducto { set; get; }
             public long IdProducto { set; get; }
-            public string GUID { get; set; }
+            public string GUID { get; set; } = Guid.NewGuid().ToString();
 
         }
         #endregion

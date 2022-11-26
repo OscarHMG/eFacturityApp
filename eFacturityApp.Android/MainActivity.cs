@@ -4,7 +4,9 @@ using Android.OS;
 using eFacturityApp.Views;
 using Prism;
 using Prism.Ioc;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace eFacturityApp.Droid
@@ -28,6 +30,13 @@ namespace eFacturityApp.Droid
             UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            CultureInfo ci = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+        }
 
         public override void OnBackPressed()
         {

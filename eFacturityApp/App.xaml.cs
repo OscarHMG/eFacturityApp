@@ -9,6 +9,8 @@ using Prism;
 using Prism.Ioc;
 using Prism.Plugin.Popups;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -26,7 +28,7 @@ namespace eFacturityApp
         {
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2Mzk5QDMxMzgyZTMzMmUzMGFwRnBJZkZzNnp1TXBjNzl4OEM2M01SL2tyTlB3WHJQa0dHSXl1R2txaVE9");
-
+            
             UserService userService = new UserService(NavigationService, null);
             string PathToNavigate = await userService.HasValidToken() ? "/MainPage/Nav/HomePage" : "/Nav/LoginPage";
             await Utility.Navigate(NavigationService, PathToNavigate);

@@ -9,8 +9,12 @@ namespace eFacturityApp.Services
 {
     public class ApiService : APIServiceBase
     {
+#if DEBUG
+        public const string BASE_URL = "https://c241-181-199-60-229.sa.ngrok.io/";
+
+#else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
-        //public const string BASE_URL = "https://f591-2800-bf0-8027-1187-31c8-9f45-5667-157d.ngrok.io/";
+#endif
         private const string BASE_API = "api/";
         private const string GET_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/GetPerfil";
         private const string EDIT_PROFILE_INFORMATION = BASE_URL + BASE_API + "Perfil/Editar";
@@ -119,7 +123,6 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<ListarDocumentosGeneradosModel>> GetConsultaFacturas(FiltersApiModel filtros)
         {
             return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
-            //return await this.GetAsync<FiltersApiModel,GenericResponseObject<ListarDocumentosGeneradosModel>>(filtros, LOAD_FACTURAS_CREADAS);
         }
 
 

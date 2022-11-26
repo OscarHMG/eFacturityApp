@@ -404,7 +404,7 @@
                         HorizontalOptions="FillAndExpand"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <DatePicker Date="{Binding Filtros.Desde}"/>
+                        <DatePicker Date="{Binding Filtros.Desde}" FontSize="Body"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>
@@ -416,7 +416,7 @@
                         HorizontalOptions="FillAndExpand"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <DatePicker Date="{Binding Filtros.Hasta}"/>
+                        <DatePicker Date="{Binding Filtros.Hasta}" FontSize="Body"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>

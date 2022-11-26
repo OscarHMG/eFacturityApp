@@ -65,18 +65,18 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <inputLayout:SfTextInputLayout 
-                        Hint="Cantidad"
+                        Hint="Cant."
                         HorizontalOptions="FillAndExpand"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <numeric:SfNumericUpDown Font="PR" IsEditable="False" Minimum="1" SpinButtonAlignment="Both" UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="0" Value="{Binding NewItemFactura.Cantidad}"/>
+                        <numeric:SfNumericUpDown Font="PR" IsEditable="False" Minimum="1" SpinButtonAlignment="Both" UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="0" Value="{Binding Cantidad}"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>
                         </inputLayout:SfTextInputLayout.HintLabelStyle>
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
-                        Hint="Precio Unitario"
+                        Hint="Precio Unit."
                         HorizontalOptions="FillAndExpand"
                         IsEnabled="{Binding EnablePrecioEntry}"
                         IsHintAlwaysFloated="false" 
@@ -92,7 +92,7 @@
                         </inputLayout:SfTextInputLayout.HintLabelStyle>
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
-                        Hint="% Descuento"
+                        Hint="% Desc."
                         HorizontalOptions="FillAndExpand"
                         IsEnabled="{Binding EnableDescuentoEntry}"
                         IsHintAlwaysFloated="false" 

@@ -59,19 +59,22 @@
 
 
             <Style TargetType="Entry" ApplyToDerivedTypes="true">
-                <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
+                <!--<Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/> -->
                 <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="FontSize" Value="Body"></Setter>
                 <Setter Property="TextColor" Value="#696969"></Setter>
             </Style>
 
             <Style TargetType="combobox:SfComboBox" ApplyToDerivedTypes="true">
                 <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
                 <Setter Property="FontFamily" Value="PB" />
+                <Setter Property="TextSize" Value="Body"></Setter>
                 <Setter Property="DropDownItemFontFamily" Value="PR"/>
                 <Setter Property="TextColor" Value="#696969"></Setter>
             </Style>
 
             <Style TargetType="Editor" ApplyToDerivedTypes="True">
+                <Setter Property="FontSize" Value="Body"></Setter>
                 <Setter Property="HeightRequest" Value="{d:OnPlatform Android='50', iOS='25'}"/>
                 <Setter Property="FontFamily" Value="PB" />
                 <Setter Property="TextColor" Value="#696969"></Setter>

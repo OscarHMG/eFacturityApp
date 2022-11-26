@@ -47,7 +47,7 @@
                                             IsHintAlwaysFloated="false" 
                                             IsEnabled="{Binding EnableControls}"
                                             ContainerType="Outlined">
-                                            <DatePicker Date="{Binding Factura.FechaEmision}" IsEnabled="{Binding EnableControls}"/>
+                                            <DatePicker Date="{Binding Factura.FechaEmision}" IsEnabled="{Binding EnableControls}" FontSize="Body"/>
                                             <inputLayout:SfTextInputLayout.HintLabelStyle>
                                                 <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                                                 </inputLayout:LabelStyle>
@@ -156,7 +156,7 @@
                                             <inputLayout:SfTextInputLayout 
                                                 IsEnabled="{Binding EnableControls}"
                                                 HorizontalOptions="EndAndExpand"
-                                                Hint="% Descuento"
+                                                Hint="% Desc."
                                                 IsHintAlwaysFloated="false" 
                                                 ContainerType="Outlined">
                                                 <Entry Text="{Binding Factura.PorcentajeDescuento}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}" Unfocused="Entry_Unfocused">
@@ -303,7 +303,6 @@
                                                 VerticalOptions="CenterAndExpand">
                                                 <Label 
                                                     Text="Agregue items a la factura."
-                                                    Margin="10,25,10,10"
                                                     FontSize="18"
                                                     FontAttributes="Bold"
                                                     Style="{StaticResource RegularLabel}"

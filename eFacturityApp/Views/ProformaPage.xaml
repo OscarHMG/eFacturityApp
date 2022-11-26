@@ -10,10 +10,18 @@
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
     xmlns:behaviors="clr-namespace:eFacturityApp.Behaviors"
-    xmlns:vm="clr-namespace:eFacturityApp.ViewModels"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters"
     EnableBackButtonOverride="{Binding ShowPrompt}"
     Title="{Binding TitlePage}"
     x:Class="eFacturityApp.Views.ProformaPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+            <x:String x:Key="formatdecimaltwoplaces">{0:0.00}</x:String>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
                 <StackLayout Margin="0" Padding="0">
             <ScrollView Margin="0" VerticalScrollBarVisibility="Never">
@@ -147,7 +155,7 @@
                                             </inputLayout:SfTextInputLayout>-->
                                             <inputLayout:SfTextInputLayout 
                                                 IsEnabled="{Binding EnableControls}"
-                                                HorizontalOptions="EndAndExpand"
+                                                HorizontalOptions="FillAndExpand"
                                                 Hint="% Descuento"
                                                 IsHintAlwaysFloated="false" 
                                                 ContainerType="Outlined">
@@ -293,7 +301,6 @@
                                                 VerticalOptions="CenterAndExpand">
                                                 <Label 
                                                     Text="Agregue items a la proforma."
-                                                    Margin="10,25,10,10"
                                                     FontSize="18"
                                                     FontAttributes="Bold"
                                                     Style="{StaticResource RegularLabel}"

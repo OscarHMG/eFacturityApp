@@ -39,7 +39,7 @@
                             CornerRadius="70" 
                             Margin="0,0,0,15" />
                         <!-- Name & role description-->
-                        <Label Grid.ColumnSpan="2" Grid.Row="1" MaxLines="1" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center" FontSize="26" CharacterSpacing="1">
+                        <Label Grid.ColumnSpan="2" Grid.Row="1" MaxLines="2" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center" FontSize="26" CharacterSpacing="1">
                             <Label.FormattedText>
                                 <FormattedString>
 

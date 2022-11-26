@@ -140,8 +140,7 @@ namespace eFacturityApp.ViewModels
                     response.data.Personas.ForEach(x => ItemsPersonas.Add(new ItemPicker(x.IdPersona, x.Ruc.ToUpper(), x.Ruc.ToUpper())));
                     response.data.PuntosVenta.ForEach(x => ItemsPuntoVentas.Add(new ItemPicker(x.IdPuntoVenta, (x.Codigo + " " + x.Nombre).ToUpper(), (x.Codigo + " " + x.Nombre).ToUpper())));
 
-
-                    //ProductosServicios = new List<ProductoModel>(response.data.Productos);
+                    ProductosServicios = new List<ProductoModel>(response.data.Productos);
                     await _loaderService.Hide();
 
 
@@ -229,7 +228,15 @@ namespace eFacturityApp.ViewModels
                 if (Response)
                 {
                     var FilteredList = ItemsProforma.ToList().Where(x => !x.GUID.Equals(Item.GUID));
-                    ItemsProforma = new ObservableCollection<ItemProforma>(FilteredList);
+                    if (FilteredList == null)
+                    {
+                        ItemsProforma = new ObservableCollection<ItemProforma>();
+                    }
+                    else
+                    {
+                        ItemsProforma = new ObservableCollection<ItemProforma>(FilteredList);
+                    }
+                    
                     /*if (ItemsProforma.Count != 0)
                     {
                         CalcularTotalesCommand.Execute(null);

@@ -97,7 +97,9 @@ namespace eFacturityApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Decimal.Parse(value.ToString()).ToString("C");
+            //return Decimal.Parse(value.ToString()).ToString("C");
+            //system.Globalization.CultureInfo.InvariantCulture
+            return Decimal.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture).ToString("C");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

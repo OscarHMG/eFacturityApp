@@ -26,6 +26,7 @@ namespace eFacturityApp.Popups.ViewModels
         [Reactive] public decimal Precio { get; set; }
         [Reactive] public ItemFacturaModel NewItemFactura { get; set; } = new ItemFacturaModel();
         [Reactive] public ItemProforma NewItemProforma { get; set; } = new ItemProforma();
+        [Reactive] public decimal Cantidad { get; set; }
         [Reactive] public string ErrorMessage { get; set; } = string.Empty;
         [Reactive] public string ReturnPageTo { get; set; }
         [Reactive] public DropDown DropDownArticulos { get; set; }
@@ -43,6 +44,7 @@ namespace eFacturityApp.Popups.ViewModels
         public AlertFacturaItemPopupPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             Descuento = 0;
+            Cantidad = 1;
             LoadArticulosCatalogosCommand = new Command(() => LoadDropDowns(ProductosServicios));
 
             CancelCommand = new Command(async () => await NavigateBack(_navigationService));
@@ -131,7 +133,7 @@ namespace eFacturityApp.Popups.ViewModels
                     NewItemFactura.NombreProducto = ArticuloSelected.TextoLargo;
                     NewItemFactura.Precio = Precio;
                     NewItemFactura.Descuento = Descuento;
-
+                    NewItemFactura.Cantidad =  Cantidad;
                     if (item.PrecioManual != null && item.PrecioManual.Value)
                     {
                         NewItemFactura.PrecioManual = Precio;
@@ -152,7 +154,7 @@ namespace eFacturityApp.Popups.ViewModels
                     NewItemProforma.NombreProducto = ArticuloSelected.TextoLargo;
                     NewItemProforma.Precio = Precio;
                     NewItemProforma.Descuento = Descuento;
-
+                    NewItemProforma.Cantidad= Cantidad;
                     if (item.PrecioManual != null && item.PrecioManual.Value)
                     {
                         NewItemProforma.PrecioManual = Precio;
@@ -163,7 +165,7 @@ namespace eFacturityApp.Popups.ViewModels
                     }
 
                     NavigationParameters NavParams = new NavigationParameters();
-                    NavParams.Add("NewItemProforma", NewItemFactura);
+                    NavParams.Add("NewItemProforma", NewItemProforma);
 
                     await NavigateBack(_navigationService, NavParams);
 
