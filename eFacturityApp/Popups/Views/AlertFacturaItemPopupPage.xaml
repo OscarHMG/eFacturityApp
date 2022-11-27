@@ -31,7 +31,7 @@
         <Frame CornerRadius="8" >
 
             <StackLayout>
-                <Label Text="NUEVO ITEM FACTURA" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
+                <Label Text="NUEVO ITEM" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
                     
@@ -106,9 +106,9 @@
                 </StackLayout>
 
                 <Label Text="{Binding ErrorMessage}" Style="{StaticResource BoldLabel}" FontSize="16" TextColor="{StaticResource Red}"/>
-                <StackLayout Orientation="Horizontal" Spacing="10" Margin="0, 5, 0, 5" HorizontalOptions="EndAndExpand">
-                    <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}" WidthRequest="100" Style="{StaticResource NegativeButton}"/>
-                    <syncfusion:SfButton Text="AGREGAR" Command="{Binding AddNewItemCommand}" WidthRequest="100"/>
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="0, 5, 0, 5" HorizontalOptions="FillAndExpand">
+                    <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}"  Style="{StaticResource NegativeButton}" HorizontalOptions="FillAndExpand"/>
+                    <syncfusion:SfButton Text="AGREGAR" Command="{Binding AddNewItemCommand}" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

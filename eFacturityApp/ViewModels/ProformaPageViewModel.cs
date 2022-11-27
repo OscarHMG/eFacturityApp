@@ -36,9 +36,17 @@ namespace eFacturityApp.ViewModels
         [Reactive] public ObservableCollection<ItemProforma> ItemsProforma { get; set; } = new ObservableCollection<ItemProforma>();
         [Reactive] public bool EnableControls { get; set; } = true;
         [Reactive] public bool ShowPrompt { get; set; } = true;
-        [Reactive] public bool ShowControlesFacturaCreada { get; set; } = false;
-        public long IdFacturaCreada { get; set; } = 0;
+        [Reactive] public bool ShowControlesProformaCreada { get; set; } = false;
+        public long IdProformaCreada { get; set; } = 0;
         [Reactive] public bool IsLoadingTotales { get; set; } = false;
+
+        [Reactive] public decimal SubtotalItemsMasIva { get; set; }
+        [Reactive] public decimal SubtotalItemsIva { get; set; }
+        [Reactive] public decimal SubtotalItemsICE { get; set; }
+        [Reactive] public decimal SubtotalItemsCeroIva { get; set; }
+        [Reactive] public decimal SubtotalItemsNoGrabaIva { get; set; }
+        [Reactive] public decimal TotalDocumentoElectronico { get; set; }
+        [Reactive] public decimal TotalDescuento { get; set; }
 
         public ICommand LoadDropDownsCommand { get; set; }
         public ICommand NewItemCommand { get; set; }
@@ -46,6 +54,8 @@ namespace eFacturityApp.ViewModels
         public ICommand CreateNewProformaCommand { get; set; }
         public ICommand CalcularTotalesCommand { get; set; }
         public ICommand EntryDescuentoUnfocusedCommand { get; protected set; }
+
+        public ICommand FinalizarCommand { get; set; }
 
         public ProformaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
@@ -62,8 +72,12 @@ namespace eFacturityApp.ViewModels
             RemoveItemCommand = new Command<ItemProforma>(async (Item) => await DeleteItem(Item));
             CalcularTotalesCommand = new Command(async () => await CalcularTotales());
             EntryDescuentoUnfocusedCommand = new Command(() => RecalcularValores());
+
+            CreateNewProformaCommand = new Command(async () => await CreateNewProforma());
+            FinalizarCommand = new Command(async () => await NavigateBack(_navigationService));
         }
 
+        
 
         public void OnAppearing()
         {
@@ -91,13 +105,13 @@ namespace eFacturityApp.ViewModels
                 TitlePage = "Detalle de Proforma";
                 ShowPrompt = false;
                 //Cargar totales desde el API
-                //TotalDocumentoElectronico = Factura.ComprobantevTotal;
-                //SubtotalItemsMasIva = Factura.ComprobantevSubtotal;
-                //SubtotalItemsIva = Factura.ComprobantevIvatotal;
-                //SubtotalItemsICE = Factura.ComprobantevICEtotal;
-                //SubtotalItemsCeroIva = Factura.ComprobantevSubtotal0;
-                //SubtotalItemsNoGrabaIva = 0; // Revisar con castillo.
-                //TotalDescuento = Factura.TotalDescuento;
+                TotalDocumentoElectronico = Proforma.ComprobantevTotal;
+                SubtotalItemsMasIva = Proforma.ComprobantevSubtotal;
+                SubtotalItemsIva = Proforma.ComprobantevIvatotal;
+                SubtotalItemsICE = Proforma.ComprobantevICEtotal;
+                SubtotalItemsCeroIva = Proforma.ComprobantevSubtotal0;
+                SubtotalItemsNoGrabaIva = 0; // Revisar con castillo.
+                TotalDescuento = Proforma.TotalDescuento;
 
 
             }
@@ -194,7 +208,7 @@ namespace eFacturityApp.ViewModels
                 isValid = false;
                 ErrorMessage = "% de descuento, es requerido.";
             }
-            else if (PersonaSelected == null)
+            else if (PersonaSelected == null || PersonaSelected.Id == 0)
             {
                 isValid = false;
                 ErrorMessage = "Persona, es requerido.";
@@ -202,7 +216,7 @@ namespace eFacturityApp.ViewModels
             else if (ItemsProforma.Count == 0)
             {
                 isValid = false;
-                ErrorMessage = "La factura debe contar con al menos un item en su detalle.";
+                ErrorMessage = "La proforma debe contar con al menos un item en su detalle.";
             }
             KeyValueValidation.Add(isValid, ErrorMessage);
             return KeyValueValidation;
@@ -218,7 +232,7 @@ namespace eFacturityApp.ViewModels
         }
         private async Task DeleteItem(ItemProforma Item)
         {
-            if (Proforma.IdProformaCabecera != null && Proforma.IdProformaCabecera != 0)
+            if (IdProformaCreada != 0)
             {
                 await ShowAlert("Detalle de proforma", "No se puede modificar la proforma, en modo VISUALIZADOR", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
@@ -237,7 +251,7 @@ namespace eFacturityApp.ViewModels
                         ItemsProforma = new ObservableCollection<ItemProforma>(FilteredList);
                     }
                     
-                    /*if (ItemsProforma.Count != 0)
+                    if (ItemsProforma.Count != 0)
                     {
                         CalcularTotalesCommand.Execute(null);
 
@@ -252,11 +266,54 @@ namespace eFacturityApp.ViewModels
                         SubtotalItemsCeroIva = 0;
                         SubtotalItemsNoGrabaIva = 0;
                         TotalDescuento = 0;
-                    }*/
+                    }
                 }
             }
         }
 
+
+        private async Task CreateNewProforma()
+        {
+            try
+            {
+                bool isValid = ValidateFields().First().Key;
+                string Message = ValidateFields().First().Value;
+                if (ValidateFields().First().Key)
+                {
+                    _loaderService.setNavigationService(_navigationService);
+                    await _loaderService.Show("Registrando su proforma..");
+                    Proforma.Items = ItemsProforma.ToList();
+                    Proforma.IdPersona = PersonaSelected.Id;
+                    var response = await _apiService.CreateNewProforma(Proforma);
+                    await _loaderService.Hide();
+
+                    if (await HandleAPIResponse(response.statusCode, response.message, TitlePage, _navigationService))
+                    {
+
+                        await ShowAlert(TitlePage, "Su proforma fue creada de manera exitosa.", Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                        if (response.data.IdProformaCabecera != null)
+                        {
+                            //Bloqueo todos los controles
+                            EnableControls = false;
+                            TitlePage = "Detalle de proforma";
+                            IdProformaCreada = response.data.IdProformaCabecera.GetValueOrDefault();
+                            ShowControlesProformaCreada = true;
+                        }
+
+                    }
+                }
+                else
+                {
+                    await ShowAlert(TitlePage, Message, Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                await ShowAlert(TitlePage, e.Message, Popups.ViewModels.AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+            }
+        }
         private void RecalcularValores()
         {
             if (ItemsProforma.Count != 0)
@@ -271,10 +328,10 @@ namespace eFacturityApp.ViewModels
 
         private async Task CalcularTotales()
         {
-            /*try
+            try
             {
                 IsLoadingTotales = true;
-                var response = await _apiService.CalcularTotales(ItemsFactura.ToList());
+                var response = await _apiService.CalcularTotalesProforma(ItemsProforma.ToList());
                 if (response.statusCode == 200)
                 {
                     var Totales = response.data;
@@ -294,7 +351,7 @@ namespace eFacturityApp.ViewModels
             finally
             {
                 IsLoadingTotales = false;
-            }*/
+            }
         }
     }
 }

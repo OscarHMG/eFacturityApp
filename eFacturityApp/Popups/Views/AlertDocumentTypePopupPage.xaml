@@ -43,7 +43,7 @@
                 </syncfusion:SfRadioGroup>
                 <Label Text="{Binding ErrorMessage}" Style="{StaticResource BoldLabel}" FontSize="16" TextColor="{StaticResource Red}"/>
                 <StackLayout Orientation="Horizontal" Spacing="10" Margin="0, 5, 0, 5" HorizontalOptions="EndAndExpand">
-                    <syncfusion:SfButton Text="CANCELAR" Command="{Binding CancelCommand}" WidthRequest="100" Style="{StaticResource NegativeButton}"/>
+                    <syncfusion:SfButton Text="CERRAR" Command="{Binding CancelCommand}" Style="{StaticResource NegativeButton}" WidthRequest="120"/>
                     <syncfusion:SfButton Text="OK" Command="{Binding DocumentTypeSelectedCommand}" WidthRequest="80"/>
                 </StackLayout>
                 

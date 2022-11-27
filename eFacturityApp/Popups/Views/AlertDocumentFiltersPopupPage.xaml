@@ -62,6 +62,7 @@
             </inputLayout:SfTextInputLayout>
             <inputLayout:SfTextInputLayout 
                 Hint="Estado" 
+                IsVisible="{Binding ShowFiltroEstados}"
                 ContainerType="Outlined" 
                 Padding="0" >
                 <inputLayout:SfTextInputLayout.HintLabelStyle>
@@ -83,6 +84,7 @@
                     DisplayMemberPath = "TextoLargo"
                     DataSource="{Binding DropDownTipoEstado.Items}"
                     SelectedDropDownItemColor="White">
+                    
                 </combobox:SfComboBox>
             </inputLayout:SfTextInputLayout>
             <inputLayout:SfTextInputLayout 

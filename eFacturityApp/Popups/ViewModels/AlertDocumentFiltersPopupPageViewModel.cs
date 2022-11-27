@@ -32,7 +32,7 @@ namespace eFacturityApp.Popups.ViewModels
         [Reactive] public ItemPicker PersonaSelected { get; set; }
 
 
-        
+        [Reactive] public bool ShowFiltroEstados { get; set; } = true;
 
         [Reactive] public ICommand ApplyFiltersCommand { get; set; }
 
@@ -65,6 +65,7 @@ namespace eFacturityApp.Popups.ViewModels
             var Estados = parameters.GetValue<List<ItemPicker>>("Estados");
             var ItemsPersonas = parameters.GetValue<List<ItemPicker>>("Personas");
             var Filters = parameters.GetValue<FiltersApiModel>("FiltersSelected");
+            ShowFiltroEstados = parameters.GetValue<bool>("ShowFiltroEstados");
             if (Estados != null)
             {
                 DropDownTipoEstado = new DropDown(Estados);
@@ -78,7 +79,10 @@ namespace eFacturityApp.Popups.ViewModels
             if (Filters != null)
             {
                 Estado = Filters.TipoSeleccion;
-                EstadoSelected = DropDownTipoEstado.Items.FirstOrDefault(c=> c.TextoLargo == Filters.TipoSeleccion );
+                if (DropDownTipoEstado != null)
+                {
+                    EstadoSelected = DropDownTipoEstado.Items.FirstOrDefault(c => c.TextoLargo == Filters.TipoSeleccion);
+                }
                 IdPersona = Filters.IdPersona;
                 PersonaSelected = DropDownPersonas.Items.FirstOrDefault(c=> c.Id == Filters.IdPersona);
                 Codigo = Filters.Codigo;

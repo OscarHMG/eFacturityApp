@@ -59,6 +59,7 @@ namespace eFacturityApp.ViewModels
                 parameters.Add("Personas", ItemsPersonas);
                 parameters.Add("Estados", Estados);
                 parameters.Add("FiltersSelected", Filtros);
+                parameters.Add("ShowFiltroEstados", true);
                 await Navigate(_navigationService, "AlertDocumentFiltersPopupPage", parameters);
             });
 

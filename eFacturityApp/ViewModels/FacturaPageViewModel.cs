@@ -317,7 +317,7 @@ namespace eFacturityApp.ViewModels
 
         private async Task DeleteItem(ItemFacturaModel Item)
         {
-            if (Factura.IdDocumentoCabecera != null && Factura.IdDocumentoCabecera != 0)
+            if (IdFacturaCreada != 0)
             {
                 await ShowAlert("Detalle de factura", "No se puede modificar la factura, en modo VISUALIZADOR", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
@@ -363,27 +363,27 @@ namespace eFacturityApp.ViewModels
                 isValid = false;
                 ErrorMessage = "Días de crédito, es requerido.";
             }
-            else if (FormasPagoSelected == null)
+            else if (FormasPagoSelected == null || FormasPagoSelected.Id == 0)
             {
                 isValid = false;
                 ErrorMessage = "Forma de pago, es requerido.";
             }
-            else if (EstablecimientoSelected == null)
+            else if (EstablecimientoSelected == null || EstablecimientoSelected.Id == 0)
             {
                 isValid = false;
                 ErrorMessage = "Establecimiento, es requerido.";
             }
-            else if (PuntoVentaSelected == null)
+            else if (PuntoVentaSelected == null || PuntoVentaSelected.Id == 0   )
             {
                 isValid = false;
                 ErrorMessage = "Punto de venta, es requerido.";
             }
-            else if (Factura.PorcentajeDescuento == null)
+            else if (Factura.PorcentajeDescuento == null )
             {
                 isValid = false;
                 ErrorMessage = "% de descuento, es requerido.";
             }
-            else if (PersonaSelected == null)
+            else if (PersonaSelected == null || PersonaSelected.Id == 0 )
             {
                 isValid = false;
                 ErrorMessage = "Persona, es requerido.";

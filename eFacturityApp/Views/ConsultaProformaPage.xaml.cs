@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace eFacturityApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ConsultaProformaPage : ContentPage
+    public partial class ConsultaProformaPage : BaseNavigationBarPage
     {
         public ConsultaProformaPage()
         {

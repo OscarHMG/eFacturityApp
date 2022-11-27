@@ -69,90 +69,7 @@
                                     </StackLayout>
 
                                     <StackLayout>
-
-                                        <!--<inputLayout:SfTextInputLayout 
-                                            Hint="Forma de pago" 
-                                            IsEnabled="{Binding EnableControls}"
-                                            ContainerType="Outlined" 
-                                            Padding="0" >
-                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                                </inputLayout:LabelStyle>
-                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <combobox:SfComboBox
-                                                DropDownBorderColor="{StaticResource Primary}"
-                                                DropDownTextColor="#696969"
-                                                FontFamily="PB"
-                                                IsEnabled="{Binding EnableControls}"
-                                                TextColor="#696969"
-                                                BorderColor="{StaticResource Primary}"
-                                                HorizontalOptions="FillAndExpand"
-                                                SelectedItem="{Binding FormasPagoSelected, Mode=TwoWay}"
-                                                DisplayMemberPath = "TextoLargo"
-                                                DataSource="{Binding DropDownFormasPago.Items}"
-                                                SelectedDropDownItemColor="White">
-                                            </combobox:SfComboBox>
-                                        </inputLayout:SfTextInputLayout>
-
-                                        <inputLayout:SfTextInputLayout 
-                                            Hint="Establecimiento" 
-                                            IsEnabled="{Binding EnableControls}"
-                                            ContainerType="Outlined" 
-                                            Padding="0" >
-                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                                </inputLayout:LabelStyle>
-                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                            <combobox:SfComboBox
-                                                IsEnabled="{Binding EnableControls}"
-                                                DropDownBorderColor="{StaticResource Primary}"
-                                                DropDownTextColor="#696969"
-                                                FontFamily="PB"
-                                                IsEditableMode="true" 
-                                                AllowFiltering="true"
-                                                ShowSuggestionsOnFocus="True"
-                                                SuggestionMode="Contains"
-                                                TextColor="#696969"
-                                                BorderColor="{StaticResource Primary}"
-                                                HorizontalOptions="FillAndExpand"
-                                                SelectedItem="{Binding EstablecimientoSelected, Mode=TwoWay}"
-                                                DisplayMemberPath = "TextoLargo"
-                                                DataSource="{Binding DropDownEstablecimientos.Items}"
-                                                SelectedDropDownItemColor="White">
-                                            </combobox:SfComboBox>
-                                        </inputLayout:SfTextInputLayout>-->
-
-
                                         <StackLayout Orientation="Horizontal" >
-                                            <!--<inputLayout:SfTextInputLayout 
-                                                HorizontalOptions="FillAndExpand"
-                                                Hint="Puntos de venta" 
-                                                IsEnabled="{Binding EnableControls}"
-                                                ContainerType="Outlined" 
-                                                Padding="0" >
-                                                <inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
-                                                    </inputLayout:LabelStyle>
-                                                </inputLayout:SfTextInputLayout.HintLabelStyle>
-                                                <combobox:SfComboBox
-                                                    IsEnabled="{Binding EnableControls}"
-                                                    DropDownBorderColor="{StaticResource Primary}"
-                                                    DropDownTextColor="#696969"
-                                                    FontFamily="PB"
-                                                    TextColor="#696969"
-                                                    IsEditableMode="true" 
-                                                    AllowFiltering="true"
-                                                    ShowSuggestionsOnFocus="True"
-                                                    SuggestionMode="Contains"
-                                                    BorderColor="{StaticResource Primary}"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
-                                                    DisplayMemberPath = "TextoLargo"
-                                                    DataSource="{Binding DropDownPuntoVentas.Items}"
-                                                    SelectedDropDownItemColor="White">
-                                                </combobox:SfComboBox>
-
-                                            </inputLayout:SfTextInputLayout>-->
                                             <inputLayout:SfTextInputLayout 
                                                 IsEnabled="{Binding EnableControls}"
                                                 HorizontalOptions="FillAndExpand"
@@ -315,7 +232,7 @@
                     </syncfusion:SfExpander>
                     
                     <!-- Totales -->
-                    <!--<syncfusion:SfExpander x:Name="expanderTotales" HeaderBackgroundColor="White" >
+                    <syncfusion:SfExpander x:Name="expanderTotales" HeaderBackgroundColor="White" >
                         <syncfusion:SfExpander.Header >
                             <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
 
@@ -331,7 +248,7 @@
                                     <ActivityIndicator Color="{StaticResource Accent}" IsRunning="True" Scale="0.7"/>
                                     <Label Text="Calculando totales.." FontSize="15" Style="{StaticResource RegularLabel}"/>
                                 </StackLayout>
-                                
+
                                 <Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="50*, 50*">
                                     <Label Grid.Row="0" Grid.Column="0" Text="Subtotal 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubtotalItemsMasIva, Converter={StaticResource currencyConverter}}"  HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
@@ -350,9 +267,9 @@
                                     <Label Grid.Row="6" Grid.Column="1" Text="{Binding TotalDocumentoElectronico, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
                                 </Grid>
                             </StackLayout>
-                            
+
                         </syncfusion:SfExpander.Content>
-                    </syncfusion:SfExpander>-->
+                    </syncfusion:SfExpander>
                 </StackLayout>
             </ScrollView>
 
@@ -361,20 +278,17 @@
                 
                 <StackLayout Orientation="Vertical">
                     <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
-                    <button:SfButton Command="{Binding CreateNewFacturaCommand}" Text="REGISTRAR PROFORMA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                    <button:SfButton Command="{Binding CreateNewProformaCommand}" Text="REGISTRAR PROFORMA" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
 
                 </StackLayout>
                 
             </StackLayout>
 
-            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesFacturaCreada}">
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesProformaCreada}">
 
                 <StackLayout Orientation="Vertical">
                     <button:SfButton Command="{Binding FinalizarCommand}" Text="FINALIZAR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}"/>
-
-                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
-
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

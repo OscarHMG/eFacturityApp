@@ -10,7 +10,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://c241-181-199-60-229.sa.ngrok.io/";
+        public const string BASE_URL = "https://d3e0-181-199-60-229.sa.ngrok.io/";
 
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
@@ -39,6 +39,10 @@ namespace eFacturityApp.Services
         private const string ANULAR_FACTURA = BASE_URL + BASE_API + "Facturas/Anular?id={0}";
         private const string RECOVER_ACCOUNT = BASE_URL + BASE_API + "Seguridad/OlvideMiContrasenia?correoUsuario={0}";
         private const string GET_TOTALES_FACTURA = BASE_URL + BASE_API + "Facturas/CalcularTotales";
+
+        private const string CREATE_NEW_PROFORMA = BASE_URL + BASE_API + "Proformas/Registrar";
+        private const string GET_TOTALES_PROFORMA = BASE_URL + BASE_API + "Proformas/CalcularTotales";
+        private const string LOAD_PROFORMAS_CREADAS = BASE_URL + BASE_API + "Proformas/GetProformas";
 
         public string DOWNLOAD_DOC {get; set;} = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}"; 
         public ApiService() : base()
@@ -152,5 +156,20 @@ namespace eFacturityApp.Services
             return await this.PostAsync<List<ItemFacturaModel>, GenericResponseObject<FacturaTotales>>(items, GET_TOTALES_FACTURA, null);
         }
 
+        //////////// PROFORMA ////////////
+        public async Task<GenericResponseObject<ProformaModel>> CreateNewProforma(ProformaModel data)
+        {
+            return await this.PostAsync<ProformaModel, GenericResponseObject<ProformaModel>>(data, CREATE_NEW_PROFORMA, null);
+        }
+        public async Task<GenericResponseObject<ListarProformaGeneradasViewModel>> GetConsultaProformas(FiltersApiModel filtros)
+        {
+            return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarProformaGeneradasViewModel>>(filtros, LOAD_PROFORMAS_CREADAS);
+        }
+
+
+        public async Task<GenericResponseObject<ProformaTotales>> CalcularTotalesProforma(List<ItemProforma> items)
+        {
+            return await this.PostAsync<List<ItemProforma>, GenericResponseObject<ProformaTotales>>(items, GET_TOTALES_PROFORMA, null);
+        }
     }
 }
