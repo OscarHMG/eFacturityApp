@@ -1,6 +1,10 @@
-﻿using Foundation;
+﻿
+using Foundation;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
+using ObjCRuntime;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -21,9 +25,17 @@ namespace eFacturityApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
+            SfTextInputLayoutRenderer.Init();
+            Syncfusion.XForms.iOS.Border.SfBorderRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfButtonRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfCheckBoxRenderer.Init();
+            Syncfusion.XForms.iOS.Expander.SfExpanderRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfRadioButtonRenderer.Init();
+            Syncfusion.XForms.iOS.ComboBox.SfComboBoxRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
-
+            KeyboardOverlapRenderer.Init();
             return base.FinishedLaunching(app, options);
         }
     }

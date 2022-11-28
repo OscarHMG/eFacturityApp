@@ -5,6 +5,8 @@
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="true"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F8F8"
     x:Class="eFacturityApp.Views.LoginPage">

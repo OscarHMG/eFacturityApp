@@ -28,6 +28,9 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <CodesignProvision></CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements></CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -102,7 +105,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Services\FileService.cs" />
-    <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <LinkDescription Include="LinkerSettings.xml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -191,6 +193,23 @@
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default@2x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="account.png" />
+    <BundleResource Include="avatar.png" />
+    <BundleResource Include="Banner.jpeg" />
+    <BundleResource Include="banner1.png" />
+    <BundleResource Include="banner2.png" />
+    <BundleResource Include="banner3.png" />
+    <BundleResource Include="document.png" />
+    <BundleResource Include="eFacturityLogo1.png" />
+    <BundleResource Include="icon.png" />
+    <BundleResource Include="mail_password.png" />
+    <BundleResource Include="NewClient.png" />
+    <BundleResource Include="NewDoc.png" />
+    <BundleResource Include="NewProduct.png" />
+    <BundleResource Include="padlock.png" />
+    <BundleResource Include="SearchDoc.png" />
+    <BundleResource Include="splashlogo.png" />
+    <BundleResource Include="user_recover.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -223,12 +242,18 @@
     <PackageReference Include="Xamarin.Forms.PancakeView">
       <Version>2.3.0.759</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.KeyboardOverlap">
+      <Version>1.0.0.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eFacturityApp\eFacturityApp.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{3D989F96-D92B-4784-B5F3-8D3FACCFFA01}</Project>
       <Name>eFacturityApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entitlements.plist" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
