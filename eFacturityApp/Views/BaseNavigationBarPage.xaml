@@ -30,6 +30,8 @@
                         FontSize="25"
                         Style="{StaticResource RegularLabel}"
                         Text="{TemplateBinding Title}"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation"
                         VerticalOptions="Center" />
                 </StackLayout>
                 <ContentPresenter Grid.Row="1" />

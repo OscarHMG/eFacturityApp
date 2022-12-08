@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:behaviors="http://prismlibrary.com"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
+    EnableBackButtonOverride="{Binding ShowPrompt}"
+    Title="{Binding TitlePage}"
+    x:Class="eFacturityApp.Views.LiquidacionCompraPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+            <x:String x:Key="formatdecimaltwoplaces">{0:0.00}</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="0">
+            <ScrollView Margin="0" VerticalScrollBarVisibility="Never">
+                <StackLayout  VerticalOptions="FillAndExpand">
+                    <syncfusion:SfExpander x:Name="expander" HeaderBackgroundColor="White" IsExpanded="True" DynamicSizeMode="Content">
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
+
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="INFORMACIÓN GENERAL" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <Grid VerticalOptions="StartAndExpand" Padding="0, 15">
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal" >
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Fecha de Emisión"
+                                            HorizontalOptions="FillAndExpand"
+                                            IsHintAlwaysFloated="false" 
+                                            IsEnabled="{Binding EnableControls}"
+                                            ContainerType="Outlined">
+                                            <DatePicker Date="{Binding LiquidacionCompra.FechaEmision}" IsEnabled="{Binding EnableControls}" FontSize="Body"/>
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            HorizontalOptions="EndAndExpand"
+                                            Hint="Días de crédito"
+                                            IsEnabled="{Binding EnableControls}"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <Entry Text="{Binding LiquidacionCompra.DiasCredito}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}"/>
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
+                                    </StackLayout>
+
+                                    <StackLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Forma de pago" 
+                                            IsEnabled="{Binding EnableControls}"
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                                IsEnabled="{Binding EnableControls}"
+                                                TextColor="#696969"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding FormasPagoSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownFormasPago.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Establecimiento" 
+                                            IsEnabled="{Binding EnableControls}"
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                IsEnabled="{Binding EnableControls}"
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                                IsEditableMode="true" 
+                                                AllowFiltering="true"
+                                                ShowSuggestionsOnFocus="True"
+                                                SuggestionMode="Contains"
+                                                TextColor="#696969"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding EstablecimientoSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownEstablecimientos.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+
+                                        <StackLayout Orientation="Horizontal" >
+                                            <inputLayout:SfTextInputLayout 
+                                                HorizontalOptions="FillAndExpand"
+                                                Hint="Puntos de venta" 
+                                                IsEnabled="{Binding EnableControls}"
+                                                ContainerType="Outlined" 
+                                                Padding="0" >
+                                                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                    </inputLayout:LabelStyle>
+                                                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <combobox:SfComboBox
+                                                    IsEnabled="{Binding EnableControls}"
+                                                    DropDownBorderColor="{StaticResource Primary}"
+                                                    DropDownTextColor="#696969"
+                                                    FontFamily="PB"
+                                                    TextColor="#696969"
+                                                    IsEditableMode="true" 
+                                                    AllowFiltering="true"
+                                                    ShowSuggestionsOnFocus="True"
+                                                    SuggestionMode="Contains"
+                                                    BorderColor="{StaticResource Primary}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
+                                                    DisplayMemberPath = "TextoLargo"
+                                                    DataSource="{Binding DropDownPuntoVentas.Items}"
+                                                    SelectedDropDownItemColor="White">
+                                                </combobox:SfComboBox>
+
+                                            </inputLayout:SfTextInputLayout>
+                                            <inputLayout:SfTextInputLayout 
+                                                IsEnabled="{Binding EnableControls}"
+                                                HorizontalOptions="EndAndExpand"
+                                                Hint="% Desc."
+                                                IsHintAlwaysFloated="false" 
+                                                ContainerType="Outlined">
+                                                <Entry Text="{Binding LiquidacionCompra.PorcentajeDescuento}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}" Unfocused="Entry_Unfocused">
+                                                    <Entry.Behaviors>
+                                                        <behaviors:EventToCommandBehavior 
+                                                            EventName="Unfocused" 
+                                                            Command="{Binding EntryDescuentoUnfocusedCommand}" />
+                                                    </Entry.Behaviors>
+                                                </Entry>
+                                                <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                    <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                    </inputLayout:LabelStyle>
+                                                </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            </inputLayout:SfTextInputLayout>
+                                        </StackLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Persona" 
+                                            IsEnabled="{Binding EnableControls}"
+                                            ContainerType="Outlined" 
+                                            Padding="0" >
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                            <combobox:SfComboBox
+                                                DropDownBorderColor="{StaticResource Primary}"
+                                                DropDownTextColor="#696969"
+                                                FontFamily="PB"
+                                                IsEnabled="{Binding EnableControls}"
+                                                TextColor="#696969"
+                                                IsEditableMode="true" 
+                                                AllowFiltering="true"
+                                                ShowSuggestionsOnFocus="True"
+                                                SuggestionMode="Contains"
+                                                BorderColor="{StaticResource Primary}"
+                                                HorizontalOptions="FillAndExpand"
+                                                SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
+                                                DisplayMemberPath = "TextoLargo"
+                                                DataSource="{Binding DropDownPersonas.Items}"
+                                                SelectedDropDownItemColor="White">
+                                            </combobox:SfComboBox>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Vendedor"
+                                            IsEnabled="{Binding EnableControls}"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <Entry Text="{Binding LiquidacionCompra.NombreVendedor}" Keyboard="Text" IsEnabled="{Binding EnableControls}"/>
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
+
+
+
+                                        <inputLayout:SfTextInputLayout 
+                                            Hint="Descripción liquidación"
+                                            IsEnabled="{Binding EnableControls}"
+                                            IsHintAlwaysFloated="false" 
+                                            ContainerType="Outlined">
+                                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding LiquidacionCompra.Descripcion}" IsEnabled="{Binding EnableControls}"/>
+
+                                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                                </inputLayout:LabelStyle>
+                                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                                        </inputLayout:SfTextInputLayout>
+
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
+
+                    <syncfusion:SfExpander x:Name="expanderDetalle" HeaderBackgroundColor="White" >
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
+
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="DETALLE LIQUIDACIÓN DE COMPRA" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" MaxLines="1" LineBreakMode="TailTruncation"/>
+
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <StackLayout VerticalOptions="StartAndExpand">
+                                <CollectionView ItemsSource="{Binding ItemsLiquidacionCompra}" Margin="0, 10, 0, 0" HeightRequest="200">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <yummy:PancakeView  
+                                                    BackgroundColor="White"
+                                                    CornerRadius="12">
+                                                    <Grid ColumnDefinitions="10*,60*,30*" HorizontalOptions="FillAndExpand" HeightRequest="80">
+                                                        <StackLayout Grid.Column="0"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="5,0,0,0">
+                                                            <Label Text="&#xf00d;" TextColor="{StaticResource Red}" FontFamily="FA" FontSize="30" VerticalTextAlignment="Center"/>
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer 
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LiquidacionCompraPageViewModel}}, Path=RemoveItemCommand}"
+                                                                    CommandParameter="{Binding .}">
+
+                                                                </TapGestureRecognizer>
+                                                            </StackLayout.GestureRecognizers>
+                                                        </StackLayout>
+                                                        <Label Grid.Column="1" Style="{StaticResource RegularLabel}" Text="{Binding NombreProducto}" FontSize="18" MaxLines="3" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                                                        <StackLayout Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Spacing="0">
+                                                            <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="{Binding Cantidad}" Style="{StaticResource RegularLabel}" FontSize="18"/>
+                                                                        <Span FontSize="16" Text=" x " Style="{StaticResource BoldLabel}" TextColor="{StaticResource Accent}"/>
+                                                                        <Span Text="{Binding Precio, Converter={StaticResource currencyConverter}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                            <Label LineBreakMode="WordWrap" HorizontalTextAlignment="End">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="Desc.: " Style="{StaticResource BoldLabel}" FontSize="16"/>
+                                                                        <Span Text="{Binding Descuento, StringFormat={StaticResource formatdecimaltwoplaces}}" FontSize="18" Style="{StaticResource RegularLabel}"/>
+
+
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                        </StackLayout>
+                                                    </Grid>
+                                                </yummy:PancakeView>
+
+                                            </StackLayout>
+
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                    <CollectionView.EmptyView>
+                                        <ContentView>
+                                            <StackLayout 
+                                                HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="CenterAndExpand">
+                                                <Label 
+                                                    Text="Agregue items a la liq. de compras"
+                                                    FontSize="18"
+                                                    FontAttributes="Bold"
+                                                    Style="{StaticResource RegularLabel}"
+                                                    HorizontalOptions="Fill"
+                                                    HorizontalTextAlignment="Center" />
+                                            </StackLayout>
+                                        </ContentView>
+                                    </CollectionView.EmptyView>
+                                </CollectionView>
+                            </StackLayout>
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
+
+                    <!-- Totales -->
+                    <syncfusion:SfExpander x:Name="expanderTotales" HeaderBackgroundColor="White" >
+                        <syncfusion:SfExpander.Header >
+                            <yummy:PancakeView Padding="5, 8"  VerticalOptions="FillAndExpand" CornerRadius="12" HorizontalOptions="StartAndExpand">
+
+                                <Grid  HorizontalOptions="StartAndExpand">
+                                    <Label TextColor="#696969" Text="TOTALES" Style="{StaticResource BoldLabel}" FontSize="19" VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </yummy:PancakeView>
+                        </syncfusion:SfExpander.Header>
+                        <syncfusion:SfExpander.Content>
+                            <StackLayout>
+                                <StackLayout IsVisible="{Binding IsLoadingTotales}" HorizontalOptions="CenterAndExpand" Margin="0, 10,0, 15">
+                                    <ActivityIndicator Color="{StaticResource Accent}" IsRunning="True" Scale="0.7"/>
+                                    <Label Text="Calculando totales.." FontSize="15" Style="{StaticResource RegularLabel}"/>
+                                </StackLayout>
+                                <!--<Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="25*, 25*, 25*, 25*">
+                                    
+                                </Grid>-->
+                                <Grid Padding="0,20" VerticalOptions="StartAndExpand" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="50*, 50*">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="Subtotal 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubtotalItemsMasIva, Converter={StaticResource currencyConverter}}"  HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="Subtotal 0%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SubtotalItemsCeroIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="2" Grid.Column="0" Text="Sub. No objeto de IVA:" LineBreakMode="WordWrap" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding SubtotalItemsNoGrabaIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Text="Descuento:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding TotalDescuento, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="4" Grid.Column="0" Text="IVA 12%:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding SubtotalItemsIva, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    <Label Grid.Row="5" Grid.Column="0" Text="ICE:" Style="{StaticResource BoldLabel}" FontSize="19"/>
+                                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding SubtotalItemsICE, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+
+                                    <Label Grid.Row="6" Grid.Column="0" Text="TOTAL:" Style="{StaticResource BoldLabel}" FontSize="20"/>
+                                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding TotalDocumentoElectronico, Converter={StaticResource currencyConverter}}" HorizontalOptions="EndAndExpand" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                </Grid>
+                            </StackLayout>
+
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
+                </StackLayout>
+            </ScrollView>
+
+
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding EnableControls}">
+
+                <StackLayout Orientation="Vertical">
+                    <button:SfButton Command="{Binding NewItemCommand}" Text="AGREGAR ITEM" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource Button3}"/>
+                    <button:SfButton Command="{Binding CreateNewLiquidacionCompraCommand}" Text="REGISTRAR NUEVA LIQ. DE COMPRAS" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesLiquidacionCompraCreada}">
+
+                <StackLayout Orientation="Vertical">
+                    <button:SfButton Command="{Binding FinalizarCommand}" Text="FINALIZAR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}"/>
+
+                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

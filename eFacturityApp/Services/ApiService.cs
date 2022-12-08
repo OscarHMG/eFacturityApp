@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials.Interfaces;
 using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 
 namespace eFacturityApp.Services
@@ -10,8 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://e4d6-181-199-60-229.ngrok.io/";
-
+        public const string BASE_URL = "https://cf14-181-199-44-229.sa.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
@@ -44,6 +44,9 @@ namespace eFacturityApp.Services
         private const string GET_TOTALES_PROFORMA = BASE_URL + BASE_API + "Proformas/CalcularTotales";
         private const string LOAD_PROFORMAS_CREADAS = BASE_URL + BASE_API + "Proformas/GetProformas";
 
+
+        private const string GET_TOTALES_LIQ_COMPRA = BASE_URL + BASE_API + "";
+        private const string CREATE_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "";
         public string DOWNLOAD_DOC {get; set;} = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}"; 
         public ApiService() : base()
         {
@@ -170,6 +173,19 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<ProformaTotales>> CalcularTotalesProforma(List<ItemProforma> items)
         {
             return await this.PostAsync<List<ItemProforma>, GenericResponseObject<ProformaTotales>>(items, GET_TOTALES_PROFORMA, null);
+        }
+
+        //////////   LIQUIDACION DE COMPRA  //////////////
+
+        public async Task<GenericResponseObject<LiquidacionCompraTotales>> CalcularTotalesLiquidacionCompra(List<ItemLiquidacionCompraModel> items)
+        {
+            return await this.PostAsync<List<ItemLiquidacionCompraModel>, GenericResponseObject<LiquidacionCompraTotales>>(items, GET_TOTALES_LIQ_COMPRA, null);
+
+        }
+
+        public async Task<GenericResponseObject<LiquidacionCompraModel>> CreateNewLiquidacionCompra(LiquidacionCompraModel data)
+        {
+            return await this.PostAsync<LiquidacionCompraModel, GenericResponseObject<LiquidacionCompraModel>>(data, CREATE_LIQUIDACION_COMPRA, null);
         }
     }
 }

@@ -553,6 +553,127 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public decimal TotalDescuento { get; set; }
         }
         #endregion
+
+        #region Liquidacion de Compra
+        public class LiquidacionCompraModel
+        {
+
+            public LiquidacionCompraModel()
+            {
+                Items = new List<ItemLiquidacionCompraModel>();
+                ErroresDocumentos = new List<ErroresDocumentos>();
+            }
+            public List<ItemLiquidacionCompraModel> Items { get; set; }
+            public List<ErroresDocumentos> ErroresDocumentos { get; set; }
+            public long? IdDocumentoCabeceraLiquidacion { set; get; }
+            public long IdTipoDocumento { set; get; }
+            public string TipoDocumento { set; get; }
+            public long? IdEmpresa { set; get; }
+            public string NombreEmpresa { set; get; }
+            public long? IdEstablecimiento { set; get; }
+            public string CodigoEstablecimiento { set; get; }
+            public long? IdPuntoVenta { set; get; }
+            public string CodigoPuntoVenta { set; get; }
+            public DateTime FechaEmision { set; get; } = DateTime.Now;
+            public DateTime FechaRegistro { set; get; }
+            public DateTime? FechaAnulacion { set; get; }
+            public DateTime? FechaCobro { set; get; }
+            public bool? DocXmlGenerado { set; get; }
+            public bool? DocFirmado { set; get; }
+            public bool? DocRecibido { set; get; }
+            public bool? DocAutorizado { set; get; }
+            public bool? DocRide { set; get; }
+            public bool? DocEnviar { set; get; }
+            public bool DocAnulado { set; get; }
+            public bool DocCobrado { set; get; }
+            public string FechaEmision2 { set; get; }
+
+            public long IdPersona { set; get; }
+            public string NombrePersona { set; get; }
+            public DateTime FechaVencimiento { set; get; }
+            public string DireccionMatriz { set; get; }
+            public string DireccionSucursal { set; get; }
+
+            public int NumDocumento { set; get; }
+
+            public string Info1Direccion { set; get; }
+
+            public string Info2Email { set; get; }
+
+            public long? IdFormaPago { set; get; }
+
+            public string NombreFormaPago { set; get; }
+            public string NombreTipoDocumento { set; get; }
+
+            public string ClaveAccesoXML { set; get; }
+
+            public string Secuencial { set; get; }
+
+            public decimal ComprobantevSubtotal0 { set; get; }
+
+            public decimal ComprobantevTotal { set; get; }
+
+            public string Estado { set; get; }
+            public string Descripcion { set; get; }
+            public decimal ComprobantevSubtotal { get; set; }
+            public decimal ComprobantevIvatotal { get; set; }
+            public string Mensaje { get; set; }
+            public bool Exitoso { get; set; }
+            public long? DiasCredito { set; get; }
+            public string CodVendedor { set; get; }
+
+            public decimal? PorcentajeDescuento { set; get; }
+            public decimal TotalDescuento { set; get; }
+            public int NumeroDecimales { set; get; }
+            public string MensajeErrorDocXmlGenerado { set; get; }
+            public string MensajeErrorocFirmado { set; get; }
+            public string MensajeErrorDocRecibido { set; get; }
+            public string MensajeErrorDocAutorizado { set; get; }
+            public string MensajeErrorDocRide { set; get; }
+            public string MensajeErrorCorreoEnviado { set; get; }
+            public decimal ComprobantevICEtotal { get; internal set; }
+        }
+        public class ErroresDocumentosLiquidacion
+        {
+            public string Error { get; set; }
+            public string TipoError { get; set; }
+        }
+        public class ItemLiquidacionCompraModel
+        {
+            public long? IdDocumentoCabeceraLiquidacion { set; get; }
+            public decimal Cantidad { get; set; } = 1;
+            public decimal Subtotal { set; get; }
+            public decimal Total { set; get; }
+            public decimal Descuento { set; get; }
+            public decimal ValorDescuento { set; get; }
+            public decimal Ivatotal { set; get; }
+            public decimal Precio { set; get; }
+            public decimal? PrecioManual { set; get; }
+            public string Descripcion { set; get; }
+            public string NombreProducto { set; get; }
+            public long IdProducto { set; get; }
+
+            public string GUID { get; set; } = Guid.NewGuid().ToString();
+
+        }
+
+        public class ListarLiquidacionCompraModel
+        {
+            public ListarLiquidacionCompraModel()
+            {
+                Documentos = new List<LiquidacionCompraModel>();
+            }
+
+
+
+            public List<LiquidacionCompraModel> Documentos;
+        }
+
+        public class LiquidacionCompraTotales
+        {
+
+        }
+        #endregion
         #endregion
 
 

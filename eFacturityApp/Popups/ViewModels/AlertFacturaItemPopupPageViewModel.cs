@@ -26,6 +26,7 @@ namespace eFacturityApp.Popups.ViewModels
         [Reactive] public decimal Precio { get; set; }
         [Reactive] public ItemFacturaModel NewItemFactura { get; set; } = new ItemFacturaModel();
         [Reactive] public ItemProforma NewItemProforma { get; set; } = new ItemProforma();
+        [Reactive] public ItemLiquidacionCompraModel NewItemLiquidacionCompra { get; set; } = new ItemLiquidacionCompraModel();
         [Reactive] public decimal Cantidad { get; set; }
         [Reactive] public string ErrorMessage { get; set; } = string.Empty;
         [Reactive] public string ReturnPageTo { get; set; }
@@ -169,6 +170,27 @@ namespace eFacturityApp.Popups.ViewModels
 
                     await NavigateBack(_navigationService, NavParams);
 
+                }
+                else if (ReturnPageTo.Equals("LiquidacionCompraPage"))
+                {
+                    NewItemLiquidacionCompra.IdProducto = ArticuloSelected.Id;
+                    NewItemLiquidacionCompra.NombreProducto = ArticuloSelected.TextoLargo;
+                    NewItemLiquidacionCompra.Precio = Precio;
+                    NewItemLiquidacionCompra.Descuento = Descuento;
+                    NewItemLiquidacionCompra.Cantidad = Cantidad;
+                    if (item.PrecioManual != null && item.PrecioManual.Value)
+                    {
+                        NewItemLiquidacionCompra.PrecioManual = Precio;
+                    }
+                    else
+                    {
+                        NewItemLiquidacionCompra.PrecioManual = null;
+                    }
+
+                    NavigationParameters NavParams = new NavigationParameters();
+                    NavParams.Add("NewItemLiquidacionCompra", NewItemLiquidacionCompra);
+
+                    await NavigateBack(_navigationService, NavParams);
                 }
 
 

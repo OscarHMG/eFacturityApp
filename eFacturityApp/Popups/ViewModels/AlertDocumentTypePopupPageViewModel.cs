@@ -89,6 +89,9 @@ namespace eFacturityApp.Popups.ViewModels
                     case (long)DOC_TYPE.PROFORMA:
                         RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaProformaPage" : "ProformaPage";
                         break;
+                    case (long)DOC_TYPE.LIQ_COMPRA_BIENES_SERVICIOS:
+                        RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaLiquidacionCompraPage" : "LiquidacionCompraPage";
+                        break;
                     default:
                         await ShowAlert("Tipo de Documento", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
                         break;
