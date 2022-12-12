@@ -671,12 +671,29 @@ namespace eFacturityApp.Infraestructure.ApiModels
 
         public class LiquidacionCompraTotales
         {
-
+            public decimal SubtotalItemsMasIva { get; set; }
+            public decimal SubtotalItemsIva { get; set; }
+            public decimal SubtotalItemsICE { get; set; }
+            public decimal SubtotalItemsCeroIva { get; set; }
+            public decimal SubtotalItemsNoGrabaIva { get; set; }
+            public decimal TotalDocumentoElectronico { get; set; }
+            public decimal TotalDescuento { get; set; }
         }
         #endregion
         #endregion
 
+        public class EnviarDocumentoDocumentoModel
+        {
+            public string Titulo { get; set; }
+            public string Secuencial { get; set; }
+            public long IdDocumento { get; set; }
+            public byte[] Archivo { get; set; }
+            public string NombreArchivo { get; set; }
+            public TiposDocumento Tipo { get; set; }
+            public string Correo { get; set; }
 
+
+        }
         public class MenuItemOption
         {
             public long Id { get; set; }
@@ -684,6 +701,17 @@ namespace eFacturityApp.Infraestructure.ApiModels
 
             public string ImageIcon { get; set; }
 
+        }
+
+        public enum TiposDocumento
+        {
+            Factura,    // 0
+            Proforma,   // 1
+            Liquidacion,      // 2
+            NotaCredito,      // 3
+            NotaDebito,        // 4
+            Guia,       // 5
+            Retencion, //6
         }
     }
 }

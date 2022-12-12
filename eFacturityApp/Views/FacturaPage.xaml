@@ -19,7 +19,6 @@
         <ResourceDictionary>
             <ext:CurrencyConverter x:Key="currencyConverter" />
             <x:String x:Key="formatdecimaltwoplaces">{0:0.00}</x:String>
-
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>

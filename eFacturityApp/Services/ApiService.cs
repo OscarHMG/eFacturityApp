@@ -11,7 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://cf14-181-199-44-229.sa.ngrok.io/";
+        public const string BASE_URL = "https://31f2-181-199-44-229.sa.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
@@ -45,8 +45,15 @@ namespace eFacturityApp.Services
         private const string LOAD_PROFORMAS_CREADAS = BASE_URL + BASE_API + "Proformas/GetProformas";
 
 
-        private const string GET_TOTALES_LIQ_COMPRA = BASE_URL + BASE_API + "";
-        private const string CREATE_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "";
+        private const string GET_TOTALES_LIQ_COMPRA = BASE_URL + BASE_API + "Liquidaciones/CalcularTotales";
+        private const string CREATE_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Registrar";
+        private const string LOAD_LIQUIDACION_COMPRA_CREADAS = BASE_URL + BASE_API + "Liquidaciones/GetLiquidaciones";
+
+        private const string COBRAR_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Cobrar?id={0}";
+        private const string ENVIAR_LIQUIDACION_COMPRA_SRI = BASE_URL + BASE_API + "";
+        private const string ANULAR_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Anular?id={0}";
+
+        private const string ENVIAR_CORREO = BASE_URL + BASE_API + "DcumentoEmail/EnviarDocumento";
         public string DOWNLOAD_DOC {get; set;} = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}"; 
         public ApiService() : base()
         {
@@ -187,5 +194,33 @@ namespace eFacturityApp.Services
         {
             return await this.PostAsync<LiquidacionCompraModel, GenericResponseObject<LiquidacionCompraModel>>(data, CREATE_LIQUIDACION_COMPRA, null);
         }
+
+        public async Task<GenericResponseObject<ListarLiquidacionCompraModel>> GetConsultaLiquidacionCompra(FiltersApiModel filtros)
+        {
+            return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarLiquidacionCompraModel>>(filtros, LOAD_LIQUIDACION_COMPRA_CREADAS);
+        }
+
+        public async Task<GenericResponseObject<object>> CobrarLiquidacionCompra(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<object>>(COBRAR_LIQUIDACION_COMPRA, new object[] { Id.ToString() });
+        }
+
+
+        public async Task<GenericResponseObject<object>> EnviarSRILiquidacionCompra(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ENVIAR_LIQUIDACION_COMPRA_SRI, null, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<object>> AnularLiquidacionCompra(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ANULAR_LIQUIDACION_COMPRA, null, new object[] { Id.ToString() });
+        }
+
+
+        public async Task<GenericResponseObject<object>> EnviarCorreo(EnviarDocumentoDocumentoModel data)
+        {
+            return await this.PostAsync<EnviarDocumentoDocumentoModel, GenericResponseObject<object>>(data, ENVIAR_CORREO, null);
+        }
+
     }
 }

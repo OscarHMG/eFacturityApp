@@ -35,7 +35,7 @@ namespace eFacturityApp.ViewModels
 
 #if DEBUG
             User = "1311263675001";
-            Password = "123456";
+            Password = "1311263675001";
 #endif
             RegisterCommand = new Command(async()=> await Utility.Navigate(_navigationService, "RegisterPage"));
 

@@ -7,19 +7,19 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 using static eFacturityApp.Infraestructure.ApiModels.APIModels;
 using static eFacturityApp.Utils.Utility;
+
 namespace eFacturityApp.ViewModels
 {
-    public class ConsultaFacturaPageViewModel : ViewModelBase
+    public class ConsultaLiquidacionCompraPageViewModel : ViewModelBase
     {
-        [Reactive] public ObservableCollection<FacturaModel> Facturas { get; set; } = new ObservableCollection<FacturaModel>();
+        [Reactive] public ObservableCollection<LiquidacionCompraModel> LiquidacionesCompra { get; set; } = new ObservableCollection<LiquidacionCompraModel>();
 
         [Reactive] public FiltersApiModel Filtros { get; set; } = new FiltersApiModel();
 
@@ -32,7 +32,7 @@ namespace eFacturityApp.ViewModels
         [Reactive] public bool IsDownloadingFile { get; set; }
         [Reactive] public double ProgressValue { get; set; }
 
-        public ICommand LoadFacturasCommand { get; set; }
+        public ICommand LoadLiquidacionesCompraCommand { get; set; }
         public ICommand ShowFilterPopUpCommand { get; set; }
 
         public ICommand LoadFiltersCommand { get; set; }
@@ -43,17 +43,16 @@ namespace eFacturityApp.ViewModels
 
         public ICommand DownloadXMLCommand { get; set; }
 
-        public ICommand CobrarFacturaCommand { get; set; }
+        public ICommand CobrarLiquidacionCompraCommand { get; set; }
 
-        public ICommand EnviarFacturaSRICommand { get; set; }
+        public ICommand EnviarLiquidacionCompraSRICommand { get; set; }
 
-        public ICommand AnularFacturaCommand { get; set; }
+        public ICommand AnularLiquidacionCompraCommand { get; set; }
 
         public ICommand SendEmailCommand { get; set; }
-
-        public ConsultaFacturaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService/*, IDownloadService downloadService*/) : base(navigationService, loader, userService, apiService/*, downloadService*/)
+        public ConsultaLiquidacionCompraPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService/*, downloadService*/)
         {
-            LoadFacturasCommand = new Command(async () => await LoadFacturas());
+            LoadLiquidacionesCompraCommand = new Command(async () => await LoadLiquidacionCompras());
             LoadFiltersCommand = new Command(async () => await LoadFilters());
             ShowFilterPopUpCommand = new Command(async () =>
             {
@@ -65,183 +64,184 @@ namespace eFacturityApp.ViewModels
                 await Navigate(_navigationService, "AlertDocumentFiltersPopupPage", parameters);
             });
 
-            ViewDetalleCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            ViewDetalleCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
             {
                 NavigationParameters parameters = new NavigationParameters();
-                parameters.Add("FacturaDetalle", FacturaSelected);
-                await Navigate(_navigationService, "FacturaPage", parameters);
+                parameters.Add("LiquidacionCompraDetalle", LiquidacionCompraSelected);
+                await Navigate(_navigationService, "LiquidacionCompraPage", parameters);
             });
 
-            CobrarFacturaCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            CobrarLiquidacionCompraCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
             {
-                var Response = await ShowYesNoAlert("Cobrar factura", "¿Desea enviar a cobro la factura"+ FacturaSelected.Secuencial+  "?", _navigationService);
+                var Response = await ShowYesNoAlert("Cobrar liquidación de compra", "¿Desea enviar a cobro la liquidación de compra" + LiquidacionCompraSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
-                    await CobrarFactura(FacturaSelected);
+                    await CobrarliquidacionCompra(LiquidacionCompraSelected);
                 }
-                
+
             });
 
-            EnviarFacturaSRICommand = new Command<FacturaModel>(async(FacturaSelected) => 
+            EnviarLiquidacionCompraSRICommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
             {
-                var Response = await ShowYesNoAlert("Enviar al SRI", "¿Desea enviar al SRI la factura" + FacturaSelected.Secuencial + "?", _navigationService);
+                var Response = await ShowYesNoAlert("Enviar al SRI", "¿Desea enviar al SRI la liquidación de compra" + LiquidacionCompraSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
-                    await EnviarSRI(FacturaSelected);
-                }
-            });
-
-            DownloadPDFCommand = new Command<FacturaModel>(async(FacturaSelected)=> 
-            {
-                var Response = await ShowYesNoAlert("Factura - Descargar PDF", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
-                if (Response)
-                {
-                    
-                    await StartDownloadAsync(FacturaSelected, "pdf");
+                    await EnviarSRI(LiquidacionCompraSelected);
                 }
             });
 
-            DownloadXMLCommand = new Command<FacturaModel>(async (FacturaSelected) =>
+            DownloadPDFCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
             {
-                var Response = await ShowYesNoAlert("Factura - Descargar XML", "¿Desea descargar la factura" + FacturaSelected.Secuencial + "?", _navigationService);
+                var Response = await ShowYesNoAlert("Liquidación de compra - Descargar PDF", "¿Desea descargar la factura" + LiquidacionCompraSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
-                    await StartDownloadAsync(FacturaSelected, "xml");
+
+                    await StartDownloadAsync(LiquidacionCompraSelected, "pdf");
                 }
             });
 
-            AnularFacturaCommand = new Command<FacturaModel>(async(FacturaSelected) => 
+            DownloadXMLCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
             {
-                var Response = await ShowYesNoAlert("Anular Factura", "¿Desea anular la factura " + FacturaSelected.Secuencial + "?", _navigationService);
+                var Response = await ShowYesNoAlert("Liquidación de compra - Descargar XML", "¿Desea descargar la factura" + LiquidacionCompraSelected.Secuencial + "?", _navigationService);
                 if (Response)
                 {
-                    await AnularFactura(FacturaSelected);
+                    await StartDownloadAsync(LiquidacionCompraSelected, "xml");
                 }
             });
 
-            SendEmailCommand = new Command<FacturaModel>(async (FacturaSelected) =>  await SendEmail(FacturaSelected));
+            AnularLiquidacionCompraCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) =>
+            {
+                var Response = await ShowYesNoAlert("Anular liquidación de compra", "¿Desea anular la liquidación de compra " + LiquidacionCompraSelected.Secuencial + "?", _navigationService);
+                if (Response)
+                {
+                    await AnularLiquidacionCompra(LiquidacionCompraSelected);
+                }
+            });
+
+            SendEmailCommand = new Command<LiquidacionCompraModel>(async (LiquidacionCompraSelected) => await SendEmail(LiquidacionCompraSelected));
         }
 
-        private async Task SendEmail(FacturaModel facturaSelected)
+
+
+        private async Task SendEmail(LiquidacionCompraModel LiquidacionCompraSelected)
         {
             try
             {
                 await _loaderService.Show("Enviando el documento al correo..");
-                
+
                 var userprofileData = await _userService.GetUserInformationProfile();
                 EnviarDocumentoDocumentoModel data = new EnviarDocumentoDocumentoModel();
-                data.IdDocumento = (long)facturaSelected.IdDocumentoCabecera;
-                data.Tipo = TiposDocumento.Factura;
+                data.IdDocumento = (long)LiquidacionCompraSelected.IdDocumentoCabeceraLiquidacion;
+                data.Tipo = TiposDocumento.Liquidacion;
                 data.Correo = userprofileData.Correo;
                 var response = await _apiService.EnviarCorreo(data);
-                if (await HandleAPIResponse(response.statusCode, response.message, "Envío de Factura", _navigationService))
+                if (await HandleAPIResponse(response.statusCode, response.message, "Envío de Liq. de compra", _navigationService))
                 {
-                    await ShowAlert("Envío de Factura", "La  Factura " + facturaSelected.Secuencial + " fue enviada con éxito a su correo.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await ShowAlert("Envío de Liq. de compra", "La Liq. de compra " + LiquidacionCompraSelected.Secuencial + " fue enviada con éxito a su correo.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
                 }
             }
             catch (Exception err)
             {
-                await ShowAlert("Envío de Factura", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Envío de Liq. de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
         }
-
-        private async Task EnviarSRI(FacturaModel facturaSelected)
+        private async Task EnviarSRI(LiquidacionCompraModel liquidacionCompraSelected)
         {
             try
             {
                 await _loaderService.Show("Enviando al SRI..");
-                var response = await _apiService.EnviarSRIFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                var response = await _apiService.EnviarSRIFactura(liquidacionCompraSelected.IdDocumentoCabeceraLiquidacion.GetValueOrDefault());
                 await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
                 {
-                    await ShowAlert("Consulta de facturas", "La  Factura " + facturaSelected.Secuencial + " fue enviada con éxito al SRI.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await ShowAlert("Consulta de liquidación de compra", "La liquidación de compra " + liquidacionCompraSelected.Secuencial + " fue enviada con éxito al SRI.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
                 }
             }
             catch (Exception err)
             {
-                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Consulta de liquidación de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
             finally
             {
-                LoadFacturasCommand.Execute(null);
+                LoadLiquidacionesCompraCommand.Execute(null);
             }
         }
 
 
-        private async Task AnularFactura(FacturaModel facturaSelected)
+        private async Task AnularLiquidacionCompra(LiquidacionCompraModel liquidacionCompraSelected)
         {
             try
             {
-                await _loaderService.Show("Anulando factura..");
-                var response = await _apiService.AnularFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                await _loaderService.Show("Anulando liquidación de compra..");
+                var response = await _apiService.AnularLiquidacionCompra(liquidacionCompraSelected.IdDocumentoCabeceraLiquidacion.GetValueOrDefault());
                 await _loaderService.Hide();
-                if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
+                if (await HandleAPIResponse(response.statusCode, response.message, "Anular liquidación de compra", _navigationService))
                 {
-                    await ShowAlert("Anular factura", "La  Factura " + facturaSelected.Secuencial + " fue anulada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await ShowAlert("Anular liquidación de compra", "La liquidación de compra " + liquidacionCompraSelected.Secuencial + " fue anulada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
                 }
             }
             catch (Exception err)
             {
-                await ShowAlert("Anular factura", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Anular liquidación de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
             finally
             {
-                LoadFacturasCommand.Execute(null);
+                LoadLiquidacionesCompraCommand.Execute(null);
             }
         }
 
-        private async Task CobrarFactura(FacturaModel facturaSelected)
+        private async Task CobrarliquidacionCompra(LiquidacionCompraModel liquidacionCompraSelected)
         {
             try
             {
-                await _loaderService.Show("Cobrando su factura..");
-                var response = await _apiService.CobrarFactura(facturaSelected.IdDocumentoCabecera.GetValueOrDefault());
+                await _loaderService.Show("Cobrando su liquidación de compra..");
+                var response = await _apiService.CobrarLiquidacionCompra(liquidacionCompraSelected.IdDocumentoCabeceraLiquidacion.GetValueOrDefault());
                 await _loaderService.Hide();
-                if (await HandleAPIResponse(response.statusCode, response.message, "Cobrar factura", _navigationService))
+                if (await HandleAPIResponse(response.statusCode, response.message, "Cobrar liquidación de compra", _navigationService))
                 {
-                    await ShowAlert("Consulta de facturas", "La  Factura " +facturaSelected.Secuencial + " fue cobrada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    await ShowAlert("Consulta de liquidación de compra", "La liquidación de compra " + liquidacionCompraSelected.Secuencial + " fue cobrada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
                 }
             }
             catch (Exception err)
             {
-                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Consulta de liquidaciones de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
             finally
             {
-                LoadFacturasCommand.Execute(null);
+                LoadLiquidacionesCompraCommand.Execute(null);
             }
         }
 
-        private async Task LoadFacturas()
+        private async Task LoadLiquidacionCompras()
         {
             try
             {
                 await _loaderService.Show("Un momento..");
-                var response = await _apiService.GetConsultaFacturas(Filtros);
+                var response = await _apiService.GetConsultaLiquidacionCompra(Filtros);
                 await _loaderService.Hide();
-                if (await HandleAPIResponse(response.statusCode, response.message, "Consultar facturas", _navigationService))
+                if (await HandleAPIResponse(response.statusCode, response.message, "Consultar liquidaciones de compra", _navigationService))
                 {
-                    Facturas = new ObservableCollection<FacturaModel>(response.data.Documentos);
-                    NoItemsMessage = Facturas.Count == 0 ? "No se encontraron facturas con los criterios de búsqueda escogidos." : "";
+                    LiquidacionesCompra = new ObservableCollection<LiquidacionCompraModel>(response.data.Documentos);
+                    NoItemsMessage = LiquidacionesCompra.Count == 0 ? "No se encontraron liquidaciones de compra con los criterios de búsqueda escogidos." : "";
                 }
 
             }
             catch (Exception err)
             {
-                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Consulta de liquidaciones de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
                 NoItemsMessage = "Ocurrió un error en la consulta.";
             }
         }
 
-        public async Task StartDownloadAsync(FacturaModel facturaModel, string extension)
+        public async Task StartDownloadAsync(LiquidacionCompraModel liquidacionCompraModel, string extension)
         {
             var progressIndicator = new Progress<double>(ReportProgress);
             var cts = new CancellationTokenSource();
@@ -251,10 +251,10 @@ namespace eFacturityApp.ViewModels
                 await _loaderService.Show("Descargando documento..");
 
                 //var url = "http://agrega.juntadeandalucia.es/repositorio/01022011/19/es-an_2011020113_9122046/ODE-a52ae1e2-1203-388d-bcc7-51d33d8ffdc4/Biografia_Darwin.pdf";
-                var url = string.Format(_apiService.DOWNLOAD_DOC, facturaModel.IdDocumentoCabecera, extension);
-                
+                var url = string.Format(_apiService.DOWNLOAD_DOC, liquidacionCompraModel.IdDocumentoCabeceraLiquidacion, extension);
+
                 DownloadService downloadService = new DownloadService();
-                await downloadService.DownloadFileAsync(url, progressIndicator, cts.Token, facturaModel.Secuencial, extension);
+                await downloadService.DownloadFileAsync(url, progressIndicator, cts.Token, liquidacionCompraModel.Secuencial, extension);
 
                 await ShowAlert("Documento descargado", "Su documento ha sido descargado en la carpeta de Descargas", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
@@ -300,7 +300,7 @@ namespace eFacturityApp.ViewModels
             }
             catch (Exception err)
             {
-                await ShowAlert("Consulta de facturas", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                await ShowAlert("Consulta de liquidaciones de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
 
             }
             finally
@@ -321,7 +321,7 @@ namespace eFacturityApp.ViewModels
             base.Initialize(parameters);
 
             LoadFiltersCommand.Execute(null);
-            LoadFacturasCommand.Execute(null);
+            LoadLiquidacionesCompraCommand.Execute(null);
 
         }
 
@@ -344,7 +344,7 @@ namespace eFacturityApp.ViewModels
                     Filtros.TipoSeleccion = currentFilters.TipoSeleccion;
                     Filtros.IdPersona = currentFilters.IdPersona;
                     Filtros.IdTipoDocumento = 2;
-                    LoadFacturasCommand.Execute(null);
+                    LoadLiquidacionesCompraCommand.Execute(null);
                 }
             }
         }

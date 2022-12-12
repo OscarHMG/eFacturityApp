@@ -38,6 +38,8 @@ namespace eFacturityApp.ViewModels
 
         public ICommand ViewDetalleCommand { get; set; }
 
+        public ICommand SendEmailCommand { get; set; }
+
         public ConsultaProformaPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             LoadProformasCommand = new Command(async () => await LoadProformas());
@@ -58,6 +60,9 @@ namespace eFacturityApp.ViewModels
                 parameters.Add("ProformaDetalle", ProformaSelected);
                 await Navigate(_navigationService, "ProformaPage", parameters);
             });
+
+            SendEmailCommand = new Command<ProformaModel>(async (proformaModel) => await SendEmail(proformaModel));
+
         }
 
         public override void Initialize(INavigationParameters parameters)
@@ -87,7 +92,30 @@ namespace eFacturityApp.ViewModels
             }
         }
 
+        private async Task SendEmail(ProformaModel proformaModel)
+        {
+            try
+            {
+                await _loaderService.Show("Enviando el documento al correo..");
 
+                var userprofileData = await _userService.GetUserInformationProfile();
+                EnviarDocumentoDocumentoModel data = new EnviarDocumentoDocumentoModel();
+                data.IdDocumento = (long)proformaModel.IdProformaCabecera;
+                data.Tipo = TiposDocumento.Proforma;
+                data.Correo = userprofileData.Correo;
+                var response = await _apiService.EnviarCorreo(data);
+                if (await HandleAPIResponse(response.statusCode, response.message, "Envío de Liq. de compra", _navigationService))
+                {
+                    await ShowAlert("Envío de Liq. de compra", "La Liq. de compra " + proformaModel.Secuencial + " fue enviada con éxito a su correo.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+                }
+            }
+            catch (Exception err)
+            {
+                await ShowAlert("Envío de Liq. de compra", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+
+            }
+        }
         private async Task LoadFilters()
         {
             ItemsPersonas = new List<ItemPicker>();

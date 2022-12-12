@@ -3,15 +3,15 @@
     xmlns:views="clr-namespace:eFacturityApp.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
-    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters" 
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
-    xmlns:vm="clr-namespace:eFacturityApp.ViewModels"
-    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
     xmlns:local="clr-namespace:eFacturityApp.DataTemplateSelectors" 
-    xmlns:ext="clr-namespace:eFacturityApp.Converters"
-    Title="Consultar facturas"
-    x:Class="eFacturityApp.Views.ConsultaFacturaPage">
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels"
+    Title="Consultar liq. de compra"
+    x:Class="eFacturityApp.Views.ConsultaLiquidacionCompraPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ext:CurrencyConverter x:Key="currencyConverter" />
@@ -84,7 +84,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=ViewDetalleCommand}"/>
                                 <button:SfButton 
                                     Text="&#xf1c1;"
                                     TextColor="Red"
@@ -98,7 +98,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=DownloadPDFCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=DownloadPDFCommand}"/>
                                 <button:SfButton 
                                     Text="&#xf15b;"
                                     TextColor="Blue"
@@ -112,7 +112,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=DownloadXMLCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=DownloadXMLCommand}"/>
                                 <button:SfButton 
                                     Text="&#x24;"
                                     TextColor="GreenYellow"
@@ -126,7 +126,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=CobrarFacturaCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=CobrarLiquidacionCompraCommandCommand}"/>
                                 <button:SfButton 
                                     Text="&#xf0e0;"
                                     TextColor="DarkViolet"
@@ -140,7 +140,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=SendEmailCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=SendEmailCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>
@@ -216,7 +216,7 @@
                                     BorderWidth="1"
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=ViewDetalleCommand}"/>
 
                                 <button:SfButton 
                                     Text="&#xf057;"
@@ -231,9 +231,9 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=AnularFacturaCommand}"/>
-                                
-                                
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=AnularLiquidacionCompraCommand}"/>
+
+
                                 <button:SfButton 
                                     Text="&#xf1d8;"
                                     TextColor="DarkGreen"
@@ -247,7 +247,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=EnviarFacturaSRICommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=EnviarLiquidacionCompraSRICommand}"/>
                             </StackLayout>
                         </StackLayout>
 
@@ -322,7 +322,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=ViewDetalleCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>
@@ -396,15 +396,15 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaFacturaPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaLiquidacionCompraPageViewModel}}, Path=ViewDetalleCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>
                 </StackLayout>
             </DataTemplate>
 
-            <local:FacturaTemplateSelector 
-                x:Key="FacturaTemplateSelector"
+            <local:LiquidacionCompraSelector 
+                x:Key="LiquidacionCompraTemplateSelector"
                 EmitidoTemplate="{StaticResource EmitidoTemplate}"
                 PendienteEnvioSRITemplate="{StaticResource PendienteEnvioSRITemplate}"
                 AnuladoTemplate="{StaticResource AnuladoTemplate}"
@@ -447,7 +447,7 @@
                         HasShadow="True"
                         HorizontalOptions="End" 
                         VerticalOptions="Center"
-                        Command="{Binding LoadFacturasCommand}"/>
+                        Command="{Binding LoadLiquidacionesCompraCommand}"/>
 
                     <button:SfButton 
                         HeightRequest="50"
@@ -462,10 +462,10 @@
                         HorizontalOptions="End" 
                         VerticalOptions="Center"
                         Command="{Binding ShowFilterPopUpCommand}"/>
-                    
+
                 </StackLayout>
             </StackLayout>
-            <CollectionView ItemsSource="{Binding Facturas}" ItemTemplate="{StaticResource FacturaTemplateSelector}">
+            <CollectionView ItemsSource="{Binding LiquidacionesCompra}" ItemTemplate="{StaticResource LiquidacionCompraTemplateSelector}">
                 <CollectionView.EmptyView>
                     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
                         <Label 
@@ -482,6 +482,6 @@
 
             </CollectionView>
         </StackLayout>
-        
+
     </ContentPage.Content>
 </views:BaseNavigationBarPage>

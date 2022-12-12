@@ -235,14 +235,14 @@ namespace eFacturityApp.ViewModels
                 var response = await _apiService.CalcularTotalesLiquidacionCompra(ItemsLiquidacionCompra.ToList());
                 if (response.statusCode == 200)
                 {
-                    //var Totales = response.data;
-                    //SubtotalItemsMasIva = Totales.SubtotalItemsMasIva;
-                    //SubtotalItemsIva = Totales.SubtotalItemsIva;
-                    //SubtotalItemsICE = Totales.SubtotalItemsICE;
-                    //SubtotalItemsCeroIva = Totales.SubtotalItemsCeroIva;
-                    //SubtotalItemsNoGrabaIva = Totales.SubtotalItemsNoGrabaIva;
-                    //TotalDocumentoElectronico = Totales.TotalDocumentoElectronico;
-                    //TotalDescuento = Totales.TotalDescuento;
+                    var Totales = response.data;
+                    SubtotalItemsMasIva = Totales.SubtotalItemsMasIva;
+                    SubtotalItemsIva = Totales.SubtotalItemsIva;
+                    SubtotalItemsICE = Totales.SubtotalItemsICE;
+                    SubtotalItemsCeroIva = Totales.SubtotalItemsCeroIva;
+                    SubtotalItemsNoGrabaIva = Totales.SubtotalItemsNoGrabaIva;
+                    TotalDocumentoElectronico = Totales.TotalDocumentoElectronico;
+                    TotalDescuento = Totales.TotalDescuento;
                 }
             }
             catch (Exception)
@@ -270,6 +270,7 @@ namespace eFacturityApp.ViewModels
                 EnableControls = false;
                 TitlePage = "Detalle de Liquidación de compra";
                 ShowPrompt = false;
+                IdLiquidacionCompra = LiquidacionCompra.IdDocumentoCabeceraLiquidacion.GetValueOrDefault();
                 //Cargar totales desde el API
                 TotalDocumentoElectronico = LiquidacionCompra.ComprobantevTotal;
                 SubtotalItemsMasIva = LiquidacionCompra.ComprobantevSubtotal;

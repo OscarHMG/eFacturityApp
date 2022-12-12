@@ -135,7 +135,20 @@
                                             CornerRadius="25"
                                             CommandParameter="{Binding .}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaProformaPageViewModel}}, Path=ViewDetalleCommand}"/>
-                                        
+                                        <button:SfButton 
+                                            Text="&#xf0e0;"
+                                            TextColor="DarkViolet"
+                                            BackgroundColor="Transparent"
+                                            BorderWidth="1"
+                                            BorderColor="DarkViolet"
+                                            FontFamily="FA"
+                                            HasShadow="True"
+                                            WidthRequest="50" 
+                                            HeightRequest="50" 
+                                            VerticalOptions="End" 
+                                            CornerRadius="25"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaProformaPageViewModel}}, Path=SendEmailCommand}"/>
                                     </StackLayout>
                                 </StackLayout>
                             </yummy:PancakeView>
