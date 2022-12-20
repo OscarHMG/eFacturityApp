@@ -152,7 +152,7 @@ namespace eFacturityApp.ViewModels
             try
             {
                 await _loaderService.Show("Enviando al SRI..");
-                var response = await _apiService.EnviarSRIFactura(liquidacionCompraSelected.IdDocumentoCabeceraLiquidacion.GetValueOrDefault());
+                var response = await _apiService.EnviarSRILiquidacionCompra(liquidacionCompraSelected.IdDocumentoCabeceraLiquidacion.GetValueOrDefault());
                 await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
                 {
@@ -251,7 +251,7 @@ namespace eFacturityApp.ViewModels
                 await _loaderService.Show("Descargando documento..");
 
                 //var url = "http://agrega.juntadeandalucia.es/repositorio/01022011/19/es-an_2011020113_9122046/ODE-a52ae1e2-1203-388d-bcc7-51d33d8ffdc4/Biografia_Darwin.pdf";
-                var url = string.Format(_apiService.DOWNLOAD_DOC, liquidacionCompraModel.IdDocumentoCabeceraLiquidacion, extension);
+                var url = string.Format(_apiService.DOWNLOAD_DOC_LIQ_COMPRA, liquidacionCompraModel.IdDocumentoCabeceraLiquidacion, extension);
 
                 DownloadService downloadService = new DownloadService();
                 await downloadService.DownloadFileAsync(url, progressIndicator, cts.Token, liquidacionCompraModel.Secuencial, extension);

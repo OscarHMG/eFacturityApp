@@ -132,7 +132,7 @@ namespace eFacturityApp.ViewModels
             try
             {
                 await _loaderService.Show("Enviando liquidación de compra al SRI..");
-                var response = await _apiService.EnviarSRIFactura(IdLiquidacionCompra);
+                var response = await _apiService.EnviarSRILiquidacionCompra(IdLiquidacionCompra);
                 await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Envío SRI", _navigationService))
                 {

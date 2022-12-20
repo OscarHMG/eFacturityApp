@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    EnableBackButtonOverride="{Binding ShowPrompt}"
+    Title="{Binding TitlePage}"
+    x:Class="eFacturityApp.Views.NotaDebitoPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+            <x:String x:Key="formatdecimaltwoplaces">{0:0.00}</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="0">
+            <ScrollView Margin="0" VerticalScrollBarVisibility="Never">
+                <StackLayout  VerticalOptions="FillAndExpand">
+                    <StackLayout >
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Fecha de Emisión"
+                            HorizontalOptions="FillAndExpand"
+                            IsHintAlwaysFloated="false" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined">
+                            <DatePicker Date="{Binding NotaDebito.FechaEmision}" IsEnabled="{Binding EnableControls}" FontSize="Body"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Establecimiento" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                IsEnabled="{Binding EnableControls}"
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                IsEditableMode="true" 
+                                AllowFiltering="true"
+                                ShowSuggestionsOnFocus="True"
+                                SuggestionMode="Contains"
+                                TextColor="#696969"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding EstablecimientoSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownEstablecimientos.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Puntos de venta" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                IsEnabled="{Binding EnableControls}"
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                TextColor="#696969"
+                                IsEditableMode="true" 
+                                AllowFiltering="true"
+                                ShowSuggestionsOnFocus="True"
+                                SuggestionMode="Contains"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding PuntoVentaSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownPuntoVentas.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            HorizontalOptions="FillAndExpand"
+                            Hint="Impuesto" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                IsEnabled="{Binding EnableControls}"
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                TextColor="#696969"
+                                IsEditableMode="true" 
+                                AllowFiltering="true"
+                                ShowSuggestionsOnFocus="True"
+                                SuggestionMode="Contains"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding ImpuestoSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownImpuestos.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Persona" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                IsEnabled="{Binding EnableControls}"
+                                TextColor="#696969"
+                                IsEditableMode="true" 
+                                AllowFiltering="true"
+                                ShowSuggestionsOnFocus="True"
+                                SuggestionMode="Contains"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding PersonaSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownPersonas.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Fecha de emisión comprobante modificado"
+                            HorizontalOptions="FillAndExpand"
+                            IsHintAlwaysFloated="false" 
+                            IsEnabled="{Binding EnableControls}"
+                            ContainerType="Outlined">
+                            <DatePicker Date="{Binding NotaDebito.FechaEmisionComprobanteRelacionado}" IsEnabled="{Binding EnableControls}" FontSize="Body"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                        
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Sec. Comprobante modificado"
+                            IsEnabled="{Binding EnableControls}"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding NotaDebito.SecuencialComprobanteRelacionado}" Keyboard="Text" IsEnabled="{Binding EnableControls}"/>
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            IsEnabled="{Binding EnableControls}"
+                            HorizontalOptions="EndAndExpand"
+                            Hint="Valor de modificación"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Entry Text="{Binding NotaDebito.DocumentoModificaValorModificacion}" Keyboard="Numeric" IsEnabled="{Binding EnableControls}" />
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Información adicional del documento por ingresar"
+                            IsEnabled="{Binding EnableControls}"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding NotaDebito.Descripcion}" IsEnabled="{Binding EnableControls}"/>
+
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout 
+                            Hint="Razón de modificación del comprobante"
+                            IsEnabled="{Binding EnableControls}"
+                            IsHintAlwaysFloated="false" 
+                            ContainerType="Outlined">
+                            <Editor AutoSize="TextChanges" MinimumHeightRequest="100" Text="{Binding NotaDebito.Descripcion}" IsEnabled="{Binding EnableControls}"/>
+
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                        </inputLayout:SfTextInputLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding EnableControls}">
+
+                <StackLayout Orientation="Vertical">
+                    <button:SfButton Command="{Binding CreateNewNotaDebitoCommand}" Text="REGISTRAR NOTA DE DEBITO" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+
+                </StackLayout>
+
+            </StackLayout>
+            <StackLayout  Margin="0" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowControlesNotaDebitoCreada}">
+
+                <StackLayout Orientation="Vertical">
+                    <button:SfButton Command="{Binding FinalizarCommand}" Text="FINALIZAR" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand" Style="{StaticResource NegativeButton}"/>
+
+                    <button:SfButton Command="{Binding EnviarSRICommand}" Text="ENVIAR SRI" Margin="0,0,0, 0" VerticalOptions="EndAndExpand" Padding="0,10" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

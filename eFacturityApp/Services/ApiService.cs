@@ -11,7 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://31f2-181-199-44-229.sa.ngrok.io/";
+        public const string BASE_URL = "https://4123-181-199-44-229.sa.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
@@ -29,7 +29,7 @@ namespace eFacturityApp.Services
         private const string DELETE_CLIENTE_PROVEEDOR = BASE_URL + BASE_API + "Catalogos/EliminarPersona?id={0}";
 
         private const string CATALOGOS_PRODUCTOS_SERVICIOS = BASE_URL + BASE_API + "Catalogos/GetCatalogosProducto";
-
+        //FACTURA
         private const string CATALOGOS_FACTURA = BASE_URL + BASE_API + "Facturas/GetCatalogos";
         private const string LOAD_PUNTOS_VENTA_POR_ESTABLECIMIENTO = BASE_URL + BASE_API + "Facturas/GetPuntosVenta?id={0}";
         private const string CREATE_NEW_FACTURA = BASE_URL + BASE_API + "Facturas/Registrar";
@@ -39,22 +39,36 @@ namespace eFacturityApp.Services
         private const string ANULAR_FACTURA = BASE_URL + BASE_API + "Facturas/Anular?id={0}";
         private const string RECOVER_ACCOUNT = BASE_URL + BASE_API + "Seguridad/OlvideMiContrasenia?correoUsuario={0}";
         private const string GET_TOTALES_FACTURA = BASE_URL + BASE_API + "Facturas/CalcularTotales";
-
+        public string DOWNLOAD_DOC { get; set; } = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}";
+        //PROFORMA
         private const string CREATE_NEW_PROFORMA = BASE_URL + BASE_API + "Proformas/Registrar";
         private const string GET_TOTALES_PROFORMA = BASE_URL + BASE_API + "Proformas/CalcularTotales";
         private const string LOAD_PROFORMAS_CREADAS = BASE_URL + BASE_API + "Proformas/GetProformas";
 
-
+        //LIQ DE COMPRA
         private const string GET_TOTALES_LIQ_COMPRA = BASE_URL + BASE_API + "Liquidaciones/CalcularTotales";
         private const string CREATE_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Registrar";
         private const string LOAD_LIQUIDACION_COMPRA_CREADAS = BASE_URL + BASE_API + "Liquidaciones/GetLiquidaciones";
-
         private const string COBRAR_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Cobrar?id={0}";
-        private const string ENVIAR_LIQUIDACION_COMPRA_SRI = BASE_URL + BASE_API + "";
+        private const string ENVIAR_LIQUIDACION_COMPRA_SRI = BASE_URL + BASE_API + "Liquidaciones/EnviarSRI?id={0}";
         private const string ANULAR_LIQUIDACION_COMPRA = BASE_URL + BASE_API + "Liquidaciones/Anular?id={0}";
+        
+        public string DOWNLOAD_DOC_LIQ_COMPRA { get; set; } = BASE_URL + BASE_API + "Liquidaciones/Descargar?id={0}&extension={1}";
+        //NOTA DE DEBITO
+        private const string CREATE_NEW_NOTA_DEBITO = BASE_URL + BASE_API + "NotasDebito/Registrar";
+        private const string GET_NOTAS_DEBITO = BASE_URL + BASE_API + "NotasDebito/GetNotasDebito";
+        private const string ANULAR_NOTA_DEBITO = BASE_URL + BASE_API + "NotasDebito/Anular?id={0}";
+        private const string ENVIAR_NOTA_DEBITO_SRI = BASE_URL + BASE_API + "NotasDebito/EnviarSRI?id={0}";
+        private const string COBRAR_NOTA_DEBITO = BASE_URL + BASE_API + "NotasDebito/Cobrar?id={0}";
+        public string DOWNLOAD_DOC_NOTA_DEBITO { get; set; } = BASE_URL + BASE_API + "NotasDebito/Descargar?id={0}&extension={1}";
+
+
+
 
         private const string ENVIAR_CORREO = BASE_URL + BASE_API + "DcumentoEmail/EnviarDocumento";
-        public string DOWNLOAD_DOC {get; set;} = BASE_URL + BASE_API + "Facturas/Descargar?id={0}&extension={1}"; 
+        
+
+
         public ApiService() : base()
         {
             Client.BaseAddress = new Uri(BASE_URL);
@@ -222,5 +236,31 @@ namespace eFacturityApp.Services
             return await this.PostAsync<EnviarDocumentoDocumentoModel, GenericResponseObject<object>>(data, ENVIAR_CORREO, null);
         }
 
+
+        //NOTA DE DEBITO
+        public async Task<GenericResponseObject<NotaDebitoModel>> CreateNewNotaDebito(NotaDebitoModel data)
+        {
+            return await this.PostAsync<NotaDebitoModel, GenericResponseObject<NotaDebitoModel>>(data, CREATE_NEW_NOTA_DEBITO, null);
+        }
+
+        public async Task<GenericResponseObject<object>> EnviarNotaDebitoSRI(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ENVIAR_NOTA_DEBITO_SRI, null, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<ListarNotasDebitoModel>> GetConsultaNotasDebito(FiltersApiModel filtros)
+        {
+            return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarNotasDebitoModel>>(filtros, GET_NOTAS_DEBITO);
+        }
+
+        public async Task<GenericResponseObject<object>> AnularNotaDebito(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ANULAR_NOTA_DEBITO, null, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<object>> CobrarNotaDebito(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<object>>(COBRAR_NOTA_DEBITO, new object[] { Id.ToString() });
+        }
     }
 }

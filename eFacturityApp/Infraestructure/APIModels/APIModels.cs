@@ -243,12 +243,14 @@ namespace eFacturityApp.Infraestructure.ApiModels
                 Establecimientos = new List<EstablecimientoModel>();
                 PuntosVenta = new List<PuntoVentaModel>();
                 Productos = new List<ProductoModel>();
+                Impuestos = new List<ImpuestoModel>();
             }
             public List<PersonaModel> Personas { get; set; }
             public List<FormaPagoModel> FormasPago { get; set; }
             public List<EstablecimientoModel> Establecimientos { get; set; }
             public List<PuntoVentaModel> PuntosVenta { get; set; }
             public List<ProductoModel> Productos { get; set; }
+            public List<ImpuestoModel> Impuestos { get; set; }
         }
 
         public class FormaPagoModel
@@ -682,6 +684,116 @@ namespace eFacturityApp.Infraestructure.ApiModels
         #endregion
         #endregion
 
+        #region Nota de Debito
+        public class NotaDebitoModel
+        {
+
+            public NotaDebitoModel()
+            {
+                Items = new List<ItemNotaDebitoModel>();
+                ErroresDocumentos = new List<ErroresDocumentos>();
+            }
+            public List<ItemNotaDebitoModel> Items { get; set; }
+            public List<ErroresDocumentos> ErroresDocumentos { get; set; }
+
+            public long IdNotaDebitoCabecera { set; get; }
+            public string NombreTipoDocumento { set; get; }
+            public long IdTipoDocumento { set; get; }
+            public string ClaveAccesoXML { set; get; }
+            public string Secuencial { set; get; }
+            public long IdImpuesto { set; get; }
+
+
+            public long IdEmpresa { set; get; }
+            public long IdEstablecimiento { set; get; }
+            public long IdPuntoVenta { set; get; }
+
+            public DateTime FechaEmision { set; get; } = DateTime.Now;
+            public DateTime? FechaAutorizacion { set; get; }
+            public DateTime? FechaAnulacion { set; get; }
+            public DateTime? FechaCobrado { set; get; }
+            public DateTime? FechaEntrega { set; get; }
+
+            public DateTime? FechaRegistro { set; get; }
+
+
+            public string NombrePersona { set; get; }
+            public long IdPersona { set; get; }
+
+
+            public long? IdTipoDocumentoRelacionado { set; get; }
+            public String SecuencialComprobanteRelacionado { set; get; }
+            public DateTime? FechaEmisionComprobanteRelacionado { set; get; }
+
+            public String ClaveAccesoComprobanteRelacionado { set; get; }
+            public string ComprobanteModificadoMotivoModificacion { set; get; }
+            public string DocumentoModificaRazonModificacion { set; get; }
+
+            public decimal? DocumentoModificaValorModificacion { set; get; }
+
+
+            public string Descripcion { set; get; }
+            public string DireccionMatriz { set; get; }
+            public string DireccionSucursal { set; get; }
+            public int NumDocumento { set; get; }
+            public string Info1Direccion { set; get; }
+            public string Info2Email { set; get; }
+            public bool? DocXmlGenerado { set; get; }
+            public bool? DocFirmado { set; get; }
+            public bool? DocRecibido { set; get; }
+            public bool? DocAutorizado { set; get; }
+            public bool? DocRide { set; get; }
+            public bool? DocEnviar { set; get; }
+            public bool DocAnulado { set; get; }
+            public bool DocCobrado { set; get; }
+            public string pathDocXmlGenerado { set; get; }
+            public string pathDocFirmado { set; get; }
+            public string pathDocRecibido { set; get; }
+            public string pathDocAutorizado { set; get; }
+            public string pathDocRide { set; get; }
+
+
+            public string Mensaje { get; set; }
+            public bool Exitoso { get; set; }
+
+
+            public decimal ComprobantevSubtotal { set; get; }
+            public decimal ComprobantevIvatotal { set; get; }
+            public decimal ComprobantevSubtotal0 { set; get; }
+            public decimal ComprobantevTotal { set; get; }
+            public decimal ComprobantevDescuentoTotal { set; get; }
+
+
+            public decimal? PorcentajeDescuento { set; get; }
+            public decimal TotalDescuento { set; get; }
+            public int NumeroDecimales { set; get; }
+            public string MensajeErrorDocXmlGenerado { set; get; }
+            public string MensajeErrorocFirmado { set; get; }
+            public string MensajeErrorDocRecibido { set; get; }
+            public string MensajeErrorDocAutorizado { set; get; }
+            public string MensajeErrorDocRide { set; get; }
+            public string MensajeErrorCorreoEnviado { set; get; }
+
+        }
+
+        public class ItemNotaDebitoModel
+        {
+            public long? IdNotaDebitoCabecera { set; get; }
+            public decimal Cantidad { get; set; }
+            public string Descripcion { set; get; }
+            public string NombreProducto { set; get; }
+            public long IdProducto { set; get; }
+
+        }
+        public class ListarNotasDebitoModel
+        {
+            public List<NotaDebitoModel> Documentos { get; set; } = new List<NotaDebitoModel>();
+        }
+
+
+
+
+        #endregion
         public class EnviarDocumentoDocumentoModel
         {
             public string Titulo { get; set; }
@@ -693,6 +805,14 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Correo { get; set; }
 
 
+        }
+
+        public class ImpuestoModel
+        {
+            public long IdImpuesto { set; get; }
+            public string NombreImpuesto { set; get; }
+            public string CodigoImpuesto { get; set; }
+            public decimal? Tarifa { get; set; }
         }
         public class MenuItemOption
         {
