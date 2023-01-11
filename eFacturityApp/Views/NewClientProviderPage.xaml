@@ -37,8 +37,29 @@
                             </combobox:SfComboBox>
                         </inputLayout:SfTextInputLayout>
                         <inputLayout:SfTextInputLayout 
+                            Hint="Tipo identificación" 
+                            ContainerType="Outlined" 
+                            Padding="0" >
+                            <inputLayout:SfTextInputLayout.HintLabelStyle>
+                                <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR" >
+                                </inputLayout:LabelStyle>
+                            </inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <combobox:SfComboBox
+                                DropDownBorderColor="{StaticResource Primary}"
+                                DropDownTextColor="#696969"
+                                FontFamily="PB"
+                                TextColor="#696969"
+                                BorderColor="{StaticResource Primary}"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedItem="{Binding TipoIdentificacionSelected, Mode=TwoWay}"
+                                DisplayMemberPath = "TextoLargo"
+                                DataSource="{Binding DropDownTipoIdentificacion.Items}"
+                                SelectedDropDownItemColor="White">
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout 
                             HorizontalOptions="EndAndExpand"
-                            Hint="RUC/Cédula"
+                            Hint="# Identificación"
                             IsHintAlwaysFloated="false" 
                             ContainerType="Outlined">
                             <Entry Text="{Binding PersonaProveedorSelected.Ruc}" />

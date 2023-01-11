@@ -21,6 +21,10 @@ namespace eFacturityApp.ViewModels
         [Reactive] public DropDown DropDownTipoPersona { get; set; }
 
         [Reactive] public ItemPicker TipoPersonaSelected { get; set; }
+
+        [Reactive] public DropDown DropDownTipoIdentificacion { get; set; }
+
+        [Reactive] public ItemPicker TipoIdentificacionSelected { get; set; }
         [Reactive] public PersonaModel PersonaProveedorSelected  { get; set; } = new PersonaModel();
 
         [Reactive] public string TitlePage { get; set; }
@@ -48,13 +52,24 @@ namespace eFacturityApp.ViewModels
                 new ItemPicker(3, "JURÍDICA", "JURÍDICA")
             };
 
+            List<ItemPicker> TipoIdentificacion = new List<ItemPicker>()
+            {
+                new ItemPicker(1, "04-RUC", "04-RUC"),
+                new ItemPicker(2, "05-CÉDULA", "05-CÉDULA"),
+                new ItemPicker(3, "06-PASAPORTE", "06-PASAPORTE"),
+                new ItemPicker(7, "07-VENTA A CONSUMIDOR FINAL", "07-VENTA A CONSUMIDOR FINAL"),
+                new ItemPicker(8, "08-IDENTIF. DEL EXTERIOR", "08-IDENTIF. DEL EXTERIOR")
+            };
+
             DropDownTipoPersona = new DropDown(TipoPersona);
+            DropDownTipoIdentificacion = new DropDown(TipoIdentificacion);
 
             if (PersonaProveedorSelected.IdPersona != 0)
             {
                 TipoPersonaSelected = SetSelectedValuesDropDown(PersonaProveedorSelected.IdTipoTipoPersona, TipoPersona);
-
+                TipoIdentificacionSelected = SetSelectedValuesDropDown(PersonaProveedorSelected.IdTipoIdentificacion, TipoIdentificacion);
                 this.RaisePropertyChanged("TipoPersonaSelected");
+                this.RaisePropertyChanged("TipoIdentificacionSelected");
             }
         }
 
@@ -62,18 +77,33 @@ namespace eFacturityApp.ViewModels
         {
             bool isValid = true;
 
-            if (TipoPersonaSelected == null || string.IsNullOrEmpty(PersonaProveedorSelected.Ruc) || string.IsNullOrEmpty(PersonaProveedorSelected.RazonSocial)
+            if (TipoPersonaSelected == null || TipoIdentificacionSelected == null || string.IsNullOrEmpty(PersonaProveedorSelected.Ruc) || string.IsNullOrEmpty(PersonaProveedorSelected.RazonSocial)
                 || string.IsNullOrEmpty(PersonaProveedorSelected.NombreComercial) || string.IsNullOrEmpty(PersonaProveedorSelected.Direccion) 
                 || string.IsNullOrEmpty(PersonaProveedorSelected.Telefono) || string.IsNullOrEmpty(PersonaProveedorSelected.Correo)) 
             {
                 isValid = false;
                 await ShowAlert(TitlePage, "Complete los campos, para proceder con el registro.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
             }
-            else if (PersonaProveedorSelected.Ruc.Trim().Length != 10 && PersonaProveedorSelected.Ruc.Trim().Length != 13)
+            else if (TipoIdentificacionSelected!= null)
             {
-                isValid = false;
-                await ShowAlert(TitlePage, "RUC, debe constar de 13 dígitos\n Cédula, debe constar con 10 dígitos", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                if (TipoIdentificacionSelected.Id == 1) //RUC
+                {
+                    if (PersonaProveedorSelected.Ruc.Trim().Length != 13)
+                    {
+                        isValid = false;
+                        await ShowAlert(TitlePage, "# Identificación, debe constar de 13 dígitos", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    }
+                }
+                else if (TipoIdentificacionSelected.Id == 2) //CEDULA
+                {
+                    if (PersonaProveedorSelected.Ruc.Trim().Length != 10)
+                    {
+                        isValid = false;
+                        await ShowAlert(TitlePage, "# Identificación, debe constar de 10 dígitos", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
+                    }
+                }
             }
+            
             else if (!Regex.IsMatch(PersonaProveedorSelected.Correo.Trim(), REGEX_EMAIL_PATTERN, RegexOptions.IgnoreCase))
             {
                 isValid = false;
@@ -101,6 +131,7 @@ namespace eFacturityApp.ViewModels
                 try
                 {
                     PersonaProveedorSelected.IdTipoTipoPersona = TipoPersonaSelected.Id;
+                    PersonaProveedorSelected.IdTipoIdentificacion = TipoIdentificacionSelected.Id;
                     await _loaderService.Show("Un momento..");
                     var response = await _apiService.CreateEditClienteProveedor(PersonaProveedorSelected);
 

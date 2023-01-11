@@ -33,10 +33,19 @@
                                     VerticalOptions="CenterAndExpand"
                                     HorizontalOptions="FillAndExpand"
                                     Padding="15,10">
+
                                     <Label LineBreakMode="TailTruncation">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="RUC/Cédula:" Style="{StaticResource BoldLabel}"/>
+                                                <Span Text="Tipo Identificación: " Style="{StaticResource BoldLabel}"/>
+                                                <Span Text="{Binding NombreTipoIdentificacion}" Style="{StaticResource RegularLabel}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="# Identificación: " Style="{StaticResource BoldLabel}"/>
                                                 <Span Text="{Binding Ruc}" Style="{StaticResource RegularLabel}"/>
                                             </FormattedString>
                                         </Label.FormattedText>

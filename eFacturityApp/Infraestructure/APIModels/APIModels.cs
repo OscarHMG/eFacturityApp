@@ -232,6 +232,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public long? IdRegimen { set; get; }
             public string NombreRegimen { set; get; }
             public bool? EsAgenteRetencion { set; get; }
+            public long? IdTipoIdentificacion { set; get; }
+            public string NombreTipoIdentificacion { set; get; }
         }
 
         public class CatalogosApiModel

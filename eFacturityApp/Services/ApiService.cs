@@ -11,7 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://4123-181-199-44-229.sa.ngrok.io/";
+        public const string BASE_URL = "https://a8c4-157-100-113-202.sa.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
