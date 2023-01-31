@@ -1,4 +1,6 @@
 ﻿
+using System.Globalization;
+using System.Threading;
 using Foundation;
 using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using ObjCRuntime;
@@ -25,6 +27,9 @@ namespace eFacturityApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            CultureInfo ci = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             SfTextInputLayoutRenderer.Init();

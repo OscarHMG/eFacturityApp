@@ -17,14 +17,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Image Margin="0, 50" Grid.Row="0" Source="eFacturityLogo1" WidthRequest="100" HeightRequest="100" Aspect="AspectFit"/>
+            <Image Margin="0, 50" Grid.Row="0" Source="eFacturityLogo1"  HeightRequest="100" Aspect="AspectFit"/>
             <BoxView HeightRequest="100" BackgroundColor="#FFFFFF" Opacity="0.3" />
 
 
             <Path
                 Grid.Row="1"
                 VerticalOptions="StartAndExpand"
-                HorizontalOptions="StartAndExpand"
+                HorizontalOptions="FillAndExpand"
                 Margin="0, -70, 0 , 0"
                 Aspect="Fill"
                 Data="M-1.41,96.20 C189.90,30.09 359.76,152.45 513.82,50.81 L516.08,154.44 L0.00,150.00 Z">
@@ -41,7 +41,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0">
-                    <Label Text="¡Bienvenido!" FontSize="37" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"></Label>
+                    <Label Text="¡Bienvenido!" FontSize="37" FontFamily="PB"  TextColor="White" HorizontalTextAlignment="Center"></Label>
                     <StackLayout HorizontalOptions="{OnIdiom Phone=FillAndExpand, Tablet=Center}"
                         VerticalOptions="FillAndExpand"
                         Spacing="10"
