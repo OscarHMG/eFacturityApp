@@ -33,9 +33,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.efacturity.app</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>2</string>
 	<key>Custom Property</key>
 	<string></string>
 </dict>

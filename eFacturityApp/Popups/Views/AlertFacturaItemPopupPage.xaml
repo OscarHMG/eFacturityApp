@@ -34,9 +34,6 @@
             <StackLayout>
                 <Label Text="NUEVO ITEM" Style="{StaticResource BoldLabel}" FontSize="18" Margin="0, 0, 0, 8"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-
-                    
-
                     <inputLayout:SfTextInputLayout
                         HorizontalOptions="FillAndExpand"
                         Hint="Escoga Art/Servicio" 
@@ -64,17 +61,19 @@
                         </combobox:SfComboBox>
                     </inputLayout:SfTextInputLayout>
                 </StackLayout>
-                <inputLayout:SfTextInputLayout 
+                <inputLayout:SfTextInputLayout
                     Hint="Cantidad"
                     HorizontalOptions="FillAndExpand"
                     IsHintAlwaysFloated="false" 
                     ContainerType="Outlined">
-                    <numeric:SfNumericUpDown Font="PR" IsEditable="True" Minimum="1"  UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="1" Value="{Binding Cantidad}" HorizontalOptions="FillAndExpand"/>
+                    <numeric:SfNumericUpDown Font="PR" IsEditable="True" Minimum="1"  UpDownButtonColor="{StaticResource Secondary}" MaximumDecimalDigits="2" Value="{Binding Cantidad}" HorizontalOptions="FillAndExpand"/>
                     <inputLayout:SfTextInputLayout.HintLabelStyle>
                         <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                         </inputLayout:LabelStyle>
                     </inputLayout:SfTextInputLayout.HintLabelStyle>
                 </inputLayout:SfTextInputLayout>
+                
+                
                 <StackLayout Orientation="Horizontal">
                     
                     <inputLayout:SfTextInputLayout 

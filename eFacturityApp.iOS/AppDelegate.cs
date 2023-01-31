@@ -6,6 +6,7 @@ using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using ObjCRuntime;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfNumericUpDown.XForms.iOS;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
@@ -39,6 +40,7 @@ namespace eFacturityApp.iOS
             Syncfusion.XForms.iOS.Expander.SfExpanderRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfRadioButtonRenderer.Init();
             Syncfusion.XForms.iOS.ComboBox.SfComboBoxRenderer.Init();
+            SfNumericUpDownRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
             KeyboardOverlapRenderer.Init();
             return base.FinishedLaunching(app, options);

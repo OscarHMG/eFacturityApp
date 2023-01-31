@@ -33,10 +33,6 @@ namespace eFacturityApp.ViewModels
         {
             Version = $"Versión: {VersionTracking.CurrentVersion} ({VersionTracking.CurrentBuild})";
 
-#if DEBUG
-            User = "1311263675001";
-            Password = "1311263675001";
-#endif
             RegisterCommand = new Command(async()=> await Utility.Navigate(_navigationService, "RegisterPage"));
 
             RecoverAccountCommand = new Command(async()=> await Utility.Navigate(_navigationService, "RecoverAccount"));
