@@ -10,6 +10,8 @@
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
     xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
     xmlns:converter="clr-namespace:eFacturityApp.Converters"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    android:Application.WindowSoftInputModeAdjust="Resize"
     x:Class="eFacturityApp.App">
     <Application.Resources>
         <converter:DisplayAlertTypeToIsVisibleConverter x:Key="DisplayAlertTypeToIsVisibleConverter" />

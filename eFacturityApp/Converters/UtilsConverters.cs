@@ -99,11 +99,12 @@ namespace eFacturityApp.Converters
         {
             //return Decimal.Parse(value.ToString()).ToString("C");
             //system.Globalization.CultureInfo.InvariantCulture
-            if (string.IsNullOrEmpty(value?.ToString()))
+            if (value == null)
             {
                 return Decimal.Parse("0", System.Globalization.CultureInfo.InvariantCulture).ToString("C");
             }
             return Decimal.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture).ToString("C");
+            //return Decimal.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture).ToString("C");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
