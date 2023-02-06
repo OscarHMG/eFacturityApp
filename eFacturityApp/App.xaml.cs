@@ -71,6 +71,7 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<LiquidacionCompraPage, LiquidacionCompraPageViewModel>("LiquidacionCompraPage");
             containerRegistry.RegisterForNavigation<ConsultaLiquidacionCompraPage, ConsultaLiquidacionCompraPageViewModel>("ConsultaLiquidacionCompraPage");
             containerRegistry.RegisterForNavigation<NotaDebitoPage, NotaDebitoPageViewModel>("NotaDebitoPage");
+            containerRegistry.RegisterForNavigation<ConsultaNotaDebitoPage, ConsultaNotaDebitoPageViewModel>("ConsultaNotaDebitoPage");
         }
     }
 }

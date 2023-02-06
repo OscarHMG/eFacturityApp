@@ -99,6 +99,10 @@ namespace eFacturityApp.Converters
         {
             //return Decimal.Parse(value.ToString()).ToString("C");
             //system.Globalization.CultureInfo.InvariantCulture
+            if (string.IsNullOrEmpty(value?.ToString()))
+            {
+                return Decimal.Parse("0", System.Globalization.CultureInfo.InvariantCulture).ToString("C");
+            }
             return Decimal.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture).ToString("C");
         }
 
