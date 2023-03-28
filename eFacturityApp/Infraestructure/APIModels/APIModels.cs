@@ -181,6 +181,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
 
             public string Nombres { get; set; }
             public string Apellidos { get; set; }
+            public long IdEmpresa { get; set; }
         }
 
 
@@ -818,7 +819,7 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string CodigoEstablecimiento { set; get; }
             public long? IdPuntoVenta { set; get; }
             public string CodigoPuntoVenta { set; get; }
-            public DateTime FechaEmision { set; get; }
+            public DateTime FechaEmision { set; get; } = DateTime.Now;
             public DateTime FechaRegistro { set; get; }
             public DateTime? FechaAnulacion { set; get; }
             public DateTime? FechaCobro { set; get; }
@@ -918,6 +919,13 @@ namespace eFacturityApp.Infraestructure.ApiModels
         }
 
         #endregion
+
+
+        public class DocumentosRelacionados
+        {
+            public long IdDocumentoCabeceraRelacionado { set; get; }
+            public string Secuencial { set; get; }
+        }
 
         #endregion
         public class EnviarDocumentoDocumentoModel

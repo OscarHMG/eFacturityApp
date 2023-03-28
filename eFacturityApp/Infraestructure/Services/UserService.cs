@@ -48,7 +48,14 @@ namespace eFacturityApp.Infraestructure.Services
 
         public async Task<PerfilUsuarioModel> GetUserInformationProfile()
         {
-            return JsonConvert.DeserializeObject<PerfilUsuarioModel>(await SecureStorage.GetAsync("UserInfo"));
+
+            var response = await SecureStorage.GetAsync("UserInfo");
+
+            if (response == null)
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<PerfilUsuarioModel>(response);
         }
 
 
@@ -69,7 +76,8 @@ namespace eFacturityApp.Infraestructure.Services
         public async Task<bool> HasValidToken()
         {
             var token = await SecureStorage.GetAsync("oauth_token");
-            if (token != null)
+            var userPerfilInfo = await GetUserInformationProfile();
+            if (token != null && userPerfilInfo != null)
             {
                 var expiresIn = await SecureStorage.GetAsync("expiresIn");
                 var expirationDate = Convert.ToDateTime(expiresIn);

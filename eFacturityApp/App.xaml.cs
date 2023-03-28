@@ -49,6 +49,7 @@ namespace eFacturityApp
             containerRegistry.RegisterForNavigation<AlertDocumentTypePopupPage, AlertDocumentTypePopupPageViewModel>("AlertDocumentTypePopupPage");
             containerRegistry.RegisterForNavigation<AlertFacturaItemPopupPage, AlertFacturaItemPopupPageViewModel>("AlertFacturaItemPopupPage");
             containerRegistry.RegisterForNavigation<AlertDocumentFiltersPopupPage, AlertDocumentFiltersPopupPageViewModel>("AlertDocumentFiltersPopupPage");
+            containerRegistry.RegisterForNavigation<AlertDateFilterPopupPage, AlertDateFilterPopupPageViewModel>("AlertDateFilterPopupPage");
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
 

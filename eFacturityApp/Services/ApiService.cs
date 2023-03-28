@@ -11,7 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://ec27-157-100-111-43.ngrok.io/";
+        public const string BASE_URL = "https://714b-181-199-62-229.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
@@ -63,7 +63,12 @@ namespace eFacturityApp.Services
         public string DOWNLOAD_DOC_NOTA_DEBITO { get; set; } = BASE_URL + BASE_API + "NotasDebito/Descargar?id={0}&extension={1}";
 
 
-
+        //NOTA DE CREDITO
+        private const string GET_NOTAS_CREDITO_FACTURA = BASE_URL + BASE_API + "NotasCredito/GetNotasCreditoFactura?idEmpresa={0}&desde={1}&hasta={2}";
+        private const string GET_NOTAS_CREDITO_LIQ_COMPRA = BASE_URL + BASE_API + "NotasCredito/GetNotasCreditoLiquidacion?idEmpresa={0}&desde={1}&hasta={2}";
+        private const string GET_DETALLE_FACTURA = BASE_URL + BASE_API + "NotasCredito/GetDatosFacturaRelacionada?idDocumentoCabecera={0}";
+        private const string GET_DETALLE_LIQ_COMPRAS = BASE_URL + BASE_API + "NotasCredito/GetDatosLiquidacionRelacionada?idDocumentoCabecera={0}";
+        private const string CREATE_NEW_NOTA_CREDITO = BASE_URL + BASE_API + "NotasCredito/Registrar";
 
         private const string ENVIAR_CORREO = BASE_URL + BASE_API + "DcumentoEmail/EnviarDocumento";
         
@@ -261,6 +266,33 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<object>> CobrarNotaDebito(long Id)
         {
             return await this.GetAsync<GenericResponseObject<object>>(COBRAR_NOTA_DEBITO, new object[] { Id.ToString() });
+        }
+
+        //NOTA DE CREDITO
+        public async Task<GenericResponseObject<List<DocumentosRelacionados>>> GetFacturasNotaCredito(long Id, DateTime desde, DateTime hasta)
+        {
+            return await this.PostAsync<object, GenericResponseObject<List<DocumentosRelacionados>>>(null, GET_NOTAS_CREDITO_FACTURA, new object[] { Id.ToString(), desde.ToString("yyyy-MM-dd"), hasta.ToString("yyyy-MM-dd") });
+        }
+
+        public async Task<GenericResponseObject<List<DocumentosRelacionados>>> GetLiqCompraNotaCredito(long Id, DateTime desde, DateTime hasta)
+        {
+            return await this.PostAsync<object, GenericResponseObject<List<DocumentosRelacionados>>>(null, GET_NOTAS_CREDITO_LIQ_COMPRA, new object[] { Id.ToString(), desde.ToString("yyyy-MM-dd"), hasta.ToString("yyyy-MM-dd") });
+        }
+
+
+        public async Task<GenericResponseObject<NotaCreditoModel>> GetDetalleNotaCreditoFactura(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<NotaCreditoModel>>(GET_DETALLE_FACTURA, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<NotaCreditoModel>> GetDetalleNotaCreditoliqCompra(long Id)
+        {
+            return await this.GetAsync<GenericResponseObject<NotaCreditoModel>>(GET_DETALLE_LIQ_COMPRAS, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<NotaCreditoModel>> CreateNewNotaCredito(NotaCreditoModel data)
+        {
+            return await this.PostAsync<NotaCreditoModel, GenericResponseObject<NotaCreditoModel>>(data, CREATE_NEW_NOTA_DEBITO, null);
         }
     }
 }

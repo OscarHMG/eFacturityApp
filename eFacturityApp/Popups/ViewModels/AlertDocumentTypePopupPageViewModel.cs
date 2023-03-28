@@ -95,6 +95,9 @@ namespace eFacturityApp.Popups.ViewModels
                     case (long)DOC_TYPE.NOTA_DEBITO:
                         RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaNotaDebitoPage" : "NotaDebitoPage";
                         break;
+                    case (long)DOC_TYPE.NOTA_CREDITO:
+                        RouteNavigation = GoToConsultasDocumentsPage ? "ConsultaNotaDebitoPage" : "NotaCreditoPage";
+                        break;
                     default:
                         await ShowAlert("Tipo de Documento", "Trabajo en proceso.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
                         break;
