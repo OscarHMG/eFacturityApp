@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationBarPage  
+    xmlns:views="clr-namespace:eFacturityApp.Views" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:ext="clr-namespace:eFacturityApp.Converters" 
+    xmlns:local="clr-namespace:eFacturityApp.DataTemplateSelectors" 
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels"
+    x:Class="eFacturityApp.Views.ConsultaNotaCreditoPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ext:CurrencyConverter x:Key="currencyConverter" />
+            <x:String x:Key="formatdatetimewithoutseconds">{0:dd-MM-yyyy HH:mm}</x:String>
+            <DataTemplate x:Key="EmitidoTemplate">
+                <StackLayout Padding="5">
+                    <yummy:PancakeView
+                        BackgroundColor="White"
+                        CornerRadius="12">
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Thickness="1" Color="#EFEFEF"  />
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView.Shadow>
+                            <yummy:DropShadow BlurRadius="5" />
+                        </yummy:PancakeView.Shadow>
+                        <StackLayout VerticalOptions="CenterAndExpand" Spacing="5" Padding="25, 15" Background="White">
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text = "Secuencia: " Style="{StaticResource BoldLabel}" FontSize="17" />
+                                        <Span Text="{Binding Secuencial}" Style="{StaticResource RegularLabel}" FontSize="17"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Style="{StaticResource RegularLabel}" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Fecha emisión: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding FechaEmision, StringFormat={StaticResource formatdatetimewithoutseconds}}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Razon Modificación: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding RazonModificacion}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Total: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding ComprobantevTotal, Converter={StaticResource currencyConverter}}" Style="{StaticResource RegularLabel}"  FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" VerticalOptions="CenterAndExpand" Style="{StaticResource RegularLabel}" FontSize="17">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Estado: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="EMITIDO" Style="{StaticResource BoldLabel}" TextColor="{StaticResource Green}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="0,10,0,0">
+                                <button:SfButton 
+                                    Text="&#xf03a;"
+                                    TextColor="#696969"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#696969"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                <button:SfButton 
+                                    Text="&#xf1c1;"
+                                    TextColor="Red"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Red"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=DownloadPDFCommand}"/>
+                                <button:SfButton 
+                                    Text="&#xf15b;"
+                                    TextColor="Blue"
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="1"
+                                    BorderColor="Blue"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=DownloadXMLCommand}"/>
+                                <button:SfButton 
+                                    Text="&#x24;"
+                                    TextColor="GreenYellow"
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="1"
+                                    BorderColor="GreenYellow"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=CobrarNotaCreditoCommand}"/>
+                                <button:SfButton 
+                                    Text="&#xf0e0;"
+                                    TextColor="DarkViolet"
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="1"
+                                    BorderColor="DarkViolet"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=SendEmailCommand}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="PendienteEnvioSRITemplate">
+                <StackLayout Padding="5">
+                    <yummy:PancakeView
+                        BackgroundColor="White"
+                        CornerRadius="12">
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Thickness="1" Color="#EFEFEF"  />
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView.Shadow>
+                            <yummy:DropShadow BlurRadius="5" />
+                        </yummy:PancakeView.Shadow>
+                        <StackLayout VerticalOptions="CenterAndExpand" Spacing="5" Padding="25, 15" Background="White">
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text = "Secuencia: " Style="{StaticResource BoldLabel}" FontSize="17" />
+                                        <Span Text="{Binding Secuencial}" Style="{StaticResource RegularLabel}" FontSize="17"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Style="{StaticResource RegularLabel}" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Fecha emisión: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding FechaEmision, StringFormat={StaticResource formatdatetimewithoutseconds}}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Razon Modificación: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding RazonModificacion}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Total: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding ComprobantevTotal, Converter={StaticResource currencyConverter}}" Style="{StaticResource RegularLabel}"  FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" VerticalOptions="CenterAndExpand" Style="{StaticResource RegularLabel}" FontSize="17">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Estado: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="PEND. ENVÍO AL SRI" Style="{StaticResource BoldLabel}" TextColor="{StaticResource Naranja}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="0,10,0,0">
+                                <button:SfButton 
+                                    Text="&#xf03a;"
+                                    TextColor="#696969"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#696969"
+                                    BorderWidth="1"
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+
+                                <button:SfButton 
+                                    Text="&#xf057;"
+                                    TextColor="Red"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Red"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=AnularNotaCreditoCommand}"/>
+
+
+                                <button:SfButton 
+                                    Text="&#xf1d8;"
+                                    TextColor="DarkGreen"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="DarkGreen"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=EnviarNotaCreditoCommand}"/>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </yummy:PancakeView>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="AnuladoTemplate">
+                <StackLayout Padding="5">
+                    <yummy:PancakeView
+                        BackgroundColor="White"
+                        CornerRadius="12">
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Thickness="1" Color="#EFEFEF"  />
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView.Shadow>
+                            <yummy:DropShadow BlurRadius="5" />
+                        </yummy:PancakeView.Shadow>
+                        <StackLayout VerticalOptions="CenterAndExpand" Spacing="5" Padding="25, 15" Background="White">
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text = "Secuencia: " Style="{StaticResource BoldLabel}" FontSize="17" />
+                                        <Span Text="{Binding Secuencial}" Style="{StaticResource RegularLabel}" FontSize="17"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Style="{StaticResource RegularLabel}" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Fecha emisión: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding FechaEmision, StringFormat={StaticResource formatdatetimewithoutseconds}}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Razon Modificación: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding RazonModificacion}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Total: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding ComprobantevTotal, Converter={StaticResource currencyConverter}}" Style="{StaticResource RegularLabel}"  FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" VerticalOptions="CenterAndExpand" Style="{StaticResource RegularLabel}" FontSize="17">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Estado: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="ANULADO" Style="{StaticResource BoldLabel}" TextColor="{StaticResource Red}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="0,10,0,0">
+                                <button:SfButton 
+                                    Text="&#xf03a;"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#696969"
+                                    BorderColor="#696969"
+                                    BorderWidth="1"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="CobradoTemplate">
+                <StackLayout Padding="5">
+                    <yummy:PancakeView
+                        BackgroundColor="White"
+                        CornerRadius="12">
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Thickness="1" Color="#EFEFEF"  />
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView.Shadow>
+                            <yummy:DropShadow BlurRadius="5" />
+                        </yummy:PancakeView.Shadow>
+                        <StackLayout VerticalOptions="CenterAndExpand" Spacing="5" Padding="25, 15" Background="White">
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text = "Secuencia: " Style="{StaticResource BoldLabel}" FontSize="17" />
+                                        <Span Text="{Binding Secuencial}" Style="{StaticResource RegularLabel}" FontSize="17"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Style="{StaticResource RegularLabel}" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Fecha emisión: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding FechaEmision, StringFormat={StaticResource formatdatetimewithoutseconds}}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Razon Modificación: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding RazonModificacion}" Style="{StaticResource RegularLabel}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" Style="{StaticResource RegularLabel}" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Total: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="{Binding ComprobantevTotal, Converter={StaticResource currencyConverter}}" Style="{StaticResource RegularLabel}"  FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label LineBreakMode="WordWrap" VerticalOptions="CenterAndExpand" Style="{StaticResource RegularLabel}" FontSize="17">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Estado: " Style="{StaticResource BoldLabel}" FontSize="17"/>
+                                        <Span Text="COBRADO" Style="{StaticResource BoldLabel}" TextColor="{StaticResource Accent}" FontSize="17"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="0,0,10, 0" >
+                                <button:SfButton 
+                                    Text="&#xf03a;"
+                                    TextColor="#696969"
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="1"
+                                    BorderColor="#696969"
+                                    FontFamily="FA"
+                                    HasShadow="True"
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    VerticalOptions="End" 
+                                    CornerRadius="25"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+            </DataTemplate>
+
+            <local:NotaCreditoTemplateSelector 
+                x:Key="NotaCreditoTemplateSelector"
+                EmitidoTemplate="{StaticResource EmitidoTemplate}"
+                PendienteEnvioSRITemplate="{StaticResource PendienteEnvioSRITemplate}"
+                AnuladoTemplate="{StaticResource AnuladoTemplate}"
+                CobradoTemplate ="{StaticResource CobradoTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Desde"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <DatePicker Date="{Binding Filtros.Desde}" FontSize="Body"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout 
+                        Hint="Hasta"
+                        HorizontalOptions="FillAndExpand"
+                        IsHintAlwaysFloated="false" 
+                        ContainerType="Outlined">
+                        <DatePicker Date="{Binding Filtros.Hasta}" FontSize="Body"/>
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
+                            </inputLayout:LabelStyle>
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                    <button:SfButton 
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Text="&#xf002;"
+                        FontFamily="FA"
+                        HasShadow="True"
+                        HorizontalOptions="End" 
+                        VerticalOptions="Center"
+                        Command="{Binding LoadNotasCreditosCommand}"/>
+
+                    <button:SfButton 
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Text="&#xf0b0;"
+                        BackgroundColor="White"
+                        TextColor="#696969"
+                        BorderColor="#696969"
+                        BorderWidth="1"
+                        FontFamily="FA"
+                        HasShadow="True"
+                        HorizontalOptions="End" 
+                        VerticalOptions="Center"
+                        Command="{Binding ShowFilterPopUpCommand}"/>
+
+                </StackLayout>
+            </StackLayout>
+            <CollectionView ItemsSource="{Binding NotaCreditos}" ItemTemplate="{StaticResource NotaCreditoTemplateSelector}">
+                <CollectionView.EmptyView>
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+                        <Label 
+                            Text="{Binding NoItemsMessage}"
+                            Style="{StaticResource RegularLabel}"
+                            FontSize="18"
+                            HorizontalOptions="CenterAndExpand"
+                            Margin="15, 0"
+                            VerticalOptions="CenterAndExpand"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+            </CollectionView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</views:BaseNavigationBarPage>

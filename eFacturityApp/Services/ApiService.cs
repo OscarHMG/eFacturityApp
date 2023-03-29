@@ -69,6 +69,8 @@ namespace eFacturityApp.Services
         private const string GET_DETALLE_FACTURA = BASE_URL + BASE_API + "NotasCredito/GetDatosFacturaRelacionada?idDocumentoCabecera={0}";
         private const string GET_DETALLE_LIQ_COMPRAS = BASE_URL + BASE_API + "NotasCredito/GetDatosLiquidacionRelacionada?idDocumentoCabecera={0}";
         private const string CREATE_NEW_NOTA_CREDITO = BASE_URL + BASE_API + "NotasCredito/Registrar";
+        private const string LOAD_NOTA_CREDITOS_CREADAS = BASE_URL + BASE_API + "Facturas/GetFacturas";
+
 
         private const string ENVIAR_CORREO = BASE_URL + BASE_API + "DcumentoEmail/EnviarDocumento";
         
@@ -292,7 +294,12 @@ namespace eFacturityApp.Services
 
         public async Task<GenericResponseObject<NotaCreditoModel>> CreateNewNotaCredito(NotaCreditoModel data)
         {
-            return await this.PostAsync<NotaCreditoModel, GenericResponseObject<NotaCreditoModel>>(data, CREATE_NEW_NOTA_DEBITO, null);
+            return await this.PostAsync<NotaCreditoModel, GenericResponseObject<NotaCreditoModel>>(data, CREATE_NEW_NOTA_CREDITO, null);
+        }
+
+        public async Task<GenericResponseObject<ListarDocumentosNotaCreditoGeneradosViewModel>> GetConsultaNotaCreditos(FiltersApiModel filtros)
+        {
+            return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarDocumentosNotaCreditoGeneradosViewModel>>(filtros, LOAD_NOTA_CREDITOS_CREADAS);
         }
     }
 }

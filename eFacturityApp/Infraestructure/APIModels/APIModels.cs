@@ -927,6 +927,8 @@ namespace eFacturityApp.Infraestructure.ApiModels
             public string Secuencial { set; get; }
         }
 
+
+       
         #endregion
         public class EnviarDocumentoDocumentoModel
         {
