@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:eFacturityApp.DataTemplateSelectors" 
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:vm="clr-namespace:eFacturityApp.ViewModels"
+    xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
     x:Class="eFacturityApp.Views.ConsultaNotaCreditoPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -83,7 +83,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
                                 <button:SfButton 
                                     Text="&#xf1c1;"
                                     TextColor="Red"
@@ -97,7 +97,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=DownloadPDFCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=DownloadPDFCommand}"/>
                                 <button:SfButton 
                                     Text="&#xf15b;"
                                     TextColor="Blue"
@@ -111,21 +111,8 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=DownloadXMLCommand}"/>
-                                <button:SfButton 
-                                    Text="&#x24;"
-                                    TextColor="GreenYellow"
-                                    BackgroundColor="Transparent"
-                                    BorderWidth="1"
-                                    BorderColor="GreenYellow"
-                                    FontFamily="FA"
-                                    HasShadow="True"
-                                    WidthRequest="50" 
-                                    HeightRequest="50" 
-                                    VerticalOptions="End" 
-                                    CornerRadius="25"
-                                    CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=CobrarNotaCreditoCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=DownloadXMLCommand}"/>
+                                <!-- cOBRAR OPTION WAS HERE -->
                                 <button:SfButton 
                                     Text="&#xf0e0;"
                                     TextColor="DarkViolet"
@@ -139,7 +126,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=SendEmailCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=SendEmailCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>
@@ -215,7 +202,7 @@
                                     BorderWidth="1"
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
 
                                 <button:SfButton 
                                     Text="&#xf057;"
@@ -230,7 +217,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=AnularNotaCreditoCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=AnularNotaCreditoCommand}"/>
 
 
                                 <button:SfButton 
@@ -246,7 +233,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=EnviarNotaCreditoCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=EnviarNotaCreditoCommand}"/>
                             </StackLayout>
                         </StackLayout>
 
@@ -321,7 +308,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>
@@ -395,7 +382,7 @@
                                     VerticalOptions="End" 
                                     CornerRadius="25"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm: ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConsultaNotaCreditoPageViewModel}}, Path=ViewDetalleCommand}"/>
                             </StackLayout>
                         </StackLayout>
                     </yummy:PancakeView>

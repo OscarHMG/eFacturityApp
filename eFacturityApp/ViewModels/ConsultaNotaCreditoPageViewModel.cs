@@ -71,15 +71,6 @@ namespace eFacturityApp.ViewModels
                 await Navigate(_navigationService, "NotaCreditoPage", parameters);
             });
 
-            CobrarNotaCreditoCommand = new Command<NotaCreditoModel>(async (NotaCreditoSelected) =>
-            {
-                var Response = await ShowYesNoAlert("Cobrar nota crédito", "¿Desea enviar a cobro la nota crédito" + NotaCreditoSelected.Secuencial + "?", _navigationService);
-                if (Response)
-                {
-                    await CobrarFactura(NotaCreditoSelected);
-                }
-
-            });
 
             EnviarNotaCreditoCommand = new Command<NotaCreditoModel>(async (NotaCreditoSelected) =>
             {
@@ -186,7 +177,7 @@ namespace eFacturityApp.ViewModels
             try
             {
                 await _loaderService.Show("Enviando al SRI..");
-                var response = await _apiService.EnviarSRIFactura(NotaCreditoSelected.IdNotaCreditoCabecera.GetValueOrDefault());
+                var response = await _apiService.EnviarNotaCreditoSRI(NotaCreditoSelected.IdNotaCreditoCabecera.GetValueOrDefault());
                 await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
                 {
@@ -211,7 +202,7 @@ namespace eFacturityApp.ViewModels
             try
             {
                 await _loaderService.Show("Anulando nota crédito..");
-                var response = await _apiService.AnularFactura(NotaCreditoSelected.IdNotaCreditoCabecera.GetValueOrDefault());
+                var response = await _apiService.AnularNotaCredito(NotaCreditoSelected.IdNotaCreditoCabecera.GetValueOrDefault());
                 await _loaderService.Hide();
                 if (await HandleAPIResponse(response.statusCode, response.message, "Enviar SRI", _navigationService))
                 {
@@ -230,29 +221,6 @@ namespace eFacturityApp.ViewModels
             }
         }
 
-        private async Task CobrarFactura(NotaCreditoModel NotaCreditoSelected)
-        {
-            try
-            {
-                await _loaderService.Show("Cobrando su nota crédito..");
-                var response = await _apiService.CobrarFactura(NotaCreditoSelected.IdNotaCreditoCabecera.GetValueOrDefault());
-                await _loaderService.Hide();
-                if (await HandleAPIResponse(response.statusCode, response.message, "Cobrar nota crédito", _navigationService))
-                {
-                    await ShowAlert("Consulta de nota crédito", "La nota crédito " + NotaCreditoSelected.Secuencial + " fue cobrada con éxito.", AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-
-                }
-            }
-            catch (Exception err)
-            {
-                await ShowAlert("Consulta de nota crédito", "Error : " + err.Message, AlertConfirmationPopupPageViewModel.EnumInputType.Ok, _navigationService);
-
-            }
-            finally
-            {
-                LoadNotasCreditosCommand.Execute(null);
-            }
-        }
 
         private async Task LoadNotaCreditos()
         {

@@ -11,7 +11,7 @@ namespace eFacturityApp.Services
     public class ApiService : APIServiceBase
     {
 #if DEBUG
-        public const string BASE_URL = "https://714b-181-199-62-229.ngrok.io/";
+        public const string BASE_URL = "https://1251-181-199-62-229.ngrok.io/";
 #else
         public const string BASE_URL = "https://api.efacturity.com:44372/";
 #endif
@@ -69,11 +69,11 @@ namespace eFacturityApp.Services
         private const string GET_DETALLE_FACTURA = BASE_URL + BASE_API + "NotasCredito/GetDatosFacturaRelacionada?idDocumentoCabecera={0}";
         private const string GET_DETALLE_LIQ_COMPRAS = BASE_URL + BASE_API + "NotasCredito/GetDatosLiquidacionRelacionada?idDocumentoCabecera={0}";
         private const string CREATE_NEW_NOTA_CREDITO = BASE_URL + BASE_API + "NotasCredito/Registrar";
-        private const string LOAD_NOTA_CREDITOS_CREADAS = BASE_URL + BASE_API + "Facturas/GetFacturas";
-
-
+        private const string LOAD_NOTA_CREDITOS_CREADAS = BASE_URL + BASE_API + "NotasCredito/GetNotasCredito";
+        private const string ANULAR_NOTA_CREDITO = BASE_URL + BASE_API + "NotasCredito/Anular?id={0}";
+        private const string ENVIAR_NOTA_CREDITO_SRI = BASE_URL + BASE_API + "NotasCredito/EnviarSRI?id={0}";
         private const string ENVIAR_CORREO = BASE_URL + BASE_API + "DcumentoEmail/EnviarDocumento";
-        
+        public string DOWNLOAD_DOC_NOTA_CREDITO { get; set; } = BASE_URL + BASE_API + "NotasCredito/Descargar?id={0}&extension={1}";
 
 
         public ApiService() : base()
@@ -300,6 +300,16 @@ namespace eFacturityApp.Services
         public async Task<GenericResponseObject<ListarDocumentosNotaCreditoGeneradosViewModel>> GetConsultaNotaCreditos(FiltersApiModel filtros)
         {
             return await this.PostAsync<FiltersApiModel, GenericResponseObject<ListarDocumentosNotaCreditoGeneradosViewModel>>(filtros, LOAD_NOTA_CREDITOS_CREADAS);
+        }
+
+        public async Task<GenericResponseObject<object>> AnularNotaCredito(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ANULAR_NOTA_DEBITO, null, new object[] { Id.ToString() });
+        }
+
+        public async Task<GenericResponseObject<object>> EnviarNotaCreditoSRI(long Id)
+        {
+            return await this.PostAsync<GenericResponseObject<object>>(ENVIAR_NOTA_CREDITO_SRI, null, new object[] { Id.ToString() });
         }
     }
 }
