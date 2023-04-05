@@ -88,13 +88,17 @@ namespace eFacturityApp.ViewModels
 
         public long IdNotaCreditoCreada { get; set; } = 0;
 
+        public long IdDocumentoCabeceraRelacionado { get; set; }
+
+        public long IdPersona { get; set; }
+
         public NotaCreditoPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             LoadDropDownsCommand = new Command(async () => await LoadDropDowns());
 
             CreateNewNotaCreditoCommand = new Command(async () => await CreateNewNotaCredito());
 
-            //FinalizarCommand = new Command(async () => await NavigateBack(_navigationService));
+            FinalizarCommand = new Command(async () => await NavigateBack(_navigationService));
 
             //EnviarSRICommand = new Command(async () => await EnviarNotaDebitoSRI());
 
@@ -398,6 +402,8 @@ namespace eFacturityApp.ViewModels
                     ComprobantevSubtotal12 = DataResponse.ComprobantevSubtotal12;
                     ComprobantevSubtotal = DataResponse.ComprobantevSubtotal;
                     SubtotalItemsICE = 0;
+                    IdDocumentoCabeceraRelacionado = DataResponse.IdDocumentoCabeceraRelacionado.GetValueOrDefault();
+                    IdPersona = DataResponse.IdPersona;
                     Items = new ObservableCollection<ItemDocumentNotaCreditoCabeceraModel>(DataResponse.Items);
                 }
             }
@@ -427,6 +433,8 @@ namespace eFacturityApp.ViewModels
                     ComprobantevSubtotal12 = DataResponse.ComprobantevSubtotal12;
                     ComprobantevSubtotal = DataResponse.ComprobantevSubtotal;
                     SubtotalItemsICE = 0;
+                    IdDocumentoCabeceraRelacionado = DataResponse.IdDocumentoCabeceraRelacionado.GetValueOrDefault();
+                    IdPersona = DataResponse.IdPersona;
                     Items = new ObservableCollection<ItemDocumentNotaCreditoCabeceraModel>(DataResponse.Items);
 
                     Items = new ObservableCollection<ItemDocumentNotaCreditoCabeceraModel>(DataResponse.Items);
@@ -452,6 +460,7 @@ namespace eFacturityApp.ViewModels
                     NotaCredito.IdEstablecimiento = EstablecimientoSelected.Id;
                     NotaCredito.IdPuntoVenta = PuntoVentaSelected.Id;
                     NotaCredito.IdDocumentoCabeceraRelacionado = DocumentoSelected.Id;
+                    NotaCredito.IdPersona = IdPersona;
                     var response = await _apiService.CreateNewNotaCredito(NotaCredito);
                     await _loaderService.Hide();
 
@@ -506,7 +515,7 @@ namespace eFacturityApp.ViewModels
             else if (DocumentoSelected == null || DocumentoSelected.Id == 0)
             {
                 isValid = false;
-                ErrorMessage = "Secuencial del documento, es requerido.";
+                ErrorMessage = "Debe escoger un documento, es requerido.";
             }
             
             KeyValueValidation.Add(isValid, ErrorMessage);

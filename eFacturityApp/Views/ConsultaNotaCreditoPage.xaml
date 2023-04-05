@@ -10,6 +10,7 @@
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:vm="clr-namespace:eFacturityApp.ViewModels" 
+    Title="Consultar nota de débitos"
     x:Class="eFacturityApp.Views.ConsultaNotaCreditoPage">
     <ContentPage.Resources>
         <ResourceDictionary>
