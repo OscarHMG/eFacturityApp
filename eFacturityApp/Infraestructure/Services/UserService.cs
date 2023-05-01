@@ -59,8 +59,18 @@ namespace eFacturityApp.Infraestructure.Services
         }
 
 
+        public PerfilUsuarioModel GetUserInformationProfile2()
+        {
 
-        
+            var response = SecureStorage.GetAsync("UserInfo");
+
+            if (response == null)
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<PerfilUsuarioModel>(response.Result);
+        }
+
 
 
 

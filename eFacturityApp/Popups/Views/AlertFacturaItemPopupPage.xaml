@@ -72,26 +72,21 @@
                         </inputLayout:LabelStyle>
                     </inputLayout:SfTextInputLayout.HintLabelStyle>
                 </inputLayout:SfTextInputLayout>
-                
-                
-                <StackLayout Orientation="Horizontal">
-                    
-                    <inputLayout:SfTextInputLayout 
+
+
+                <StackLayout Orientation="Vertical">
+                    <inputLayout:SfTextInputLayout
                         Hint="Precio Unit."
                         HorizontalOptions="FillAndExpand"
-                        IsEnabled="{Binding EnablePrecioEntry}"
                         IsHintAlwaysFloated="false" 
                         ContainerType="Outlined">
-                        <Entry Text="{Binding Precio}" Keyboard="Telephone" IsEnabled="{Binding EnablePrecioEntry}">
-                            <Entry.Behaviors>
-                                <behav:DecimalEntryBehavior/>
-                            </Entry.Behaviors>
-                        </Entry>
+                        <numeric:SfNumericUpDown Font="PR" IsEditable="True"  MaximumDecimalDigits="{Binding NumeroDecimales}" Value="{Binding Precio}" HorizontalOptions="FillAndExpand"/>
                         <inputLayout:SfTextInputLayout.HintLabelStyle>
                             <inputLayout:LabelStyle FontSize="{d:OnPlatform Android='18', iOS='20'}" FontFamily="PR">
                             </inputLayout:LabelStyle>
                         </inputLayout:SfTextInputLayout.HintLabelStyle>
                     </inputLayout:SfTextInputLayout>
+
                     <inputLayout:SfTextInputLayout 
                         Hint="% Desc."
                         HorizontalOptions="FillAndExpand"

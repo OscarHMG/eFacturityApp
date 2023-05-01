@@ -39,9 +39,12 @@ namespace eFacturityApp.Popups.ViewModels
 
         public ICommand CancelCommand { get; set; }
         public ICommand AddNewItemCommand { get; set; }
+        public ICommand LoadUserInformationCommand { get; set; }
+
+        PerfilUsuarioModel PerfilUsuario = null;
 
 
-
+        [Reactive] public int NumeroDecimales { get; set; } = 2;
         public AlertFacturaItemPopupPageViewModel(INavigationService navigationService, LoaderService loader, UserService userService, ApiService apiService) : base(navigationService, loader, userService, apiService)
         {
             Descuento = 0;
@@ -67,7 +70,18 @@ namespace eFacturityApp.Popups.ViewModels
                     }
                 }
                 ));
-
+            LoadUserInformationCommand = new Command(async () =>
+            {
+                PerfilUsuario = await userService.GetUserInformationProfile();
+                if (PerfilUsuario != null)
+                {
+                    NumeroDecimales = PerfilUsuario.NumDecimales != null ? PerfilUsuario.NumDecimales.GetValueOrDefault() : 2;
+                }
+                else
+                {
+                    NumeroDecimales = 2;
+                }
+            });
 
         }
 
@@ -90,6 +104,8 @@ namespace eFacturityApp.Popups.ViewModels
 
                 LoadArticulosCatalogosCommand.Execute(null);
             }
+
+            LoadUserInformationCommand.Execute(null);
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
